@@ -2,3 +2,4 @@ node_modules
 files
 .env
 package-lock.json
+images
