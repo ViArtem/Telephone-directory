@@ -50,7 +50,7 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
         data.append("avatar", img);
 
         axios
-          .put("/contact/update", data)
+          .put("http://localhost:4000/contact/update", data)
           .then((user) => {
             edit(user);
 

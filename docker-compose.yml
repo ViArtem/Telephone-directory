@@ -1,6 +1,18 @@
 version: '3.7'
 
 services:
+
+  mongo:
+    image: mongo
+    volumes:
+      - data-volume:/data/db
+    ports:
+      - "27018:27017"
+
+    networks:
+      - app-network
+    restart: unless-stopped
+
   server:
     build:
       context: ./server
@@ -20,14 +32,8 @@ services:
       - NODE_ENV=development
     networks:
       - app-network
-  mongo:
-    image: mongo
-    volumes:
-      - data-volume:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - app-network
+
+
   client:
     build:
       context: ./client
@@ -38,12 +44,8 @@ services:
     volumes:
       - ./client/:/usr/app
       - /usr/app/node_modules
-    depends_on:
-      - server
     ports:
       - "3000:3000"
-    environment:
-      - http_proxy=http://localhost:4000
     networks:
       - app-network
 

@@ -7,13 +7,13 @@ import "../styles/Auth.css";
 const Authorization = () => {
   const [user, setUser] = useState({ email: "", password: "" });
   const [serverResponse, setserverResponse] = useState("");
+
   function exit(e) {
     e.preventDefault();
-    console.log(user);
+
     axios
-      .post("/user/authorization", user)
+      .post("http://localhost:4000/user/authorization", user)
       .then((response) => {
-        console.log(response);
         if (response.response.status == 400) {
           return setserverResponse(`${response.response.data.message}`);
         }

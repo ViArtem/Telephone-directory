@@ -64,6 +64,7 @@ const FoundBlock = ({
   // information about the found user
   const [foundUserDataSocket, setfoundUserDataSocket] = useState("");
   const [foundUserNumberSocket, setfoundUserNumberSocket] = useState("");
+
   const [allUserSocketData, setAllUserSocketData] = useState("");
   const [showSocketButton, setShowSocketButton] = useState(false);
   const [socketImg, setSocketImg] = useState("");
@@ -76,16 +77,20 @@ const FoundBlock = ({
           fullName: deleteUserDataSocket,
           ownerId: jwt(localStorage.getItem("Authorization")).id,
           userRole: jwt(localStorage.getItem("Authorization")).role,
+          imagePath: socketImg,
         });
-        // updates the list of users at the click of a button
 
+        // updates the list of users at the click of a button
         setfoundUserDataSocket("");
         setfoundUserNumberSocket("");
         setShowSocketButton(false);
       } else {
-        const response = await axios.delete("/contact/delete", {
-          data: deleteUser,
-        });
+        const response = await axios.delete(
+          "http://localhost:4000/contact/delete",
+          {
+            data: deleteUser,
+          }
+        );
         foundContactHttp = null;
         setUserNumber("");
         deletes(response);
@@ -182,7 +187,7 @@ const FoundBlock = ({
                 marginRight: "auto",
                 marginLeft: "auto",
               }}
-              src={socketImg}
+              src={`http://localhost:4000/${socketImg}`}
               alt="Foto"
             />
           </Photo>
@@ -207,7 +212,7 @@ const FoundBlock = ({
                 marginRight: "auto",
                 marginLeft: "auto",
               }}
-              src={httpImg}
+              src={`http://localhost:4000/${httpImg}`}
               alt="Foto"
             />
           </Photo>

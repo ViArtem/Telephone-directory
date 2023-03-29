@@ -56,7 +56,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
       data.append("avatar", image);
       //for the http block
       axios
-        .post("/contact/add", data)
+        .post("http://localhost:4000/contact/add", data)
         .then((user) => {
           if (user.data) {
             add(user);

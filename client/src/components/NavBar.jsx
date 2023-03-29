@@ -17,13 +17,13 @@ const NavBar = ({ styleClass, history, historyList }) => {
     className += styleClass.styleClass;
   }
 
-  //історія адміна
+  //admin history
 
   function getHistory() {
     if (jwt(localStorage.getItem("Authorization"))) {
       if (jwt(localStorage.getItem("Authorization")).role == "admin") {
         axios
-          .get("/admin/history")
+          .get("http://localhost:4000/admin/history")
           .then((allContact) => {
             console.log(allContact);
             if (allContact) {
@@ -47,7 +47,9 @@ const NavBar = ({ styleClass, history, historyList }) => {
     <div className={className}>
       <Photo>
         <img
-          src={jwt(localStorage.getItem("Authorization")).avatar}
+          src={`http://localhost:4000/${
+            jwt(localStorage.getItem("Authorization")).avatar
+          }`}
           style={{
             with: "75px",
             height: " 75px",

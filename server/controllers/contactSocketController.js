@@ -114,7 +114,8 @@ async function socketData() {
       const deletedUser = await contactService.deleteContact(
         data.fullName,
         data.ownerId,
-        data.userRole
+        data.userRole,
+        data.imagePath
       );
 
       io.sockets.emit("delete user", {

@@ -26,7 +26,9 @@ const UserList = ({
 
   async function changeList(e) {
     setHowMany((prevState) => ({ ...prevState, pages: e.selected }));
-    const allContact = await axios.post("/contact/all", { pages: e.selected });
+    const allContact = await axios.post("http://localhost:4000/contact/all", {
+      pages: e.selected,
+    });
     setContact([...allContact.data]);
   }
 
@@ -52,9 +54,12 @@ const UserList = ({
   async function deleteContact(e) {
     try {
       e.preventDefault();
-      const response = await axios.delete("/contact/delete", {
-        data: contactData,
-      });
+      const response = await axios.delete(
+        "http://localhost:4000/contact/delete",
+        {
+          data: contactData,
+        }
+      );
       setContactData({ fullName: "", action: "", imgPath: "" });
       setupdatingList(Math.random());
     } catch (error) {
@@ -76,11 +81,10 @@ const UserList = ({
   useEffect(() => {
     console.log(howMany);
     axios
-      .post("/contact/all", { pages: howMany })
+      .post("http://localhost:4000/contact/all", { pages: howMany })
       .then((allContact) => {
-        console.log(allContact);
         if (allContact === undefined) {
-          return console.log("Запит повернув пусту відповідь.");
+          return console.log("Null");
         }
 
         setContact([...allContact.data]);
@@ -127,7 +131,7 @@ const UserList = ({
                     marginRight: "auto",
                     marginLeft: "auto",
                   }}
-                  src={contact.avatar}
+                  src={`http://localhost:4000/${contact.avatar}`}
                   alt="Logo"
                 />
               </Photo>

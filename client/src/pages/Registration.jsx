@@ -27,14 +27,16 @@ const Registration = () => {
         data.append("email", newUser.email);
         data.append("password", newUser.password);
         data.append("avatar", image);
-        await axios.post("/user/registration", data).then((response) => {
-          console.log(response);
+        await axios
+          .post("http://localhost:4000/user/registration", data)
+          .then((response) => {
+            console.log(response);
 
-          if (response.response.status == 400) {
-            return seterrorValue(response.response.data.message);
-          }
-          setImage("");
-        });
+            if (response.response.status == 400) {
+              return seterrorValue(response.response.data.message);
+            }
+            setImage("");
+          });
       }
     } catch (error) {
       console.log(error);
