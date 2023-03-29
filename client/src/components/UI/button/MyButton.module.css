@@ -1,0 +1,10 @@
+.myBtn{
+    /* display: block; */
+    border-radius: 5px;
+    padding: 5px 15px;
+    color:  aliceblue;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid  aliceblue;
+    cursor: pointer;
+}

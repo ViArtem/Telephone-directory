@@ -1,0 +1,10 @@
+.photo{
+    
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgb(234, 233, 255);
+    /* background-color: red; */
+}

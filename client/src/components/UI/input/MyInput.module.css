@@ -1,0 +1,18 @@
+.myInput{
+    width: 100%;
+    background: transparent;
+    border-radius: 6px;
+    color: aliceblue;
+    padding: 1px 8px;
+    margin: 5px, 0px;
+    border: 1px solid rgba(255, 255, 255, 1);
+  
+}
+
+.myInput::placeholder{
+    font-family: 'Inter', sans-serif;
+    color: rgba(255, 255, 255, 0.5);
+}
+.myInput:focus {
+    outline: none;
+  }

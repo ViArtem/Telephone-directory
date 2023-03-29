@@ -1,0 +1,217 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: aliceblue;
+    font-family: 'Inter', sans-serif;
+    
+}
+body{
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(52, 48, 142, 1), rgba(144, 52, 48, 0.74));
+}
+#root{
+    display: flex;
+    justify-content: center;
+
+}
+
+.App{
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.rowBlock{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.otherBlock{
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin: 5px 0px 0px 0px;
+    text-align: center;
+    display: flex;
+    flex-direction:column;
+    padding: 25px;
+    background-color:rgba(82, 94, 159, 1);
+    width: 255px;
+    height: 270px;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+
+.httpBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.socketBlock{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.editBlock{
+    margin: 5px 0px 0px 0px;
+    text-align: center;
+    display: flex;
+    flex-direction:column;
+    padding: 25px;
+    background-color:  #1f4465;
+    width: 370px;
+    height: 350px;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+}
+
+.userList{
+    position: relative;
+    min-width: 370px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    width: 370px;
+    height: 570px;
+    margin-top: 10px;
+    background-color: rgba(153, 150, 255, 0.4);
+    border-radius: 25px;
+    padding: 10px;
+    padding-top: 20px;
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.historyLink:hover{
+color: rgb(200, 255, 210);
+
+}
+.exitLink:hover{
+    color: rgb(255, 200, 200);
+
+}
+.container{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+input:first-child{
+    width: 100%;
+    background: transparent;
+    border-radius: 6px;
+    color: aliceblue;
+    padding: 1px 8px;
+    margin: 5px, 0px;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.navBar{
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    width: 1440px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 5px;
+    height: 65px;
+    border-radius: 17px;
+    background-color: rgba(35, 49, 99, 1);
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    padding: 0px 25px;
+}
+
+.contactLi{
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: 309px;
+    height: 67px;
+    border-radius: 12px;
+    border: 2px solid rgb(255, 255, 255);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+
+}
+
+.footer{
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    box-shadow: 5px 3px 7px rgba(0, 0, 0, 0.5);
+    width: 1440px;
+    height: 90px;
+    border-radius: 15px;
+    background-color: rgba(64, 63, 67, 1);
+}
+
+
+
+.httpContainer{
+
+    text-align: center;
+}
+.history{
+    width: 400px;
+    height: 500px;
+    text-align: center;
+    border-radius: 25px;
+    background-color: #316ea3;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+/*  */
+.pagination{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    max-width: 200px;
+    margin-left: 34px;
+    margin-bottom: 20px; 
+  
+}
+.pagination > li {
+    list-style: none;
+
+   
+  }
+  .pagination > li > a,
+  .pagination > li > span {
+    float: left;
+    padding: 8px 15px;
+    line-height: 1.5;
+    border: 2px solid #ddd;
+    margin-left: 2px;
+    border-radius: 5px;
+  }
+  
+  .pagination > li.active > a {
+    color: #fff;
+    background-color: rgba(66, 62, 151, 0.3);
+    border-color: #ffffff;
+  }
+  .pagination > li > a:hover {
+    background-color: rgba(66, 62, 151, 0.5);
+    cursor: pointer;
+  }
+  .pagination > li:first-child > a,
+  .pagination > li:first-child > span {
+    margin-left: 0;
+  }
