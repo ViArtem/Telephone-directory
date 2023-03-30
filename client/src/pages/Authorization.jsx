@@ -17,8 +17,6 @@ const Authorization = () => {
         if (response.response.status == 400) {
           return setserverResponse(`${response.response.data.message}`);
         }
-
-        //window.location.href = "/";
       })
       .catch((e) => {
         window.location.href = "/";

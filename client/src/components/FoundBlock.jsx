@@ -138,7 +138,6 @@ const FoundBlock = ({
   // display of the found user
   if (socket) {
     socket.on("findOne user", (data) => {
-      console.log(data);
       if (
         data.userFirstName == "User not found" ||
         data.userFirstName == "The value cannot be empty"

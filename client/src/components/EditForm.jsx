@@ -14,6 +14,7 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
     userRole: jwt(localStorage.getItem("Authorization")).role,
   });
   const [img, setImg] = useState(null);
+  const [imgValue, setImgValue] = useState("click to upload");
   const editContact = (e) => {
     /// The function sends a request with form data to edit a contact
     e.preventDefault();
@@ -117,13 +118,37 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
           minLength={12}
           placeholder="+380685452894"
         />
-        <label for="">Add avatar</label>
-        <input
-          style={{ marginTop: "5px", marginBottom: "7px" }}
-          type="file"
-          onChange={(e) => setImg(e.target.files[0])}
-        />
-        <MyButton onClick={editContact}>Update</MyButton>
+        <div style={{ position: "relative", lineHeight: "25px" }}>
+          <p> Add avatar</p>
+          <input
+            id="imageInputS"
+            style={{
+              marginTop: "5px",
+              marginBottom: "7px",
+              position: "absolute",
+              visibility: "hidden",
+              opacity: "0",
+            }}
+            type="file"
+            onChange={(e) => {
+              setImg(e.target.files[0]);
+              setImgValue("uploaded");
+            }}
+          />
+          <span
+            style={{
+              border: " 1px solid rgb(255, 255, 250)",
+              backgroundColor: "rgba(95, 94, 195, 0.5)",
+              padding: "2px 10px",
+              borderRadius: "4px",
+            }}
+          >
+            <label for="imageInputS">{imgValue}</label>
+          </span>
+        </div>
+        <MyButton onClick={editContact} style={{ marginTop: "10px" }}>
+          Update
+        </MyButton>
       </form>
     </div>
   );

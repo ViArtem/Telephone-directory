@@ -39,7 +39,6 @@ const OperationsBlock = ({
   useEffect(() => {
     if (addRequest) {
       try {
-        console.log(addRequest);
         if (addRequest.success == "The value cannot be empty") {
           return setAction([...action, addRequest.success]);
         }
@@ -71,7 +70,6 @@ const OperationsBlock = ({
   useEffect(() => {
     if (editRequest) {
       try {
-        console.log(editRequest);
         if (
           editRequest.response.data.message.message == "Name not valid" ||
           editRequest.response.data.message.message == "Number not valid"

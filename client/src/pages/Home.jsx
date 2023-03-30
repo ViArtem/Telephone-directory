@@ -17,7 +17,7 @@ import HistoryBlock from "../components/HistoryBlock";
 const socket = io.connect("http://localhost:4000");
 //
 function Home() {
-  //Додає в список операцій знайдений контакт
+  //adds the found contact to the list of operations
   const [foundRequest, setFoundRequest] = useState();
   const [foundContactHttp, setFoundContactHttp] = useState();
   function setNewFoundContactHttp(newContact) {
@@ -26,32 +26,28 @@ function Home() {
   }
   //
 
-  //Додає в список операцій створений контaкт
+  //Adds the created contract to the list of operations
   const [addRequest, setAddRequest] = useState();
   function setNewAddContactHttp(newContact) {
     setAddRequest(newContact);
   }
   //
 
-  //Додає в список операцій редагований контaкт
+  //Adds the edited content to the list of operations
   const [editRequest, setEditRequest] = useState();
   function setNewEditContactHttp(newContact) {
     setEditRequest(newContact);
   }
   //
 
-  //Додає в список операцій видалений контaкт
+  //Adds deleted content to the list of operations
   const [deleteRequest, setDeleteRequest] = useState();
   function setNewDeleteContactHttp(newContact) {
     setDeleteRequest(newContact);
   }
   //
 
-  //
-
-  //
-
-  // модальне вікно значення які ми будем передавати при натисканні кнопки
+  //modal window of the values that we will pass when the button is pressed
   const [modal, setModal] = useState();
   const [userValue, setUserValue] = useState({
     firstName: "",
@@ -66,9 +62,7 @@ function Home() {
     setUserValue(value);
   }
 
-  //
-
-  //модалка для історій
+  //a mod for stories
   const [modalHistory, setModalHistory] = useState();
 
   const [historyList, sethistoryList] = useState();

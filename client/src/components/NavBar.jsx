@@ -25,7 +25,6 @@ const NavBar = ({ styleClass, history, historyList }) => {
         axios
           .get("http://localhost:4000/admin/history")
           .then((allContact) => {
-            console.log(allContact);
             if (allContact) {
               historyList([...allContact.data]);
               history(true);

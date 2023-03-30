@@ -30,8 +30,6 @@ const Registration = () => {
         await axios
           .post("http://localhost:4000/user/registration", data)
           .then((response) => {
-            console.log(response);
-
             if (response.response.status == 400) {
               return seterrorValue(response.response.data.message);
             }
@@ -45,7 +43,6 @@ const Registration = () => {
         console.log(error);
         return console.log(error.response.data.message);
       }
-
       console.log(error);
     }
   }

@@ -29,9 +29,8 @@ const FindBlock = ({ styleClass, find, socket }) => {
       axios
         .post("http://localhost:4000/contact/find", contact)
         .then((user) => {
-          console.log(user);
           const hasUser = user.data;
-          console.log(hasUser);
+
           if (hasUser) {
             return find(user);
           }
