@@ -9,7 +9,7 @@ class userService {
       // check if such a user is registered
       const candidate = await userAdapter.findUser(email);
 
-      if (candidate) {
+      if (candidate && candidate === []) {
         return { success: `User already exists` };
       }
 

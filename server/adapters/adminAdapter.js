@@ -1,13 +1,16 @@
 import administratorFileRequest from "../filesService/administratorFileRequest.js";
-import adminDatabaseService from "../database/adminDatabaseService.js";
+import adminMongoRequest from "../database/mongo/adminMongoRequest.js";
+import adminMySQLRequest from "../database/mySQL/adminMySQLRequest.js";
 import dotenv from "dotenv";
 dotenv.config();
-const checkMongo = process.env.QUERY_PARAMETERS === "mongo";
+const checkMongo = process.env.QUERY_PARAMETERS;
 
 class administratorAdapter {
-  constructor(adminDatabaseService, administratorFileRequest) {
-    if (checkMongo) {
-      this.service = adminDatabaseService;
+  constructor(adminMongoRequest, adminMySQLRequest, administratorFileRequest) {
+    if (checkMongo === "mongo") {
+      this.service = adminMongoRequest;
+    } else if (checkMongo === "mySQL") {
+      this.service = adminMySQLRequest;
     } else {
       this.service = administratorFileRequest;
     }
@@ -25,6 +28,7 @@ class administratorAdapter {
 }
 
 export default new administratorAdapter(
-  adminDatabaseService,
+  adminMongoRequest,
+  adminMySQLRequest,
   administratorFileRequest
 );

@@ -34,7 +34,8 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
             avatar: base64Image,
           });
         };
-        setImg("");
+        setImg(null);
+        setImgValue("click to upload");
         editModal(false);
       } else {
         setHasImg(false);
@@ -57,7 +58,8 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
 
             editModal(false);
             setupdatingList(Math.random());
-            setImg("");
+            setImg(null);
+            setImgValue("click to upload");
             return setContact({ ...contact, number: "", fullName: "" });
           })
           .catch((e) => {
@@ -121,7 +123,7 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
         <div style={{ position: "relative", lineHeight: "25px" }}>
           <p> Add avatar</p>
           <input
-            id="imageInputS"
+            id="imageInputEdit"
             style={{
               marginTop: "5px",
               marginBottom: "7px",
@@ -143,7 +145,7 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
               borderRadius: "4px",
             }}
           >
-            <label for="imageInputS">{imgValue}</label>
+            <label for="imageInputEdit">{imgValue}</label>
           </span>
         </div>
         <MyButton onClick={editContact} style={{ marginTop: "10px" }}>

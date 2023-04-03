@@ -156,7 +156,7 @@ async function socketData() {
       const updatingUser = await contactService.updateContact(
         Helpers.allFirstLettersCapitalized(data.newFullName),
         data.newNumber.trim(),
-        data.idForUpdate.trim(),
+        data.idForUpdate,
         data.owner,
         data.userRole,
         avatarPath,

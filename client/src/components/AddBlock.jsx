@@ -13,6 +13,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
 
   //const [img, setImg] = useState(null);
   const [image, setImage] = useState(null);
+  const [socketImage, setSocketImage] = useState(null);
   const [imageValue, setImageValue] = useState("click to upload");
   const [socketImageValue, setSocketImageValue] = useState("click to upload");
 
@@ -34,7 +35,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
 
     if (socket) {
       const reader = new FileReader();
-      reader.readAsDataURL(image);
+      reader.readAsDataURL(socketImage);
       reader.onload = () => {
         const base64Image = reader.result.split(",")[1];
 
@@ -45,7 +46,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
           avatar: base64Image,
         });
       };
-      setImage("");
+      setSocketImage("");
       setSocketImageValue("click to upload");
       setContact({ ...contact, number: "", fullName: "" });
     } else {
@@ -137,7 +138,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
               }}
               type="file"
               onChange={(e) => {
-                setImage(e.target.files[0]);
+                setSocketImage(e.target.files[0]);
                 setSocketImageValue("uploaded");
               }}
             />

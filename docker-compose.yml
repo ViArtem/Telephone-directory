@@ -8,9 +8,11 @@ services:
       - data-volume:/data/db
     ports:
       - "27018:27017"
+ 
 
     networks:
       - app-network
+    
     restart: unless-stopped
 
   server:

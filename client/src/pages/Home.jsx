@@ -159,6 +159,7 @@ function Home() {
           </div>
         </div>
         <UserList
+          deletes={setNewDeleteContactHttp}
           editModalValue={editModalValue}
           editModal={editModal}
           updatingList={updatingList}

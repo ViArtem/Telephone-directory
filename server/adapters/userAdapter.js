@@ -1,13 +1,16 @@
-import userDatabaseService from "../database/userDatabaseService.js";
+import userMongoRequest from "../database/mongo/userMongoRequest.js";
 import userFileRequest from "../filesService/userFileRequest.js";
+import userMySQLDatabaseRequest from "../database/mySQL/userMySQLRequest.js";
 import dotenv from "dotenv";
 dotenv.config();
-const checkMongo = process.env.QUERY_PARAMETERS === "mongo";
+const checkDatabase = process.env.QUERY_PARAMETERS;
 
 class userAdapter {
-  constructor(userDatabaseService, userFileRequest) {
-    if (checkMongo) {
-      this.service = userDatabaseService;
+  constructor(userMongoRequest, userMySQLDatabaseRequest, userFileRequest) {
+    if (checkDatabase === "mongo") {
+      this.service = userMongoRequest;
+    } else if (checkDatabase === "mySQL") {
+      this.service = userMySQLDatabaseRequest;
     } else {
       this.service = userFileRequest;
     }
@@ -45,4 +48,8 @@ class userAdapter {
     return await this.service.addRefreshToken(id, refresh);
   }
 }
-export default new userAdapter(userDatabaseService, userFileRequest);
+export default new userAdapter(
+  userMongoRequest,
+  userMySQLDatabaseRequest,
+  userFileRequest
+);

@@ -75,6 +75,7 @@ class contactService {
         await contactAdapter.deleteContact(name, validationDeletion.id);
         const newLinc = imgPath.split("\\");
         await fs.unlink(path.resolve(`images/${newLinc[1]}`));
+
         return { success: `Contact ${name} has been deleted` };
       } else {
         return { message: "You don't have enough rights" };

@@ -6,6 +6,7 @@ import jwt from "jwt-decode";
 import MyPaginate from "./UI/pagination/MyPagnation";
 
 const UserList = ({
+  deletes,
   updatingList,
   setupdatingList,
   editModal,
@@ -13,7 +14,7 @@ const UserList = ({
 }) => {
   const [contacts, setContact] = useState([]);
   const [viewUser, setViewUser] = useState();
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(1);
   const [howMany, setHowMany] = useState(0);
   const [contactData, setContactData] = useState({
     fullName: "",
@@ -29,6 +30,7 @@ const UserList = ({
     const allContact = await axios.post("http://localhost:4000/contact/all", {
       pages: e.selected,
     });
+
     setContact([...allContact.data]);
   }
 
@@ -60,8 +62,10 @@ const UserList = ({
           data: contactData,
         }
       );
-      setContactData({ fullName: "", action: "", imgPath: "" });
+
       setupdatingList(Math.random());
+      setContactData({ fullName: "", action: "", imgPath: "" });
+      deletes(response);
     } catch (error) {
       console.log(error);
     }
@@ -79,12 +83,16 @@ const UserList = ({
   }
   //
   useEffect(() => {
-    console.log(howMany);
     axios
       .post("http://localhost:4000/contact/all", { pages: howMany })
       .then((allContact) => {
         if (allContact === undefined) {
           return console.log("Null");
+        }
+        if (allContact.data[0].id < 5) {
+          setPage(1);
+        } else if (allContact.data[0].id > 5) {
+          setPage(Math.ceil(allContact.data[0].id / 5));
         }
 
         setContact([...allContact.data]);

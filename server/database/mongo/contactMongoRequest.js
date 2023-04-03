@@ -1,8 +1,8 @@
-import Contact from "../models/Contact.js";
-import Helpers from "../exсeptions/Helpers.js";
+import Contact from "../../models/Contact.js";
+import Helpers from "../../exсeptions/helpers.js";
 // queries to the database with contacts
 
-class contactDatabaseService {
+class contactMongoDatabaseRequest {
   //contact creation
   async addContact(fullName, number, owner, id, avatar) {
     return await Helpers.handleErrors(
@@ -61,13 +61,17 @@ class contactDatabaseService {
 
   // Contact update
   async getAllContact(pageData) {
-    return await Helpers.handleErrors(
+    let allUserList = await Helpers.handleErrors(
       Contact.find({}, null, {
         skip: pageData.pages * 5,
         limit: 5,
       })
     );
+
+    allUserList[0].id = await Helpers.handleErrors(Contact.countDocuments());
+
+    return allUserList;
   }
 }
 
-export default new contactDatabaseService();
+export default new contactMongoDatabaseRequest();

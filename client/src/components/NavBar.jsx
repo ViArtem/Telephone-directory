@@ -18,13 +18,13 @@ const NavBar = ({ styleClass, history, historyList }) => {
   }
 
   //admin history
-
   function getHistory() {
     if (jwt(localStorage.getItem("Authorization"))) {
       if (jwt(localStorage.getItem("Authorization")).role == "admin") {
         axios
           .get("http://localhost:4000/admin/history")
           .then((allContact) => {
+            console.log(allContact);
             if (allContact) {
               historyList([...allContact.data]);
               history(true);

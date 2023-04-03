@@ -25,6 +25,7 @@
     "jwt-decode": "^3.1.2",
     "mongoose": "^6.10.0",
     "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.2.0",
     "nodemon": "^2.0.20",
     "pngjs": "^7.0.0",
     "socket.io": "^4.6.1",

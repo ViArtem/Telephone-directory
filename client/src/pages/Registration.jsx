@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import "../styles/Auth.css";
 
 const Registration = () => {
-  const [image, setImage] = useState(null);
-  const [imageValue, setImageValue] = useState("click to upload");
+  const [image, setImageRegist] = useState(null);
+  const [imageValue, setImageValueRegist] = useState("click to upload");
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
@@ -33,7 +33,7 @@ const Registration = () => {
             if (response.response.status == 400) {
               return seterrorValue(response.response.data.message);
             }
-            setImage("");
+            setImageRegist("");
           });
       }
     } catch (error) {
@@ -118,7 +118,7 @@ const Registration = () => {
           <div style={{ position: "relative", lineHeight: "25px" }}>
             <p> Add avatar</p>
             <input
-              id="imageInput"
+              id="imageInputRegist"
               style={{
                 marginTop: "5px",
                 marginBottom: "7px",
@@ -128,8 +128,8 @@ const Registration = () => {
               }}
               type="file"
               onChange={(e) => {
-                setImage(e.target.files[0]);
-                setImageValue("uploaded");
+                setImageRegist(e.target.files[0]);
+                setImageValueRegist("uploaded");
               }}
             />
             <span
@@ -140,7 +140,7 @@ const Registration = () => {
                 borderRadius: "4px",
               }}
             >
-              <label for="imageInput">{imageValue}</label>
+              <label for="imageInputRegist">{imageValue}</label>
             </span>
           </div>
           {/*  */}

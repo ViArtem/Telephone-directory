@@ -14,4 +14,4 @@ async function connectToDatabase() {
     return JSON.stringify({ DatabaseConnectError: e });
   }
 }
-export { connectToDatabase, db };
+export default connectToDatabase;

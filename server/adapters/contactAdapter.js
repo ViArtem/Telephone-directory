@@ -1,14 +1,21 @@
-import contactDatabaseService from "../database/contactDatabaseService.js";
+import contactMongoDatabaseRequest from "../database/mongo/contactMongoRequest.js";
 import contactFileRequest from "../filesService/contactFileRequest.js";
+import contactMySQLDatabaseRequest from "../database/mySQL/contactMySQLRequest.js";
 import uniqid from "uniqid";
 import dotenv from "dotenv";
 dotenv.config();
-const checkMongo = process.env.QUERY_PARAMETERS === "mongo";
+const checkDatabase = process.env.QUERY_PARAMETERS;
 
 class contactAdapter {
-  constructor(contactDatabaseService, contactFileRequest) {
-    if (checkMongo) {
-      this.service = contactDatabaseService;
+  constructor(
+    contactMongoDatabaseRequest,
+    contactMySQLDatabaseRequest,
+    contactFileRequest
+  ) {
+    if (checkDatabase === "mongo") {
+      this.service = contactMongoDatabaseRequest;
+    } else if (checkDatabase === "mySQL") {
+      this.service = contactMySQLDatabaseRequest;
     } else {
       this.service = contactFileRequest;
     }
@@ -41,7 +48,7 @@ class contactAdapter {
 }
 
 export default new contactAdapter(
-  contactDatabaseService,
-
+  contactMongoDatabaseRequest,
+  contactMySQLDatabaseRequest,
   contactFileRequest
 );

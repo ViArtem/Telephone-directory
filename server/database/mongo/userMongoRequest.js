@@ -1,8 +1,8 @@
-import Users from "../models/Users.js";
-import Helpers from "../exсeptions/Helpers.js";
+import Users from "../../models/Users.js";
+import Helpers from "../../exсeptions/helpers.js";
 
 // database queries with users
-class userDatabaseService {
+class userMongoRequest {
   // function to find a user in the database by email
   async findUser(email) {
     return await Helpers.handleErrors(Users.findOne({ email }));
@@ -50,4 +50,4 @@ class userDatabaseService {
   }
 }
 
-export default new userDatabaseService();
+export default new userMongoRequest();

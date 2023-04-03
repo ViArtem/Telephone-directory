@@ -1,7 +1,7 @@
 import { app } from "../server.js";
 import { createRequire } from "node:module";
 import { socketData } from "../controllers/contactSocketController.js";
-import { connectToDatabase } from "../connectToDatabase.js";
+import connectToDatabase from "../databasesСonnecting/connectToMongo.js";
 
 const require = createRequire(import.meta.url);
 
@@ -19,7 +19,10 @@ function startSocketServer() {
     });
 
     server.listen(PORT, async () => {
-      connectToDatabase();
+      if (process.env.QUERY_PARAMETERS === "mongo") {
+        connectToDatabase();
+      }
+
       console.log("Started socket server...");
     });
     socketData();

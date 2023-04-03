@@ -1,7 +1,7 @@
-import History from "../models/History.js";
-import Helpers from "../exсeptions/Helpers.js";
+import History from "../../models/History.js";
+import Helpers from "../../exсeptions/helpers.js";
 
-class adminDatabaseService {
+class adminMongoRequest {
   // request to receive the entire history for the administrator
   async getAllHistory() {
     return await Helpers.handleErrors(await History.find());
@@ -17,4 +17,4 @@ class adminDatabaseService {
     );
   }
 }
-export default new adminDatabaseService();
+export default new adminMongoRequest();
