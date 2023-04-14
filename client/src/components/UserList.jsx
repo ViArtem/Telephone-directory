@@ -104,17 +104,7 @@ const UserList = ({
 
   return (
     <div className="userList">
-      <h1
-        style={{
-          marginBottom: "20px",
-          display: "inline-block",
-          fontSize: "32px",
-          fontWeight: "700",
-          width: "100%",
-        }}
-      >
-        CONTACTS
-      </h1>
+      <h1>CONTACTS</h1>
 
       {contacts ? (
         <ul>
@@ -133,17 +123,11 @@ const UserList = ({
             >
               <Photo>
                 <img
-                  style={{
-                    with: "75px",
-                    height: " 75px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                  }}
                   src={`http://localhost:4000/${contact.avatar}`}
                   alt="Logo"
                 />
               </Photo>
-              <div>
+              <div className="liFullname">
                 <p style={{ marginRight: "auto", with: "100%" }}>
                   {contact.fullName}
                 </p>
@@ -153,7 +137,7 @@ const UserList = ({
                 {viewUser == contact.number ? (
                   <MyButton
                     onClick={editContact}
-                    style={{ marginBottom: "3px" }}
+                    style={{ width: "65px", height: "25px", fontSize: "14px" }}
                   >
                     Edit
                   </MyButton>
@@ -164,7 +148,10 @@ const UserList = ({
                   <MyButton
                     onClick={deleteContact}
                     style={{
-                      marginBottom: "-2px",
+                      width: "85px",
+                      fontSize: "14px",
+                      height: "25px",
+                      marginTop: "3px",
                       border: " 1px solid rgb(255, 150, 200)",
                     }}
                   >
@@ -180,7 +167,9 @@ const UserList = ({
       ) : (
         ""
       )}
+      {/* <div className="paginateContainer"> */}
       <MyPaginate handlePageClick={changeList} pageCount={page} />
+      {/* </div> */}
     </div>
   );
 };

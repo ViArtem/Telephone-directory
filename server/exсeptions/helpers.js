@@ -15,13 +15,19 @@ class Helpers {
     if (!regularExpretionNumber.test(number.trim())) {
       return { message: "Number not valid" };
     }
+
+    return true;
   }
 
   // capitalizes all first letters of words
   allFirstLettersCapitalized(Userword) {
-    return Userword.split(" ")
-      .map((word) => word[0].toUpperCase() + word.substring(1))
-      .join(" ");
+    try {
+      return Userword.split(" ")
+        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .join(" ");
+    } catch (error) {
+      return null;
+    }
   }
 
   // function for handling asynchronous code errors

@@ -12,7 +12,7 @@ const FoundBlock = ({
   socket,
   setupdatingList,
 }) => {
-  let className = "otherBlock ";
+  let className = "otherBlock foundContactBlock";
   const [userData, setUserData] = useState("");
   const [userNumber, setUserNumber] = useState("");
   const [showButton, setShowButton] = useState(false);
@@ -42,7 +42,7 @@ const FoundBlock = ({
             setShowButton(true);
           } else setShowButton(false);
           setUserNumber(foundContactHttp.data.number);
-
+          setHttpImg(foundContactHttp.data.avatar);
           return setUserData(foundContactHttp.data.fullName);
         }
       } catch (error) {
@@ -165,27 +165,13 @@ const FoundBlock = ({
   }
 
   return (
-    <div style={{ height: "232px" }} className={className}>
-      <h1
-        style={{
-          marginBottom: "20px",
-          display: "inline-block",
-          fontSize: "22px",
-          width: "100%",
-        }}
-      >
-        FOUND CONTACT
-      </h1>
-      <div className="container" style={{ gap: "2px" }}>
+    <div className={className}>
+      <h1>FOUND CONTACT</h1>
+      <div className="container">
         {foundUserNumberSocket ? (
-          <Photo>
+          <Photo style={{ width: "131px", height: "131px" }}>
             <img
-              style={{
-                with: "75px",
-                height: " 75px",
-                marginRight: "auto",
-                marginLeft: "auto",
-              }}
+              style={{ width: "140px", height: "140px" }}
               src={`http://localhost:4000/${socketImg}`}
               alt="Foto"
             />
@@ -195,22 +181,18 @@ const FoundBlock = ({
         )}
 
         {foundUserDataSocket ? (
-          <p>
-            {foundUserDataSocket} {foundUserNumberSocket}
-          </p>
+          <div>
+            <p style={{ fontSize: "18px" }}>{foundUserDataSocket}</p>
+            <p>{foundUserNumberSocket}</p>
+          </div>
         ) : (
           ""
         )}
 
         {userNumber ? (
-          <Photo>
+          <Photo style={{ width: "131px", height: "131px" }}>
             <img
-              style={{
-                with: "75px",
-                height: " 75px",
-                marginRight: "auto",
-                marginLeft: "auto",
-              }}
+              style={{ width: "140px", height: "140px" }}
               src={`http://localhost:4000/${httpImg}`}
               alt="Foto"
             />
@@ -220,9 +202,10 @@ const FoundBlock = ({
         )}
 
         {foundContactHttp ? (
-          <p>
-            {userData} {userNumber}
-          </p>
+          <div>
+            <p style={{ fontSize: "18px" }}>{userData}</p>
+            <p>{userNumber}</p>
+          </div>
         ) : (
           ""
         )}
@@ -230,7 +213,7 @@ const FoundBlock = ({
 
       <div>
         {showButton ? (
-          <MyButton onClick={ButtonEdit} style={{ marginTop: "10px" }}>
+          <MyButton onClick={ButtonEdit} style={{ marginTop: "50px" }}>
             Edit
           </MyButton>
         ) : (
@@ -241,8 +224,7 @@ const FoundBlock = ({
           <MyButton
             onClick={ButtonDelete}
             style={{
-              marginTop: "10px",
-              marginLeft: "5px",
+              marginLeft: "20px",
               border: " 1px solid rgb(255, 150, 200)",
             }}
           >
@@ -255,7 +237,7 @@ const FoundBlock = ({
 
       <div>
         {showSocketButton ? (
-          <MyButton onClick={ButtonEdit} style={{ marginTop: "10px" }}>
+          <MyButton onClick={ButtonEdit} style={{ marginTop: "50px" }}>
             Edit
           </MyButton>
         ) : (
@@ -266,8 +248,7 @@ const FoundBlock = ({
           <MyButton
             onClick={ButtonDelete}
             style={{
-              marginTop: "10px",
-              marginLeft: "5px",
+              marginLeft: "20px",
               border: " 1px solid rgb(255, 150, 200)",
             }}
           >

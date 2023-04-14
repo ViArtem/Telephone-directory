@@ -24,7 +24,6 @@ const NavBar = ({ styleClass, history, historyList }) => {
         axios
           .get("http://localhost:4000/admin/history")
           .then((allContact) => {
-            console.log(allContact);
             if (allContact) {
               historyList([...allContact.data]);
               history(true);
@@ -49,41 +48,21 @@ const NavBar = ({ styleClass, history, historyList }) => {
           src={`http://localhost:4000/${
             jwt(localStorage.getItem("Authorization")).avatar
           }`}
-          style={{
-            with: "75px",
-            height: " 75px",
-            marginRight: "auto",
-            marginLeft: "auto",
-          }}
           alt="Avatar"
         />
       </Photo>
 
-      <p
-        style={{
-          fontSize: "16px",
-          marginRight: "900px",
-          fontWeight: "500",
-        }}
-      >
+      <p style={{ marginRight: "690px" }}>
         {userName} ({userRole})
       </p>
       {jwt(localStorage.getItem("Authorization")).role == "admin" ? (
-        <p
-          onClick={getHistory}
-          className={"historyLink"}
-          style={{ fontSize: "16px", fontWeight: "500" }}
-        >
+        <p onClick={getHistory} className={"historyLink"}>
           VIEW HISTORY
         </p>
       ) : (
         ""
       )}
-      <p
-        onClick={exit}
-        className={"exitLink"}
-        style={{ fontSize: "16px", fontWeight: "500" }}
-      >
+      <p onClick={exit} className={"exitLink"}>
         EXIT
       </p>
     </div>

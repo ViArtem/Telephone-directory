@@ -3,9 +3,10 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import axios from "axios";
 import jwt from "jwt-decode";
-
+//import dotenv from "dotenv";
+//dotenv.config();
 const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
-  let className = "otherBlock ";
+  let className = "otherBlock addBlock";
 
   if (styleClass) {
     className += styleClass;
@@ -14,8 +15,10 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
   //const [img, setImg] = useState(null);
   const [image, setImage] = useState(null);
   const [socketImage, setSocketImage] = useState(null);
-  const [imageValue, setImageValue] = useState("click to upload");
-  const [socketImageValue, setSocketImageValue] = useState("click to upload");
+  const [imageValue, setImageValue] = useState("click to add an avatar");
+  const [socketImageValue, setSocketImageValue] = useState(
+    "click to add an avatar"
+  );
 
   // The variable receives data from forms for adding a contact
   const [contact, setContact] = useState({
@@ -57,7 +60,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
       data.append("avatar", image);
       //for the http block
       axios
-        .post("http://localhost:4000/contact/add", data)
+        .post(`http://localhost:4000/contact/add`, data)
         .then((user) => {
           if (user.data) {
             add(user);
@@ -93,28 +96,23 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
 
   return (
     <div className={className}>
-      <h1
-        style={{
-          marginBottom: "10px",
-          display: "inline-block",
-          fontSize: "22px",
-          width: "100%",
-        }}
-      >
-        ADD CONTACT
-      </h1>
+      <h1>ADD CONTACT</h1>
 
-      <form style={{ width: "100%" }} enctype="multipart/form-data">
-        <label for="">Enter full name</label>
+      <form
+        className="addForm"
+        style={{ width: "100%" }}
+        enctype="multipart/form-data"
+      >
+        <label for=""></label>
         <MyInput
-          style={{ marginTop: "5px", marginBottom: "7px" }}
+          style={{ marginTop: "50px", marginBottom: "7px" }}
           value={contact.fullName}
           onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
           type="text"
           minLength={1}
           placeholder="Full name"
         />
-        <label for="">Enter number</label>
+        <label for=""></label>
         <MyInput
           style={{ marginTop: "5px", marginBottom: "5px" }}
           value={contact.number}
@@ -126,30 +124,16 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
         />
         {socket ? (
           <div style={{ position: "relative", lineHeight: "25px" }}>
-            <p> Add avatar</p>
             <input
+              className="fileInput"
               id="imageInputS"
-              style={{
-                marginTop: "5px",
-                marginBottom: "7px",
-                position: "absolute",
-                visibility: "hidden",
-                opacity: "0",
-              }}
               type="file"
               onChange={(e) => {
                 setSocketImage(e.target.files[0]);
                 setSocketImageValue("uploaded");
               }}
             />
-            <span
-              style={{
-                border: " 1px solid rgb(255, 255, 250)",
-                backgroundColor: "rgba(95, 94, 195, 0.5)",
-                padding: "2px 10px",
-                borderRadius: "4px",
-              }}
-            >
+            <span className="fileInputSpan">
               <label for="imageInputS">{socketImageValue}</label>
             </span>
           </div>
@@ -158,37 +142,26 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
         )}
         {!socket ? (
           <div style={{ position: "relative", lineHeight: "25px" }}>
-            <p> Add avatar</p>
             <input
               id="imageInput"
-              style={{
-                marginTop: "5px",
-                marginBottom: "7px",
-                position: "absolute",
-                visibility: "hidden",
-                opacity: "0",
-              }}
+              className="fileInput"
               type="file"
               onChange={(e) => {
                 setImage(e.target.files[0]);
                 setImageValue("uploaded");
               }}
             />
-            <span
-              style={{
-                border: " 1px solid rgb(255, 255, 250)",
-                backgroundColor: "rgba(95, 94, 195, 0.5)",
-                padding: "2px 10px",
-                borderRadius: "4px",
-              }}
-            >
+            <span className="fileInputSpan">
               <label for="imageInput">{imageValue}</label>
             </span>
           </div>
         ) : (
           ""
         )}
-        <MyButton style={{ marginTop: "7px" }} onClick={addContact}>
+        <MyButton
+          style={{ marginTop: "30px", marginLeft: "auto", marginRight: "auto" }}
+          onClick={addContact}
+        >
           Add
         </MyButton>
       </form>

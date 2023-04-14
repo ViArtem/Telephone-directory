@@ -27,8 +27,11 @@ const Authorization = () => {
   return (
     <div className="containers container">
       <div className="authForm">
+        <h1 style={{ fontSize: "24px", marginTop: "-20px" }}>
+          Log in to your account
+        </h1>
         <form>
-          <label htmlFor="">EMAIL</label>
+          <label htmlFor=""></label>
 
           {serverResponse ? (
             <p style={{ color: "red" }}>{serverResponse}</p>
@@ -38,7 +41,6 @@ const Authorization = () => {
 
           <MyInput
             style={{
-              color: "white",
               marginTop: "10px",
               marginBottom: "20px",
               background: "transparent",
@@ -46,20 +48,19 @@ const Authorization = () => {
             value={user.email}
             onChange={(e) => setUser({ ...user, email: e.target.value })}
             type="text"
-            placeholder="hello@gmail.com"
+            placeholder="Email"
           />
 
-          <label htmlFor="">ENTER PASSWORD</label>
+          <label htmlFor=""></label>
           <MyInput
             style={{
-              color: "white",
-              marginTop: "10px",
+              marginTop: "30px",
               marginBottom: "20px",
               background: "transparent",
             }}
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
-            type="password"
+            type="Password"
             placeholder="your password"
           />
 

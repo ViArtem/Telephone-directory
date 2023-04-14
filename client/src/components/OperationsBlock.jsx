@@ -8,7 +8,7 @@ const OperationsBlock = ({
   socket,
   setupdatingList,
 }) => {
-  let className = "otherBlock ";
+  let className = "otherBlock operationsBlock";
   const [action, setAction] = useState([]);
 
   if (styleClass) {
@@ -178,16 +178,7 @@ const OperationsBlock = ({
 
   return (
     <div className={className}>
-      <h1
-        style={{
-          marginBottom: "20px",
-          display: "inline-block",
-          fontSize: "22px",
-          width: "100%",
-        }}
-      >
-        OPERATIONS
-      </h1>
+      <h1>OPERATIONS</h1>
       <ul>
         {foundRequest || deleteRequest || addRequest || editRequest
           ? action.map((act) => {

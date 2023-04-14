@@ -104,7 +104,91 @@ function Home() {
   }
   return (
     <div className="App">
-      <NavBar history={historyModal} historyList={historyModalValue} />
+      {/* First page */}
+      <div className="page firstPage">
+        <NavBar history={historyModal} historyList={historyModalValue} />
+        <div className="firsPageContent">
+          <div className="mainText">
+            <h1 className="fistPageTitle">Artem Vitenko's Project</h1>
+            <p className="fistPageSubtitle">
+              This application allows you to save, delete, find, and update your
+              contacts in the list. It also gives you access to view other
+              users' contacts.
+            </p>
+          </div>
+          <UserList
+            deletes={setNewDeleteContactHttp}
+            editModalValue={editModalValue}
+            editModal={editModal}
+            updatingList={updatingList}
+            setupdatingList={setUpdateList}
+          />
+        </div>
+        <hr className="line" />
+      </div>
+      {/* Second page */}
+      <div className="page secondPage">
+        <h1
+          style={{
+            fontSize: "30px",
+            fontWeight: "700",
+            marginBottom: "10px",
+          }}
+        >
+          HTTP Request
+        </h1>
+        <div className="secondPageContent">
+          <div className="findOperationBlock">
+            <FindBlock find={setNewFoundContactHttp} />
+            <OperationsBlock
+              foundRequest={foundRequest}
+              addRequest={addRequest}
+              deleteRequest={deleteRequest}
+              editRequest={editRequest}
+            />
+          </div>
+          <FoundBlock
+            foundContactHttp={foundContactHttp}
+            editModal={editModal}
+            editModalValue={editModalValue}
+            deletes={setNewDeleteContactHttp}
+            isHttp={true}
+            setupdatingList={setUpdateList}
+          />
+          <AddContactBlock
+            add={setNewAddContactHttp}
+            setupdatingList={setUpdateList}
+          />
+        </div>
+        <hr className="line" />
+      </div>
+
+      {/* Third page */}
+      <div className="page secondPage">
+        <h1
+          style={{
+            fontSize: "48px",
+            fontWeight: "700",
+            marginBottom: "10px",
+          }}
+        >
+          Websocket
+        </h1>
+        <div className="secondPageContent">
+          <div className="findOperationBlock">
+            <FindBlock socket={socket} />
+            <OperationsBlock socket={socket} setupdatingList={setUpdateList} />
+          </div>
+          <FoundBlock
+            socket={socket}
+            editModal={editModal}
+            editModalValue={editModalValue}
+            setupdatingList={setUpdateList}
+          />
+          <AddContactBlock socket={socket} setupdatingList={setUpdateList} />
+        </div>
+      </div>
+
       {/*  */}
       <div className="socketBlock">
         <MyModal visible={modal} setVisible={setModal}>
@@ -121,88 +205,8 @@ function Home() {
           <HistoryBlock historyList={historyList} />
         </MyModal>
         {/*  */}
-
-        <div className="httpContainer">
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              marginBottom: "10px",
-            }}
-          >
-            HTTP REQUEST
-          </h1>
-          <div className="rowBlock">
-            <FindBlock find={setNewFoundContactHttp} />
-
-            <FoundBlock
-              foundContactHttp={foundContactHttp}
-              editModal={editModal}
-              editModalValue={editModalValue}
-              deletes={setNewDeleteContactHttp}
-              isHttp={true}
-              setupdatingList={setUpdateList}
-            />
-          </div>
-          <div className="rowBlock">
-            <AddContactBlock
-              add={setNewAddContactHttp}
-              setupdatingList={setUpdateList}
-            />
-
-            <OperationsBlock
-              foundRequest={foundRequest}
-              addRequest={addRequest}
-              deleteRequest={deleteRequest}
-              editRequest={editRequest}
-            />
-          </div>
-        </div>
-        <UserList
-          deletes={setNewDeleteContactHttp}
-          editModalValue={editModalValue}
-          editModal={editModal}
-          updatingList={updatingList}
-          setupdatingList={setUpdateList}
-        />
-
-        <div className="container">
-          <div>
-            <h1
-              style={{
-                fontSize: "24px",
-                fontWeight: "700",
-                marginBottom: "10px",
-              }}
-            >
-              SOCKET REQUEST
-            </h1>
-            <div className="rowBlock">
-              <FoundBlock
-                styleClass="socketColor"
-                socket={socket}
-                editModal={editModal}
-                editModalValue={editModalValue}
-                setupdatingList={setUpdateList}
-              />
-              <FindBlock styleClass="socketColor" socket={socket} />
-            </div>
-            <div className="rowBlock">
-              <AddContactBlock
-                styleClass="socketColor"
-                socket={socket}
-                setupdatingList={setUpdateList}
-              />
-
-              <OperationsBlock
-                styleClass="socketColor"
-                socket={socket}
-                setupdatingList={setUpdateList}
-              />
-            </div>
-          </div>
-        </div>
       </div>
+      <hr className="line" />
     </div>
   );
 }

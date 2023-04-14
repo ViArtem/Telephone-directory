@@ -1,18 +1,18 @@
 .myInput{
+    border: none;
+    border-bottom: 2px solid rgba(64, 63, 67, 0.7);
     width: 100%;
     background: transparent;
-    border-radius: 6px;
-    color: aliceblue;
-    padding: 1px 8px;
-    margin: 5px, 0px;
-    border: 1px solid rgba(255, 255, 255, 1);
+    font-size: 16px;
+    color: rgba(64, 63, 67, 1);
   
 }
 
 .myInput::placeholder{
+    font-size: 16px;
     font-family: 'Inter', sans-serif;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(64, 63, 67, 0.5);
 }
 .myInput:focus {
     outline: none;
-  }
+}

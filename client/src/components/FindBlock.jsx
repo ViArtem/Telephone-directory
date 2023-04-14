@@ -4,7 +4,7 @@ import MyInput from "./UI/input/MyInput";
 import axios from "axios";
 import jwt from "jwt-decode";
 const FindBlock = ({ styleClass, find, socket }) => {
-  let className = "otherBlock ";
+  let className = "otherBlock findBlock";
 
   if (styleClass) {
     className += styleClass;
@@ -57,24 +57,13 @@ const FindBlock = ({ styleClass, find, socket }) => {
   };
 
   return (
-    <div style={{ height: "232px" }} className={className}>
-      <h1
-        style={{
-          marginBottom: "20px",
-          display: "inline-block",
-          fontSize: "22px",
-          width: "100%",
-          fontFamily: "'Inter', sans-serif ",
-        }}
-      >
-        FIND NUMBER
-      </h1>
+    <div className={className}>
+      <h1>FIND CONTACT</h1>
 
       <form style={{ width: "100%" }}>
-        <label for="">Enter full name</label>
-
+        <label for=""></label>
         <MyInput
-          style={{ marginTop: "10px", marginBottom: "10px" }}
+          style={{ marginTop: "65px" }}
           value={contact.fullName}
           onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
           type="text"
@@ -83,7 +72,9 @@ const FindBlock = ({ styleClass, find, socket }) => {
           required
         />
 
-        <MyButton onClick={findContact}>Find</MyButton>
+        <MyButton style={{ marginTop: "45px" }} onClick={findContact}>
+          Find
+        </MyButton>
       </form>
     </div>
   );

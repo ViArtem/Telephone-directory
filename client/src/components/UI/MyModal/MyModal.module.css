@@ -10,8 +10,8 @@
 }
 
 .myModalContent{
-    padding: 25px;
-    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    background-color: rgba(176, 204, 221, 1);
     border-radius: 25px;
     min-width: 200px;
 }

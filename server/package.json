@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -32,5 +33,9 @@
     "socketio-file-upload": "^0.7.3",
     "uniqid": "^5.4.0",
     "utf8": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.21.2",
+    "jest": "^29.5.0"
   }
 }

@@ -1,10 +1,11 @@
 .myBtn{
-    /* display: block; */
+    width: 88px;
+    height: 36px;
     border-radius: 5px;
     padding: 5px 15px;
-    color:  aliceblue;
-    font-size: 14px;
+    color:  rgba(115, 115, 115, 1);
+    font-size: 18px;
     background: transparent;
-    border: 1px solid  aliceblue;
+    border: 1px solid  rgba(115, 115, 115, 1);
     cursor: pointer;
 }

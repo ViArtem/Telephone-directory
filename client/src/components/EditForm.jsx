@@ -92,9 +92,10 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
     <div className="editBlock">
       <h1
         style={{
+          color: "rgba(39, 38, 67, 1)",
           marginBottom: "20px",
           display: "inline-block",
-          fontSize: "22px",
+          fontSize: "24px",
           width: "100%",
         }}
       >
@@ -102,17 +103,17 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
       </h1>
       {!hasImg ? <p style={{ color: "red" }}>please upload an avatar</p> : ""}
       <form style={{ width: "100%", marginTop: "5px" }}>
-        <label for="">Enter full name</label>
+        <label for=""></label>
         <MyInput
-          style={{ marginTop: "7px", marginBottom: "7px" }}
+          style={{ marginTop: "20px", marginBottom: "20px" }}
           value={contact.fullName}
           onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
           type="text"
           placeholder="Full name"
         />
-        <label for="">Enter number</label>
+        <label for=""></label>
         <MyInput
-          style={{ marginTop: "7px", marginBottom: "7px" }}
+          style={{ marginTop: "20px", marginBottom: "20px" }}
           value={contact.number}
           onChange={(e) => setContact({ ...contact, number: e.target.value })}
           type="text"
@@ -121,30 +122,16 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
           placeholder="+380685452894"
         />
         <div style={{ position: "relative", lineHeight: "25px" }}>
-          <p> Add avatar</p>
           <input
+            className="fileInput"
             id="imageInputEdit"
-            style={{
-              marginTop: "5px",
-              marginBottom: "7px",
-              position: "absolute",
-              visibility: "hidden",
-              opacity: "0",
-            }}
             type="file"
             onChange={(e) => {
               setImg(e.target.files[0]);
               setImgValue("uploaded");
             }}
           />
-          <span
-            style={{
-              border: " 1px solid rgb(255, 255, 250)",
-              backgroundColor: "rgba(95, 94, 195, 0.5)",
-              padding: "2px 10px",
-              borderRadius: "4px",
-            }}
-          >
+          <span className="fileInputSpan">
             <label for="imageInputEdit">{imgValue}</label>
           </span>
         </div>

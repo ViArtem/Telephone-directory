@@ -7,9 +7,8 @@
     
 }
 body{
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(52, 48, 142, 1), rgba(144, 52, 48, 0.74));
+    min-width: 1345px;
+    background-color: rgba(195, 217, 219, 1);
 }
 #root{
     display: flex;
@@ -17,50 +16,306 @@ body{
 
 }
 
-.App{
-    width: 100vw;
-    height: 100vh;
-
+img{
+    width: 75px;
+    height: 75px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-.rowBlock{
+h1{
+    color: rgba(115, 115, 115, 1);
+}
 
+/*  */
+
+.fileInput{
+    margin-top: 5px;
+    margin-bottom: 7px;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+}
+
+
+.fileInputSpan{
+    background: none;
+    border: none;
+    border-bottom: 3px solid rgba(64, 63, 67, 0.7);
+    padding: 2px 10px;
+    color: rgba(115, 115, 115, 1);
+}
+
+.fileInputSpan > label{
+font-size: 16px;
+    color: rgba(115, 115, 115, 1);
+}
+
+/*  */
+.App{
+    max-width: 1400px;
+    min-width: 1345px;
+}
+
+.line{
+    size: 5px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+/* First */
+.page{
+    margin-left: auto;
+    margin-right: auto;
+    width: 1345px;
+    height: 745px;
+}
+
+.navBar{
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    max-width: 1315px;
+    width: 1315px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 5px;
+    height: 65px;
+    border-radius: 17px;
+    background-color:rgba(130, 162, 162, 1);
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    padding: 0px 45px;
+}
+
+.navBar > p {
+    font-weight: bold;
+    color: rgba(39, 38, 67, 1);
+}
+
+.historyLink:hover{
+    color: rgb(200, 255, 210);
+    
+}
+
+.exitLink:hover{
+    color: rgb(255, 200, 200);
+    
+}
+
+.firsPageContent{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 30px;
+    margin-top: 40px;
 }
+
+.mainText{
+    width: 528px;
+    height: 533px;
+    margin-bottom: -20px;
+}
+
+.mainText > h1{
+    font-size: 32px;
+    color: rgba(39, 38, 67, 1);
+}
+
+.mainText > p{
+    margin-top: 30px;
+    font-size: 18px;
+    color: rgba(60, 59, 103, 1);
+    line-height: 125%;
+}
+
+.userList{
+    position: relative;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+    width: 410px;
+    height: 605px;
+    background-color: rgba(176, 204, 221, 1);
+    border-radius: 25px;
+    padding-top: 20px;
+    text-align: center;
+    margin-left: 60px;
+   
+}
+.userList > h1{
+    color: rgba(39, 38, 67, 1);
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+
+.contactLi{
+    width: 309px;
+    height: 64px;
+    border-radius: 12px;
+    border: 2px solid rgba(123, 148, 155, 1);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    gap: 5px;
+    
+}
+.liFullname > p{
+    color: rgba(39, 38, 67, 1);
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.paginateContainer{
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    max-width: 200px; 
+
+}
+.pagination{
+    color: rgba(79, 77, 116, 1);
+    max-width: 200px;
+    position: absolute;
+    bottom: 20px;
+    left: 25%;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.pagination > li {
+    list-style: none;
+    color: rgba(79, 77, 116, 1);
+}
+
+.pagination > li > a,
+.pagination > li > span {
+    float: left;
+    padding: 8px 15px;
+    line-height: 1.5;
+    border: 2px solid rgba(79, 77, 116, 0.3);
+    margin-left: 2px;
+    border-radius: 5px;
+    color: rgba(79, 77, 116, 1);
+}
+  
+.pagination > li.active > a {
+    color: rgba(79, 77, 116, 1);
+    background-color: rgba(93, 92, 117, 0.3);
+    border-color: rgba(79, 77, 116, 1);
+}
+
+.pagination > li > a:hover {
+    color: rgba(79, 77, 116, 1);
+    background-color: rgba(93, 91, 123, 0.3);
+    cursor: pointer;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+    color: rgba(79, 77, 116, 1);
+    margin-left: 0;
+}
+
+/* Second */
+
+.secondPage{
+text-align: center;
+}
+
+.secondPageContent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
 .otherBlock{
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    margin: 5px 0px 0px 0px;
+    background-color:rgba(176, 204, 221, 1);
     text-align: center;
+    border-radius: 20px;
     display: flex;
     flex-direction:column;
-    padding: 25px;
-    background-color:rgba(82, 94, 159, 1);
-    width: 255px;
-    height: 270px;
-    border-radius: 25px;
+    padding: 30px;
     align-items: center;
     justify-content: center;
+
+}
+
+.findBlock{
+    position: relative;
+    width: 312px;
+    height: 284px;
+}
+
+.findBlock > h1{
+    font-size: 24px;
+    position: absolute;
+    top: 0;
+    margin-top: 50px;
+}
+
+.operationsBlock{
+    position: relative;
+    width: 312px;
+    height: 305px;
+    margin-top: 19px;
     overflow-x: hidden;
     overflow-y: auto;
+
+}
+
+.operationsBlock > h1{
+    font-size: 24px;
+    position: absolute;
+    top: 0;
+    margin-top: 50px;
+    display: "inline-block";
+}
+
+.operationsBlock > ul > p{
+    color: rgba(115, 115, 115, 1);
+
 }
 
 
-
-.httpBlock{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+.foundContactBlock{
+    position: relative;
+    width: 442px;
+    height: 611px;
 }
-.socketBlock{
-    margin-top: 20px;
+
+.foundContactBlock h1{
+    font-size: 24px;
+    position: absolute;
+    top: 0;
+    margin-top: 90px;
+
+}
+
+.addBlock{
+    position: relative;
+    width: 390px;
+    height: 611px; 
+}
+
+.addBlock > h1{
+    position: absolute;
+    top: 0;
+    margin-top: 90px;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;    
+}
+
+.addForm {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    flex-direction:column;
+    gap: 20px;
 }
 
 .editBlock{
@@ -69,7 +324,6 @@ body{
     display: flex;
     flex-direction:column;
     padding: 25px;
-    background-color:  #1f4465;
     width: 370px;
     height: 350px;
     border-radius: 25px;
@@ -77,76 +331,34 @@ body{
     justify-content: center;
 }
 
-.userList{
-    position: relative;
-    min-width: 370px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    width: 370px;
-    height: 570px;
-    margin-top: 10px;
-    background-color: rgba(153, 150, 255, 0.4);
-    border-radius: 25px;
-    padding: 10px;
-    padding-top: 20px;
-    text-align: center;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-.historyLink:hover{
-color: rgb(200, 255, 210);
 
-}
-.exitLink:hover{
-    color: rgb(255, 200, 200);
 
-}
 .container{
     text-align: center;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    flex-direction: column;
+    gap: 20px;
+  
 }
+
+.container > div > p {
+    color: rgba(115, 115, 115, 1);
+    width: 100%;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
 input:first-child{
     width: 100%;
     background: transparent;
     border-radius: 6px;
-    color: aliceblue;
+    color: rgba(39, 38, 67, 1);
     padding: 1px 8px;
     margin: 5px, 0px;
     border: 1px solid rgb(255, 255, 255);
 }
 
-.navBar{
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    width: 1440px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 5px;
-    height: 65px;
-    border-radius: 17px;
-    background-color: rgba(35, 49, 99, 1);
-    display: flex;
-    align-items: center;
-    justify-content:space-between;
-    padding: 0px 25px;
-}
 
-.contactLi{
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    width: 309px;
-    height: 67px;
-    border-radius: 12px;
-    border: 2px solid rgb(255, 255, 255);
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 8px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content:space-between;
-
-}
 
 .footer{
     margin-top: 10px;
@@ -166,52 +378,20 @@ input:first-child{
     text-align: center;
 }
 .history{
+    
     width: 400px;
     height: 500px;
     text-align: center;
     border-radius: 25px;
-    background-color: #316ea3;
+ 
     overflow-x: hidden;
     overflow-y: auto;
 }
 
+.history > p{
+    color: rgba(39, 38, 67, 1);
+
+}
+
 
 /*  */
-.pagination{
-    position: absolute;
-    bottom: 0;
-    display: flex;
-    flex-direction: row;
-    max-width: 200px;
-    margin-left: 34px;
-    margin-bottom: 20px; 
-  
-}
-.pagination > li {
-    list-style: none;
-
-   
-  }
-  .pagination > li > a,
-  .pagination > li > span {
-    float: left;
-    padding: 8px 15px;
-    line-height: 1.5;
-    border: 2px solid #ddd;
-    margin-left: 2px;
-    border-radius: 5px;
-  }
-  
-  .pagination > li.active > a {
-    color: #fff;
-    background-color: rgba(66, 62, 151, 0.3);
-    border-color: #ffffff;
-  }
-  .pagination > li > a:hover {
-    background-color: rgba(66, 62, 151, 0.5);
-    cursor: pointer;
-  }
-  .pagination > li:first-child > a,
-  .pagination > li:first-child > span {
-    margin-left: 0;
-  }

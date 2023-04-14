@@ -7,13 +7,26 @@ services:
     volumes:
       - data-volume:/data/db
     ports:
-      - "27018:27017"
- 
-
+      - "27017:27017" 
     networks:
       - app-network
-    
     restart: unless-stopped
+
+  mysql:
+    image: mysql:latest
+    container_name: myapp-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 587472Aa 
+      MYSQL_DATABASE: telephoneDirectory 
+      # MYSQL_USER: root 
+      # MYSQL_PASSWORD: 587472Aa 
+    volumes:
+      - mysql-data:/var/lib/mysql 
+    ports:
+      - "3306:3306" 
+    networks:
+      - app-network
 
   server:
     build:
@@ -26,15 +39,15 @@ services:
       - ./server/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - "4000:4000"
+      - "4000:4000" 
     depends_on:
       - mongo
+      - mysql
     env_file: ./server/.env
     environment:
       - NODE_ENV=development
     networks:
       - app-network
-
 
   client:
     build:
@@ -47,16 +60,28 @@ services:
       - ./client/:/usr/app
       - /usr/app/node_modules
     ports:
-      - "3000:3000"
+      - "3000:3000" 
+    depends_on:
+      - server
+    environment:
+      # - REACT_APP_API_URL=http://localhost:4000 
+      DB_HOST: myapp-mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: 587472Aa
+      DB_NAME: telephoneDirectory
     networks:
       - app-network
 
 networks:
-    app-network:
-        driver: bridge
-
+  app-network:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.18.0.0/16
 volumes:
-    data-volume:
-    node_modules:
-    web-root:
-      driver: local
+  mysql-data:
+  data-volume:
+  node_modules:
+  web-root:
+    driver: local

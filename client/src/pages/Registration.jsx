@@ -3,6 +3,8 @@ import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import axios from "axios";
 import { Link } from "react-router-dom";
+//import dotenv from "dotenv";
+//dotenv.config();
 import "../styles/Auth.css";
 
 const Registration = () => {
@@ -28,7 +30,7 @@ const Registration = () => {
         data.append("password", newUser.password);
         data.append("avatar", image);
         await axios
-          .post("http://localhost:4000/user/registration", data)
+          .post(`http://localhost:4000/user/registration`, data)
           .then((response) => {
             if (response.response.status == 400) {
               return seterrorValue(response.response.data.message);
@@ -50,15 +52,19 @@ const Registration = () => {
   return (
     <div className="containers container">
       <div className="containerForm">
-        <h2>Registration</h2>
+        <h1 style={{ fontSize: "28px" }}>Registration</h1>
         <br />
-        {errorValue ? <p style={{ color: "red" }}>{errorValue}</p> : ""}
+        {errorValue ? (
+          <p style={{ color: "red", fontSize: "14px" }}>{errorValue}</p>
+        ) : (
+          ""
+        )}
         <form>
-          <label htmlFor="">EMAIL</label>
+          <label htmlFor=""></label>
 
           <MyInput
             style={{
-              marginTop: "10px",
+              marginTop: "20px",
               marginBottom: "10px",
               padding: "8px",
               fontSize: "14px",
@@ -66,12 +72,12 @@ const Registration = () => {
             value={newUser.email}
             onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
             type="text"
-            placeholder="hello@gmail.com"
+            placeholder="Email"
           />
-          <label htmlFor="">FIRST NAME</label>
+          <label htmlFor=""></label>
           <MyInput
             style={{
-              marginTop: "10px",
+              marginTop: "30px",
               marginBottom: "10px",
               padding: "8px",
               fontSize: "14px",
@@ -81,12 +87,12 @@ const Registration = () => {
               setNewUser({ ...newUser, firstName: e.target.value })
             }
             type="text"
-            placeholder="John"
+            placeholder="Firs Name"
           />
-          <label htmlFor="">LAST NAME</label>
+          <label htmlFor=""></label>
           <MyInput
             style={{
-              marginTop: "10px",
+              marginTop: "30px",
               marginBottom: "10px",
               padding: "8px",
               fontSize: "14px",
@@ -96,12 +102,12 @@ const Registration = () => {
               setNewUser({ ...newUser, lastName: e.target.value })
             }
             type="text"
-            placeholder="Doe"
+            placeholder="Last Name"
           />
-          <label htmlFor="">PASSWORD</label>
+          <label htmlFor=""></label>
           <MyInput
             style={{
-              marginTop: "10px",
+              marginTop: "30px",
               marginBottom: "10px",
               padding: "8px",
               fontSize: "14px",
@@ -111,35 +117,21 @@ const Registration = () => {
               setNewUser({ ...newUser, password: e.target.value })
             }
             type="text"
-            placeholder="password"
+            placeholder="Password"
           />
 
           {/* // */}
           <div style={{ position: "relative", lineHeight: "25px" }}>
-            <p> Add avatar</p>
             <input
               id="imageInputRegist"
-              style={{
-                marginTop: "5px",
-                marginBottom: "7px",
-                position: "absolute",
-                visibility: "hidden",
-                opacity: "0",
-              }}
+              className="fileInput"
               type="file"
               onChange={(e) => {
                 setImageRegist(e.target.files[0]);
                 setImageValueRegist("uploaded");
               }}
             />
-            <span
-              style={{
-                border: " 1px solid rgb(255, 255, 250)",
-                backgroundColor: "rgba(95, 94, 195, 0.5)",
-                padding: "2px 10px",
-                borderRadius: "4px",
-              }}
-            >
+            <span className="fileInputSpan">
               <label for="imageInputRegist">{imageValue}</label>
             </span>
           </div>
