@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 class Helpers {
   // validation of the contact number and name
   dataValidation(fullName, number) {
@@ -25,9 +27,14 @@ class Helpers {
   // function for handling asynchronous code errors
   async handleErrors(promise) {
     try {
-      const result = await promise;
-
-      return result;
+      if (process.env.QUERY_PARAMETERS === "mySQL") {
+        const [rows] = await promise;
+        //console.log(rows);
+        return rows;
+      } else {
+        const result = await promise;
+        return result;
+      }
     } catch (error) {
       console.log(error);
       return error;

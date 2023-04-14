@@ -47,6 +47,7 @@ class contactFileRequest {
     try {
       // get a list of all files in the folder
       const allContacts = JSON.parse(await fs.readFile(contactPath));
+
       return allContacts.slice(
         pageData.pages * 5,
         pageData.pages > 0 ? pageData.pages * 5 : 5

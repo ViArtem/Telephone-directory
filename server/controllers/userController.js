@@ -109,7 +109,7 @@ class userHttpController {
       const correctRefresh = req.headers.refresh;
 
       const accessData = jwt_decode(req.headers.authorization.split(" ")[1]);
-      if (correctRefresh == refreshFromDatabase.refresh) {
+      if (correctRefresh === refreshFromDatabase.refresh) {
         const validateRefresh = await userService.verifyRefresh(
           refreshData,
           accessData

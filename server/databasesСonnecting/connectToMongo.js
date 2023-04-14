@@ -7,7 +7,7 @@ db.set("strictQuery", false);
 //Database connection
 async function connectToDatabase() {
   try {
-    await db.connect(url);
+    await db.connect(url, { useNewUrlParser: true });
     console.log("Connect to database");
   } catch (e) {
     console.log(e);
