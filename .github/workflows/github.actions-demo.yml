@@ -16,4 +16,4 @@ jobs:
       - name: install modules
         run: cd server && npm install
       - name: unit tests
-        run: npm run test
+        run: cd server && npm run test
