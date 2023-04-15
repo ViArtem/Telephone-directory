@@ -14,6 +14,6 @@ jobs:
         with:
           node-version: ${{matrix.node-version}}
       - name: install modules
-        run: cd /server npm install
+        run: cd /server && npm install
       - name: unit tests
         run: npm run test
