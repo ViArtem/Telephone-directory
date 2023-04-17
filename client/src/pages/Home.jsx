@@ -14,7 +14,7 @@ import io from "socket.io-client";
 import MyModal from "../components/UI/MyModal/MyModal";
 import HistoryBlock from "../components/HistoryBlock";
 
-const socket = io.connect("http://localhost:4000");
+const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
 //
 function Home() {
   //adds the found contact to the list of operations
@@ -167,7 +167,7 @@ function Home() {
       <div className="page secondPage">
         <h1
           style={{
-            fontSize: "48px",
+            fontSize: "30px",
             fontWeight: "700",
             marginBottom: "10px",
           }}

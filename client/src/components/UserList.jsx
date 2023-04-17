@@ -27,9 +27,12 @@ const UserList = ({
 
   async function changeList(e) {
     setHowMany((prevState) => ({ ...prevState, pages: e.selected }));
-    const allContact = await axios.post("http://localhost:4000/contact/all", {
-      pages: e.selected,
-    });
+    const allContact = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}contact/all`,
+      {
+        pages: e.selected,
+      }
+    );
 
     setContact([...allContact.data]);
   }
@@ -57,12 +60,12 @@ const UserList = ({
     try {
       e.preventDefault();
       const response = await axios.delete(
-        "http://localhost:4000/contact/delete",
+        `${process.env.REACT_APP_SERVER_URL}contact/delete`,
         {
           data: contactData,
         }
       );
-
+      setHowMany(howMany - 1);
       setupdatingList(Math.random());
       setContactData({ fullName: "", action: "", imgPath: "" });
       deletes(response);
@@ -84,8 +87,11 @@ const UserList = ({
   //
   useEffect(() => {
     axios
-      .post("http://localhost:4000/contact/all", { pages: howMany })
+      .post(`${process.env.REACT_APP_SERVER_URL}contact/all`, {
+        pages: howMany,
+      })
       .then((allContact) => {
+        console.log(allContact);
         if (allContact === undefined) {
           return console.log("Null");
         }
@@ -123,7 +129,7 @@ const UserList = ({
             >
               <Photo>
                 <img
-                  src={`http://localhost:4000/${contact.avatar}`}
+                  src={`${process.env.REACT_APP_SERVER_URL}${contact.avatar}`}
                   alt="Logo"
                 />
               </Photo>

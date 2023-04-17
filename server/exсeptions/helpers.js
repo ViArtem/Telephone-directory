@@ -16,7 +16,7 @@ class Helpers {
       return { message: "Number not valid" };
     }
 
-    return true;
+    return false;
   }
 
   // capitalizes all first letters of words

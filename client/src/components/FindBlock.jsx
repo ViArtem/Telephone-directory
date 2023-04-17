@@ -27,7 +27,7 @@ const FindBlock = ({ styleClass, find, socket }) => {
       setContact({ ...contact, fullName: "" });
     } else {
       axios
-        .post("http://localhost:4000/contact/find", contact)
+        .post(`${process.env.REACT_APP_SERVER_URL}contact/find`, contact)
         .then((user) => {
           const hasUser = user.data;
 

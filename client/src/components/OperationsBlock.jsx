@@ -39,23 +39,22 @@ const OperationsBlock = ({
   useEffect(() => {
     if (addRequest) {
       try {
-        if (addRequest.success == "The value cannot be empty") {
-          return setAction([...action, addRequest.success]);
+        if (addRequest.data) {
+          return setAction([...action, `Add ${addRequest.data.fullName} `]);
         }
-        if (addRequest.success == "Such a contact already exists") {
-          return setAction([...action, addRequest.success]);
-        }
-
-        if (addRequest.success == "Name not valid" || "Number not valid") {
+        if (addRequest.success === "Such a contact already exists") {
           return setAction([...action, addRequest.success]);
         }
 
-        if (addRequest.success == "The number or name is not valid") {
+        if (addRequest.success === "Name not valid" || "Number not valid") {
+          return setAction([...action, addRequest.success]);
+        }
+
+        if (addRequest.success === "The number or name is not valid") {
           return setAction([...action, `Validate Error`]);
         }
       } catch (error) {
         console.log(error);
-        return setAction([...action, `Add request `]);
       }
     }
   }, [addRequest]);

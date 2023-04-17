@@ -1,9 +1,13 @@
 import getConnectionPool from "../../databasesСonnecting/connectToMySQL.js";
 import Helpers from "../../exсeptions/helpers.js";
+import dotenv from "dotenv";
+dotenv.config();
 class userMySQLDatabaseRequest {
   constructor() {
     (async () => {
-      this.pool = await getConnectionPool();
+      if (process.env.QUERY_PARAMETERS === "mySQL") {
+        this.pool = await getConnectionPool();
+      }
     })();
   }
 

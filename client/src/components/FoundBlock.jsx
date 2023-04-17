@@ -86,7 +86,7 @@ const FoundBlock = ({
         setShowSocketButton(false);
       } else {
         const response = await axios.delete(
-          "http://localhost:4000/contact/delete",
+          `${process.env.REACT_APP_SERVER_URL}contact/delete`,
           {
             data: deleteUser,
           }
@@ -172,7 +172,7 @@ const FoundBlock = ({
           <Photo style={{ width: "131px", height: "131px" }}>
             <img
               style={{ width: "140px", height: "140px" }}
-              src={`http://localhost:4000/${socketImg}`}
+              src={`${process.env.REACT_APP_SERVER_URL}${socketImg}`}
               alt="Foto"
             />
           </Photo>
@@ -193,7 +193,7 @@ const FoundBlock = ({
           <Photo style={{ width: "131px", height: "131px" }}>
             <img
               style={{ width: "140px", height: "140px" }}
-              src={`http://localhost:4000/${httpImg}`}
+              src={`${process.env.REACT_APP_SERVER_URL}${httpImg}`}
               alt="Foto"
             />
           </Photo>

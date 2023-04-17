@@ -22,7 +22,7 @@ const NavBar = ({ styleClass, history, historyList }) => {
     if (jwt(localStorage.getItem("Authorization"))) {
       if (jwt(localStorage.getItem("Authorization")).role == "admin") {
         axios
-          .get("http://localhost:4000/admin/history")
+          .get(`${process.env.REACT_APP_SERVER_URL}admin/history`)
           .then((allContact) => {
             if (allContact) {
               historyList([...allContact.data]);
@@ -45,7 +45,7 @@ const NavBar = ({ styleClass, history, historyList }) => {
     <div className={className}>
       <Photo>
         <img
-          src={`http://localhost:4000/${
+          src={`${process.env.REACT_APP_SERVER_URL}${
             jwt(localStorage.getItem("Authorization")).avatar
           }`}
           alt="Avatar"

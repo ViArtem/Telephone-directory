@@ -5,7 +5,11 @@ const storage = multer.diskStorage({
     cb(null, "images/");
   },
   filename(req, file, cb) {
-    cb(null, `${uniqid()}-${file.originalname}`);
+    if (file.originalname) {
+      cb(null, `${uniqid()}-${file.originalname}`);
+    } else {
+      cb(null, false);
+    }
   },
 });
 

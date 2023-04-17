@@ -3,8 +3,9 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import axios from "axios";
 import jwt from "jwt-decode";
-//import dotenv from "dotenv";
-//dotenv.config();
+
+//require("dotenv").config();
+
 const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
   let className = "otherBlock addBlock";
 
@@ -12,7 +13,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
     className += styleClass;
   }
 
-  //const [img, setImg] = useState(null);
+  const [imageError, setImageError] = useState(null);
   const [image, setImage] = useState(null);
   const [socketImage, setSocketImage] = useState(null);
   const [imageValue, setImageValue] = useState("click to add an avatar");
@@ -32,11 +33,15 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
 
   const addContact = async (e) => {
     e.preventDefault();
+
     const data = new FormData();
 
     //for the socket block
 
     if (socket) {
+      if (socketImage === null) {
+        return setImageError("Please add an avatar");
+      }
       const reader = new FileReader();
       reader.readAsDataURL(socketImage);
       reader.onload = () => {
@@ -49,10 +54,14 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
           avatar: base64Image,
         });
       };
-      setSocketImage("");
+      setSocketImage(null);
       setSocketImageValue("click to upload");
       setContact({ ...contact, number: "", fullName: "" });
+      setImageError(null);
     } else {
+      if (image === null) {
+        return setImageError("Please add an avatar");
+      }
       data.append("fullName", contact.fullName);
       data.append("number", contact.number);
       data.append("owner", contact.owner);
@@ -60,11 +69,11 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
       data.append("avatar", image);
       //for the http block
       axios
-        .post(`http://localhost:4000/contact/add`, data)
+        .post(`${process.env.REACT_APP_SERVER_URL}contact/add`, data) //
         .then((user) => {
           if (user.data) {
             add(user);
-            setImage("");
+            setImage(null);
             setContact({ ...contact, number: "", fullName: "" });
             setImageValue("click to upload");
             return setupdatingList(Math.random());
@@ -72,6 +81,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
           if (user.response.data.message) {
             return add({ success: user.response.data.message });
           }
+          setImageError(null);
         })
         .catch((e) => {
           console.log(e);
@@ -97,7 +107,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
   return (
     <div className={className}>
       <h1>ADD CONTACT</h1>
-
+      <p style={{ color: "red" }}>{imageError}</p>
       <form
         className="addForm"
         style={{ width: "100%" }}

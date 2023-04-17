@@ -3,8 +3,9 @@ import Helpers from "../exсeptions/helpers.js";
 describe("name, number validation", () => {
   //
   test("correct name and number", () => {
-    expect(Helpers.dataValidation("hello test", "+380977697641")).toBe(true);
+    expect(Helpers.dataValidation("hello test", "+380977697641")).toBe(false);
   });
+
   //
   test("incorrect name", () => {
     expect(Helpers.dataValidation("he1llo test", "+380977697641")).toEqual({

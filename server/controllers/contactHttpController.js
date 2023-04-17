@@ -10,7 +10,9 @@ class contactHttpController {
       const contactNumber = req.body.number.trim();
       const contactOwner = req.body.owner;
       const contactAvatar = req.file;
-
+      if (!contactAvatar) {
+        throw ApiError.BadRequest("The image value cannot be empty");
+      }
       // number and name validation
       if (contactName == "" || contactNumber == "") {
         throw ApiError.BadRequest("The value cannot be empty");

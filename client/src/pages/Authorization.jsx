@@ -12,7 +12,7 @@ const Authorization = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:4000/user/authorization", user)
+      .post(`${process.env.REACT_APP_SERVER_URL}user/authorization`, user)
       .then((response) => {
         if (response.response.status == 400) {
           return setserverResponse(`${response.response.data.message}`);

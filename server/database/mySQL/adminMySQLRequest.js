@@ -1,10 +1,13 @@
 import Helpers from "../../exсeptions/helpers.js";
 import getConnectionPool from "../../databasesСonnecting/connectToMySQL.js";
-
+import dotenv from "dotenv";
+dotenv.config();
 class adminMySQLRequest {
   constructor() {
     (async () => {
-      this.pool = await getConnectionPool();
+      if (process.env.QUERY_PARAMETERS === "mySQL") {
+        this.pool = await getConnectionPool();
+      }
     })();
   }
   // request to receive the entire history for the administrator

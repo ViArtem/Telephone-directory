@@ -30,7 +30,7 @@ const Registration = () => {
         data.append("password", newUser.password);
         data.append("avatar", image);
         await axios
-          .post(`http://localhost:4000/user/registration`, data)
+          .post(`${process.env.REACT_APP_SERVER_URL}user/registration`, data)
           .then((response) => {
             if (response.response.status == 400) {
               return seterrorValue(response.response.data.message);

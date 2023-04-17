@@ -1,9 +1,5 @@
-import getConnectionPool from "../databasesСonnecting/connectToMySQL";
-
-async function createDatabase() {
-  await getConnectionPool().query(
-    `CREATE DATABASE IF NOT EXISTS telephoneDirectory`
-  );
+async function createDatabase(connection) {
+  await connection.query(`CREATE DATABASE IF NOT EXISTS telephoneDirectory`);
 }
 
-export { createDatabase };
+export default createDatabase;

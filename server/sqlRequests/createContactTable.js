@@ -1,7 +1,5 @@
-import getConnectionPool from "../databasesСonnecting/connectToMySQL";
-
-async function createContactsTable() {
-  await getConnectionPool().query(`
+async function createContactsTable(connection) {
+  await connection.query(`
   CREATE TABLE IF NOT EXISTS contacts (
     _id INT AUTO_INCREMENT PRIMARY KEY,
     fullName VARCHAR(255) NOT NULL,
@@ -13,4 +11,4 @@ async function createContactsTable() {
   `);
 }
 
-export { createContactsTable };
+export default createContactsTable;

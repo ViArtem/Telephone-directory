@@ -1,7 +1,5 @@
-import getConnectionPool from "../databasesСonnecting/connectToMySQL";
-
-async function createUsersTable() {
-  await getConnectionPool().query(`
+async function createUsersTable(connection) {
+  await connection.query(`
   CREATE TABLE IF NOT EXISTS users (
     _id INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(255) NOT NULL,
@@ -15,4 +13,4 @@ async function createUsersTable() {
   `);
 }
 
-export { createUsersTable };
+export default createUsersTable;
