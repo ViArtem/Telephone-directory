@@ -10,6 +10,7 @@ import "../styles/Auth.css";
 const Registration = () => {
   const [image, setImageRegist] = useState(null);
   const [imageValue, setImageValueRegist] = useState("click to upload");
+  // const [imageTitle, setimageTitle] = useState(null);
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
@@ -37,6 +38,8 @@ const Registration = () => {
             }
             setImageRegist("");
           });
+      } else {
+        seterrorValue("Please upload your avatar");
       }
     } catch (error) {
       console.log(error);

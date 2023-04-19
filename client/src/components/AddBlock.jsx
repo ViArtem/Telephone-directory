@@ -39,7 +39,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
     //for the socket block
 
     if (socket) {
-      if (socketImage === null) {
+      if (!socketImage) {
         return setImageError("Please add an avatar");
       }
       const reader = new FileReader();
@@ -59,7 +59,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
       setContact({ ...contact, number: "", fullName: "" });
       setImageError(null);
     } else {
-      if (image === null) {
+      if (!image) {
         return setImageError("Please add an avatar");
       }
       data.append("fullName", contact.fullName);

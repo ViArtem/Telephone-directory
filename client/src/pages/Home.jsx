@@ -110,10 +110,22 @@ function Home() {
         <div className="firsPageContent">
           <div className="mainText">
             <h1 className="fistPageTitle">Artem Vitenko's Project</h1>
-            <p className="fistPageSubtitle">
-              This application allows you to save, delete, find, and update your
-              contacts in the list. It also gives you access to view other
-              users' contacts.
+            <p
+              className="fistPageSubtitle"
+              style={{
+                lineHeight: "1.5",
+              }}
+            >
+              This site uses websocket and http requests as the basis for
+              interacting with the server. The Add Contact module is responsible
+              for saving a new contact. The Find a contact module sends a
+              request to the server with the name of the contact you need, where
+              the request is processed and contact information is sent as a
+              response. The Found contacts module receives a response from the
+              server and displays all available information about the contact,
+              including their first name, last name, phone number, and avatar.
+              Buttons for deleting and editing a contact appear if you have
+              created it.
             </p>
           </div>
           <UserList
