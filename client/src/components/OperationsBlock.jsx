@@ -16,6 +16,12 @@ const OperationsBlock = ({
   }
 
   useEffect(() => {
+    if (action.length >= 6) {
+      action.shift();
+    }
+  }, [action]);
+
+  useEffect(() => {
     if (foundRequest) {
       try {
         if (foundRequest.data.fullName) {
@@ -99,9 +105,15 @@ const OperationsBlock = ({
   //socket
   const [addRequestForHistory, setAddRequestForHistory] = useState([]);
   const [socketAction, setSocketAction] = useState([]);
+
+  useEffect(() => {
+    if (socketAction.length >= 6) {
+      socketAction.shift();
+    }
+  }, [socketAction]);
+
   if (socket) {
     //displaying an inscription about the added user in the block with operations
-
     socket.on("add user", (data) => {
       if (
         data.userErrorName == "Name not valid" ||

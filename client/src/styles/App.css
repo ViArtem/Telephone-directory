@@ -51,6 +51,14 @@ font-size: 16px;
     color: rgba(115, 115, 115, 1);
 }
 
+.fileInputSpan:hover{
+    cursor: pointer;
+    border-bottom: 3px solid rgba(115, 113, 122, 0.7);
+}
+.fileInputSpan > label:hover{
+    cursor: pointer;
+}
+
 /*  */
 .App{
     max-width: 1400px;
@@ -93,11 +101,14 @@ font-size: 16px;
 }
 
 .historyLink:hover{
-    color: rgb(200, 255, 210);
+    cursor: pointer;
+    color: rgba(39, 38, 67, 0.59);
+    /* color: rgb(200, 255, 210); */
     
 }
 
 .exitLink:hover{
+    cursor: pointer;
     color: rgb(255, 200, 200);
     
 }
@@ -110,7 +121,9 @@ font-size: 16px;
     margin-top: 40px;
 }
 
-
+.contactLiAdmin:hover{
+    cursor: pointer;
+}
 
 .mainText{
     width: 528px;
@@ -173,16 +186,19 @@ font-size: 16px;
 .paginateContainer{
     margin-left: auto;
     margin-right: auto;
-    height: 100%;
-    max-width: 200px; 
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    align-items: center;
+    max-width: 500px; 
+    top: 300px ;
 
 }
 .pagination{
     color: rgba(79, 77, 116, 1);
     max-width: 200px;
-    position: absolute;
-    bottom: 20px;
-    left: 25%;
+
+   
     display: flex;
     flex-direction: row;
 }
@@ -225,7 +241,9 @@ font-size: 16px;
 /* Second */
 
 .secondPage{
-text-align: center;
+    height: auto;
+    padding: 20px 0px;
+    text-align: center;
 }
 
 .secondPageContent{
@@ -268,7 +286,7 @@ text-align: center;
     margin-top: 19px;
     overflow-x: hidden;
     overflow-y: auto;
-
+    line-height: 1.5;
 }
 
 .operationsBlock > h1{
@@ -280,7 +298,9 @@ text-align: center;
 }
 
 
-
+.operationsBlock > ul{
+    margin-top: 15px;
+}
 
 .operationsBlock > ul > p{
     color: rgba(115, 115, 115, 1);
@@ -366,19 +386,31 @@ input:first-child{
 
 .footer{
     margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 43px 95px;
     margin-right: auto;
     margin-left: auto;
     box-shadow: 5px 3px 7px rgba(0, 0, 0, 0.5);
-    width: 1440px;
-    height: 90px;
+    width: 1350px;
+    height: 260px;
     border-radius: 15px;
-    background-color: rgba(64, 63, 67, 1);
+    background-color:rgba(130, 162, 162, 1);
+}
+
+.footerContent{
+    color: rgba(115, 115, 115, 1);
+    line-height: 50px;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+}
+
+.textContent > p{
+    color: rgba(115, 115, 115, 1);
 }
 
 
-
 .httpContainer{
-
     text-align: center;
 }
 .history{
@@ -398,4 +430,199 @@ input:first-child{
 }
 
 
+/*Chat  */
+
+.support{
+    color: rgba(39, 38, 67, 1);
+    display: flex;
+    margin-left: 50px;
+    position: absolute;
+    right: 0;
+    bottom: 0px;
+    margin-right: 130px;
+    margin-bottom: 30px;
+    z-index: 1000000;
+}
+.supportChat{
+    width: 390px;
+    height: 380px;
+    border: 2px solid rgba(79, 77, 116, 1);
+    background-color: rgba(130, 162, 162, 1);
+    box-shadow: 5px 3px 7px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+}
+
+.supportChatContent{
+    padding: 10px;
+}
+
+.supportDialog{
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 350px;
+    height: 300px;
+    background-color: aliceblue;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 7px;   
+}
+
+.supportDialog::-webkit-scrollbar {
+    width: 0.5em;
+    background-color: transparent;
+  }
+  
+  .supportDialog::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 1em;
+  }
+  
+  .supportDialog::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+.chatButton{
+font-size: 10px;
+}
+.supportInteract{
+    margin-top: 10px;
+    display: flex;
+    flex-direction:row;
+    gap: 20px;
+}
+.supportButton{
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background-color: rgba(147, 147, 147, 1);
+    border: 2px solid rgba(79, 77, 116, 1);
+    text-align: center;
+    padding-top: 32px;
+    font-weight: bold;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.7);
+}
+
+.supportButton:hover{
+    cursor: pointer;
+}
+
+
 /*  */
+
+.supportAdmin{
+    text-align: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    margin-left: 500px;
+    margin-top: 110px;
+    width: 390px;
+    height: 500px;
+    background-color: rgba(176, 204, 221, 1);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid rgba(79, 77, 116, 1);
+}
+
+.supportAdmin > p{
+    margin-left: 280px;
+ 
+}
+
+.supportAdmin > p:hover{
+    cursor: pointer;
+ 
+}
+.supportAdminContent{
+ 
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    height: 450px;
+    padding-top: 20px;
+    background-color: rgba(176, 204, 221, 1);
+}
+
+.userChatMessage{
+    color: rgba(39, 38, 67, 1);
+    width: 300px;
+    height: 70px;
+    border: 2px solid rgba(79, 77, 116, 1);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+}
+
+.userChatMessage > p{
+    color: rgba(39, 38, 67, 1);
+
+}
+
+
+
+
+.message{
+    max-width: 90%;
+    color: rgba(39, 38, 67, 1);
+    display: inline-block;
+    background-color: rgb(117, 146, 146);
+    border-radius: 5px;
+    padding: 7px 7px 7px 5px;
+    margin-top: 5px;
+}
+
+.undefinedWrapper{
+    
+    margin-left: auto;
+    text-align: right;
+
+
+}
+.messageValue{
+display: flex;
+align-items: end;
+gap: 10px
+}
+
+.messageTime{
+    color: rgba(39, 38, 67, 1);
+    font-size: 10px;
+}
+.admin{
+    background-color: rgb(128, 167, 191);
+    margin-left: auto;
+    text-align: right;
+    padding: 7px 7px 7px 5px;
+}
+
+.adminWrapper{
+    margin-right: auto;
+    text-align: left;
+
+}
+
+.newMessage{
+    /* background-color: red */
+}
+
+.userNotifications{
+    margin-left: auto;
+    margin-bottom: auto;
+}
+
+.hasNewMessage{
+    background-color: red;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    text-align: center;
+    color: red;
+
+}

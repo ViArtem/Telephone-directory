@@ -43,6 +43,7 @@ async function socketData() {
           ).message,
         });
       }
+
       //request to create a contact
       const newSocketUser = await contactService.addNewContact(
         Helpers.allFirstLettersCapitalized(data.fullName),
@@ -57,9 +58,12 @@ async function socketData() {
           userErrorName: newSocketUser.success,
         });
       }
+
+      //
       io.sockets.emit("add user", {
         newUserData: newSocketUser,
       });
+
       // add an action to the story
       await administratorAdapter.addAction(
         `Socket: Add ${data.fullName}`,

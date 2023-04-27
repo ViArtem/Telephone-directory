@@ -15,7 +15,6 @@ class administratorFileRequest {
   //
   async addNewAction(action, time) {
     try {
-      console.log(action);
       const newActions = {
         id: uniqid(),
         action: action,

@@ -1,6 +1,7 @@
 import { app } from "../server.js";
 import { createRequire } from "node:module";
 import { socketData } from "../controllers/contactSocketController.js";
+import { socketChat } from "../controllers/chatSocketController.js";
 import connectToDatabase from "../databasesСonnecting/connectToMongo.js";
 
 const require = createRequire(import.meta.url);
@@ -26,6 +27,7 @@ function startSocketServer() {
       console.log("Started socket server...");
     });
     socketData();
+    socketChat();
     return true;
   } catch (error) {
     console.log(error);

@@ -33,7 +33,7 @@ Additional features of the administrator:
 
 ### Quick start
 
-#####Start the server:
+####Start the server:
 
 After cloning the project to your computer, add the `.env ` file to the root of the `server` folder and add the following parameters to it:
 
@@ -55,7 +55,9 @@ After cloning the project to your computer, add the `.env ` file to the root of 
 
 - MYSQL_DATABASE - the table you use in MySQL. Type: string
 
-Next, open the server folder in the terminal and enter the following command:
+Next, be sure to add the `images` folder to the root of the `server` folder
+
+Open the server folder in the terminal and enter the following command:
 
 ```JS
 npm install
@@ -65,7 +67,7 @@ npm install
 node server.js
 ```
 
-#####Start the client:
+####Start the client:
 
 To run the client, first add the `.env` file and add the following parameter
 
@@ -81,7 +83,7 @@ npm install
 npm start
 ```
 
-#####Start for the Docker container:
+####Start for the Docker container:
 Start the docker, then open the main project folder in the terminal and enter the following commands:
 
 ```JS

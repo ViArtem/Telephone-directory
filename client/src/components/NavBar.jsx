@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import jwt from "jwt-decode";
 import axios from "axios";
 import "../styles/App.css";
 import Photo from "./UI/photo/Photo";
-const NavBar = ({ styleClass, history, historyList }) => {
+const NavBar = ({
+  styleClass,
+  history,
+  historyList,
+  socketConnection,
+  changeListVisible,
+  newMessageValue,
+}) => {
   let className = "navBar ";
   let userRole;
   let userName;
@@ -13,8 +20,14 @@ const NavBar = ({ styleClass, history, historyList }) => {
       userName = jwt(localStorage.getItem("Authorization")).username;
     }
   }
+
+  let classNameSupport = "historyLink";
   if (styleClass) {
     className += styleClass.styleClass;
+  }
+  if (newMessageValue) {
+    //console.log(newMessageValue);
+    classNameSupport += " newMessage";
   }
 
   //admin history
@@ -36,6 +49,36 @@ const NavBar = ({ styleClass, history, historyList }) => {
     }
   }
 
+  function getUnreadMessage() {
+    socketConnection.emit("checking for new messages", {
+      role: jwt(localStorage.getItem("Authorization")).role,
+    });
+    socketConnection.emit("get chat list", {
+      role: jwt(localStorage.getItem("Authorization")).role,
+    });
+  }
+
+  function getChats(e) {
+    e.preventDefault();
+    changeListVisible(true);
+
+    socketConnection.emit("get chat list", {
+      role: jwt(localStorage.getItem("Authorization")).role,
+    });
+
+    socketConnection.emit("checking for new messages", {
+      role: jwt(localStorage.getItem("Authorization")).role,
+    });
+
+    // setTimeout(() => {
+    //   getUnreadMessage();
+    // }, 0);
+
+    //
+
+    //
+  }
+
   function exit() {
     localStorage.clear();
     window.location.href = "/";
@@ -55,6 +98,13 @@ const NavBar = ({ styleClass, history, historyList }) => {
       <p style={{ marginRight: "690px" }}>
         {userName} ({userRole})
       </p>
+      {jwt(localStorage.getItem("Authorization")).role === "admin" ? (
+        <p onClick={getChats} className={classNameSupport}>
+          SUPPORT
+        </p>
+      ) : (
+        ""
+      )}
       {jwt(localStorage.getItem("Authorization")).role == "admin" ? (
         <p onClick={getHistory} className={"historyLink"}>
           VIEW HISTORY
@@ -62,6 +112,7 @@ const NavBar = ({ styleClass, history, historyList }) => {
       ) : (
         ""
       )}
+
       <p onClick={exit} className={"exitLink"}>
         EXIT
       </p>

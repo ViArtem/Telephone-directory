@@ -12,6 +12,13 @@ const UserList = ({
   editModal,
   editModalValue,
 }) => {
+  const [contactLiClass, setContactLiClass] = useState("contactLi");
+  useEffect(() => {
+    if (jwt(localStorage.getItem("Authorization")).role === "admin") {
+      setContactLiClass("contactLi contactLiAdmin");
+    }
+  }, []);
+
   const [contacts, setContact] = useState([]);
   const [viewUser, setViewUser] = useState();
   const [page, setPage] = useState(1);
@@ -49,6 +56,7 @@ const UserList = ({
         action: "Delete",
         id,
       });
+
       return setViewUser(number);
     }
   }
@@ -65,9 +73,16 @@ const UserList = ({
           data: contactData,
         }
       );
-      setHowMany(howMany - 1);
+
+      if (contacts.length - 1 == 0) {
+        setHowMany(0);
+      } else {
+        setHowMany(page);
+      }
+
       setupdatingList(Math.random());
       setContactData({ fullName: "", action: "", imgPath: "" });
+
       deletes(response);
     } catch (error) {
       console.log(error);
@@ -91,19 +106,23 @@ const UserList = ({
         pages: howMany,
       })
       .then((allContact) => {
-        console.log(allContact);
+        //console.log(allContact);
         if (allContact === undefined) {
           return console.log("Null");
         }
-        if (allContact.data[0].id < 5) {
+        //setPage(Math.ceil(allContact.data[0].id / 5));
+        if (allContact.data[0].id <= 5) {
           setPage(1);
         } else if (allContact.data[0].id > 5) {
           setPage(Math.ceil(allContact.data[0].id / 5));
         }
-
+        if (allContact.data.length === 0) {
+          return setContact([]);
+        }
         setContact([...allContact.data]);
       })
       .catch((e) => {
+        setContact([]);
         console.log(e);
       });
   }, [updatingList]);
@@ -112,8 +131,8 @@ const UserList = ({
     <div className="userList">
       <h1>CONTACTS</h1>
 
-      {contacts ? (
-        <ul>
+      {contacts.length ? (
+        <ul style={{ height: "370px" }}>
           {contacts.map((contact, index) => (
             <div
               onClick={() => {
@@ -125,7 +144,7 @@ const UserList = ({
                 );
               }}
               key={Math.random()}
-              className="contactLi"
+              className={contactLiClass}
             >
               <Photo>
                 <img
@@ -171,11 +190,13 @@ const UserList = ({
           ))}
         </ul>
       ) : (
-        ""
+        <p style={{ color: "rgba(39, 38, 67, 1)" }}>
+          The contact list is empty
+        </p>
       )}
-      {/* <div className="paginateContainer"> */}
-      <MyPaginate handlePageClick={changeList} pageCount={page} />
-      {/* </div> */}
+      <div className="paginateContainer">
+        <MyPaginate handlePageClick={changeList} pageCount={page} />
+      </div>
     </div>
   );
 };
