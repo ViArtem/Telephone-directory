@@ -50,7 +50,10 @@ const AdminChatWindow = ({
         if (elm.userId === neMess.message.userId) {
           elm.userMessage = [...neMess.message.userMessage];
           setMessageList([...messageList]);
+          //  if (!changeVisible) {
           messageId.add(neMess.message.userId);
+          // }
+
           //setMessageId(neMess.message.userId);
           return setNewMessage("hasNewMessage");
         }
@@ -78,7 +81,7 @@ const AdminChatWindow = ({
         });
       });
     }
-  }, [messageList]);
+  }, [hasNewMessage]); //messageList
   //
 
   //

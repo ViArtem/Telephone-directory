@@ -12,14 +12,26 @@ const SupportWindow = ({
 }) => {
   const [userHasMessage, setUserHasMessage] = useState(false);
   const [userMessageList, setMessageList] = useState([]);
+
+  useEffect(() => {
+    if (jwt(localStorage.getItem("Authorization")).role !== "admin") {
+      socketConnection.emit("joinRoom", {
+        id: jwt(localStorage.getItem("Authorization")).id,
+      });
+    }
+  }, []);
+
   useEffect(() => {
     socketConnection.on("have new message", (data) => {
-      setUserHasMessage(true);
+      if (!visible) {
+        return setUserHasMessage(true);
+      }
+      setUserHasMessage(false);
     });
   }, [userMessageList]);
 
   useEffect(() => {
-    if (jwt(localStorage.getItem("Authorization")).role == "admin") {
+    if (jwt(localStorage.getItem("Authorization")).role === "admin") {
       socketConnection.emit("joinAdminRoom", {});
     }
   }, []);
@@ -136,7 +148,7 @@ const SupportWindow = ({
       const scrollContainer = scrollContainerRef.current;
       scrollContainer.scrollTop = scrollContainer.scrollHeight;
     }
-  }, [chatData]);
+  }, [userMessageList]);
 
   //
   return (

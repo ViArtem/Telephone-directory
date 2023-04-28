@@ -79,12 +79,13 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
             return setupdatingList(Math.random());
           }
           if (user.response.data.message) {
+            setImageError(null);
             return add({ success: user.response.data.message });
           }
-          setImageError(null);
         })
         .catch((e) => {
           console.log(e);
+          setImageError(null);
           if (e.response.data.message == "The value cannot be empty") {
             return add({ success: e.response.data.message });
           }
