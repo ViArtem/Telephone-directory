@@ -73,6 +73,7 @@ const SupportWindow = ({
       date: Number(Date.now()),
       fullName: jwt(localStorage.getItem("Authorization")).username,
       id: jwt(localStorage.getItem("Authorization")).id,
+      avatar: jwt(localStorage.getItem("Authorization")).avatar,
     });
     setMessage("");
     const allChatMessage = await getAllMessage();

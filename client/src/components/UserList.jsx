@@ -33,7 +33,9 @@ const UserList = ({
   });
 
   async function changeList(e) {
-    setHowMany((prevState) => ({ ...prevState, pages: e.selected }));
+    // console.log(e);
+    setHowMany(e.selected);
+    //setHowMany((prevState) => ({ ...prevState, pages: e.selected }));
     const allContact = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}contact/all`,
       {
@@ -74,12 +76,10 @@ const UserList = ({
         }
       );
 
-      if (contacts.length - 1 == 0) {
-        setHowMany(0);
-      } else {
-        setHowMany(page);
+      contacts.pop();
+      if (contacts.length === 0) {
+        setHowMany(howMany - 1);
       }
-
       setupdatingList(Math.random());
       setContactData({ fullName: "", action: "", imgPath: "" });
 
@@ -110,7 +110,7 @@ const UserList = ({
         if (allContact === undefined) {
           return console.log("Null");
         }
-        //setPage(Math.ceil(allContact.data[0].id / 5));
+
         if (allContact.data[0].id <= 5) {
           setPage(1);
         } else if (allContact.data[0].id > 5) {
@@ -153,7 +153,12 @@ const UserList = ({
                 />
               </Photo>
               <div className="liFullname">
-                <p style={{ marginRight: "auto", with: "100%" }}>
+                <p
+                  style={{
+                    marginRight: "auto",
+                    with: "100%",
+                  }}
+                >
                   {contact.fullName}
                 </p>
                 {viewUser == contact.number ? <p>{viewUser}</p> : ""}

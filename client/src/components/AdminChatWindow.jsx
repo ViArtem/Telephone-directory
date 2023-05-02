@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Photo from "./UI/photo/Photo";
 const AdminChatWindow = ({
   socketConnection,
   userChatData,
@@ -12,7 +12,6 @@ const AdminChatWindow = ({
   //
   const [messageId, setMessageId] = useState(new Set());
 
-  // const messageId = new Set();
   function openChat(chatInfo) {
     messageId.delete(`${chatInfo.userId}`);
 
@@ -50,11 +49,9 @@ const AdminChatWindow = ({
         if (elm.userId === neMess.message.userId) {
           elm.userMessage = [...neMess.message.userMessage];
           setMessageList([...messageList]);
-          //  if (!changeVisible) {
-          messageId.add(neMess.message.userId);
-          // }
 
-          //setMessageId(neMess.message.userId);
+          messageId.add(neMess.message.userId);
+
           return setNewMessage("hasNewMessage");
         }
       });
@@ -81,7 +78,7 @@ const AdminChatWindow = ({
         });
       });
     }
-  }, [hasNewMessage]); //messageList
+  }, [hasNewMessage]);
   //
 
   //
@@ -105,9 +102,14 @@ const AdminChatWindow = ({
               }}
               className="userChatMessage"
             >
+              <Photo>
+                <img
+                  src={`${process.env.REACT_APP_SERVER_URL}${elm.avatar}`}
+                  alt="Logo"
+                />
+              </Photo>
               <p className="n">{elm.userName}</p>
-              <p>-</p>
-              <p className="m">{elm.userMessage.length}</p>
+
               {messageId.has(elm.userId) ? (
                 <div key={Math.random()} className={newMessage}>
                   {messageCount}

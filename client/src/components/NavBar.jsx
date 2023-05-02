@@ -69,14 +69,6 @@ const NavBar = ({
     socketConnection.emit("checking for new messages", {
       role: jwt(localStorage.getItem("Authorization")).role,
     });
-
-    // setTimeout(() => {
-    //   getUnreadMessage();
-    // }, 0);
-
-    //
-
-    //
   }
 
   function exit() {

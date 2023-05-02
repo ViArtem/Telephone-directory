@@ -6,6 +6,7 @@ class messageService {
 
     let checkUser = false;
     const chatValue = {};
+
     for (const elm of userList) {
       if (elm.userId === data.id) {
         elm.userMessage.push({
@@ -44,8 +45,9 @@ class messageService {
     }
 
     if (!checkUser) {
-      userList.push({
+      userList.unshift({
         userId: data.id,
+        avatar: data.avatar,
         userName: data.fullName,
         userMessage: [{ message: data.message, date: data.date }],
       });
