@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Photo from "./UI/photo/Photo";
+import avatarImage from "../components/icon/avatar.svg";
+import jwt from "jwt-decode";
 const AdminChatWindow = ({
   socketConnection,
   userChatData,
@@ -104,7 +106,11 @@ const AdminChatWindow = ({
             >
               <Photo>
                 <img
-                  src={`${process.env.REACT_APP_SERVER_URL}${elm.avatar}`}
+                  src={
+                    elm.avatar !== "noAvatar"
+                      ? `${process.env.REACT_APP_SERVER_URL}${elm.avatar}`
+                      : avatarImage
+                  }
                   alt="Logo"
                 />
               </Photo>

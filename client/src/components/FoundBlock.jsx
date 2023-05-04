@@ -3,6 +3,7 @@ import jwt from "jwt-decode";
 import MyButton from "./UI/button/MyButton";
 import Photo from "./UI/photo/Photo";
 import axios from "axios";
+import avatarImage from "../components/icon/avatar.svg";
 const FoundBlock = ({
   styleClass,
   foundContactHttp,
@@ -18,6 +19,8 @@ const FoundBlock = ({
   const [showButton, setShowButton] = useState(false);
   const [deleteUser, setDeleteUser] = useState("");
   const [httpImg, setHttpImg] = useState("");
+  const [noAvatar, setNoAvatar] = useState(false);
+  const [noSocketAvatar, setNoSocketAvatar] = useState(false);
   if (styleClass) {
     className += styleClass;
   }
@@ -34,14 +37,23 @@ const FoundBlock = ({
         });
         if (foundContactHttp.data.number) {
           if (
-            jwt(localStorage.getItem("Authorization")).id ==
+            jwt(localStorage.getItem("Authorization")).id ===
               foundContactHttp.data.owner ||
-            jwt(localStorage.getItem("Authorization")).role == "admin"
+            jwt(localStorage.getItem("Authorization")).role === "admin"
           ) {
+            setNoAvatar(false);
+            if (foundContactHttp.data.avatar === "noAvatar") {
+              //setHttpImg(avatarImage);
+              setNoAvatar(true);
+            }
             setHttpImg(foundContactHttp.data.avatar);
             setShowButton(true);
           } else setShowButton(false);
           setUserNumber(foundContactHttp.data.number);
+          setNoAvatar(false);
+          if (foundContactHttp.data.avatar === "noAvatar") {
+            setNoAvatar(true);
+          }
           setHttpImg(foundContactHttp.data.avatar);
           return setUserData(foundContactHttp.data.fullName);
         }
@@ -79,12 +91,13 @@ const FoundBlock = ({
           userRole: jwt(localStorage.getItem("Authorization")).role,
           imagePath: socketImg,
         });
-
+        setNoSocketAvatar(false);
         // updates the list of users at the click of a button
         setfoundUserDataSocket("");
         setfoundUserNumberSocket("");
         setShowSocketButton(false);
       } else {
+        setNoAvatar(false);
         const response = await axios.delete(
           `${process.env.REACT_APP_SERVER_URL}contact/delete`,
           {
@@ -107,6 +120,7 @@ const FoundBlock = ({
     // socket edit modal
     if (socket && editModal) {
       editModal(true);
+      setNoSocketAvatar(false);
       setShowSocketButton(false);
       setfoundUserDataSocket("");
       setfoundUserNumberSocket("");
@@ -121,6 +135,7 @@ const FoundBlock = ({
     //http edit modal
     if ((editModal && foundContactHttp) || editModalValue) {
       editModal(true);
+      setNoAvatar(false);
       foundContactHttp.data.avatar = "";
       setShowButton(false);
       setUserData("");
@@ -146,6 +161,10 @@ const FoundBlock = ({
         setfoundUserDataSocket(data.userFirstName);
         setShowSocketButton(false);
       } else {
+        setNoSocketAvatar(false);
+        if (data.foundData.avatar === "noAvatar") {
+          setNoSocketAvatar(true);
+        }
         setSocketImg(data.foundData.avatar);
         setfoundUserDataSocket(`${data.foundData.fullName}`);
         setfoundUserNumberSocket(`${data.foundData.number}`);
@@ -169,10 +188,20 @@ const FoundBlock = ({
       <h1>FOUND CONTACT</h1>
       <div className="container">
         {foundUserNumberSocket ? (
-          <Photo style={{ width: "131px", height: "131px" }}>
+          <Photo
+            style={{
+              width: "80px",
+              height: "80px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
             <img
-              style={{ width: "140px", height: "140px" }}
-              src={`${process.env.REACT_APP_SERVER_URL}${socketImg}`}
+              src={
+                noSocketAvatar
+                  ? avatarImage
+                  : `${process.env.REACT_APP_SERVER_URL}${socketImg}`
+              }
               alt="Foto"
             />
           </Photo>
@@ -190,10 +219,20 @@ const FoundBlock = ({
         )}
 
         {userNumber ? (
-          <Photo style={{ width: "131px", height: "131px" }}>
+          <Photo
+            style={{
+              width: "80px",
+              height: "80px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
             <img
-              style={{ width: "140px", height: "140px" }}
-              src={`${process.env.REACT_APP_SERVER_URL}${httpImg}`}
+              src={
+                noAvatar
+                  ? avatarImage
+                  : `${process.env.REACT_APP_SERVER_URL}${httpImg}`
+              }
               alt="Foto"
             />
           </Photo>
@@ -212,13 +251,7 @@ const FoundBlock = ({
       </div>
 
       <div>
-        {showButton ? (
-          <MyButton onClick={ButtonEdit} style={{ marginTop: "50px" }}>
-            Edit
-          </MyButton>
-        ) : (
-          ""
-        )}
+        {showButton ? <MyButton onClick={ButtonEdit}>Edit</MyButton> : ""}
 
         {showButton ? (
           <MyButton
@@ -236,13 +269,7 @@ const FoundBlock = ({
       </div>
 
       <div>
-        {showSocketButton ? (
-          <MyButton onClick={ButtonEdit} style={{ marginTop: "50px" }}>
-            Edit
-          </MyButton>
-        ) : (
-          ""
-        )}
+        {showSocketButton ? <MyButton onClick={ButtonEdit}>Edit</MyButton> : ""}
 
         {showSocketButton ? (
           <MyButton

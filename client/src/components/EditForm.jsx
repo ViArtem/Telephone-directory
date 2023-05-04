@@ -15,65 +15,57 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
   });
   const [img, setImg] = useState(null);
   const [imgValue, setImgValue] = useState("click to upload");
+
+  const [errorMessage, setErrorMessage] = useState("");
   const editContact = (e) => {
     /// The function sends a request with form data to edit a contact
     e.preventDefault();
     if (userValue.socket) {
       const reader = new FileReader();
-      if (img) {
-        reader.readAsDataURL(img);
-        reader.onload = () => {
-          const base64Image = reader.result.split(",")[1];
 
-          socket.emit("edit user value", {
-            newFullName: contact.fullName,
-            newNumber: contact.number,
-            idForUpdate: userValue.id,
-            owner: contact.owner,
-            userRole: contact.userRole,
-            avatar: base64Image,
-          });
-        };
-        setImg(null);
-        setImgValue("click to upload");
-        editModal(false);
-      } else {
-        setHasImg(false);
-      }
+      reader.readAsDataURL(img);
+      reader.onload = () => {
+        const base64Image = reader.result.split(",")[1];
+
+        socket.emit("edit user value", {
+          newFullName: contact.fullName,
+          newNumber: contact.number,
+          idForUpdate: userValue.id,
+          owner: contact.owner,
+          userRole: contact.userRole,
+          avatar: base64Image,
+        });
+      };
+      setImg(null);
+      setImgValue("click to upload");
+      editModal(false);
     } else {
-      if (img) {
-        const data = new FormData();
-        data.append("fullName", contact.fullName);
-        data.append("number", contact.number);
-        data.append("id", contact.id);
-        data.append("owner", contact.owner);
-        data.append("userRole", contact.userRole);
-        data.append("action", contact.action);
-        data.append("avatar", img);
+      const data = new FormData();
+      data.append("fullName", contact.fullName);
+      data.append("number", contact.number);
+      data.append("id", contact.id);
+      data.append("owner", contact.owner);
+      data.append("userRole", contact.userRole);
+      data.append("action", contact.action);
+      data.append("avatar", img);
 
-        axios
-          .put(`${process.env.REACT_APP_SERVER_URL}contact/update`, data)
-          .then((user) => {
-            edit(user);
+      axios
+        .put(`${process.env.REACT_APP_SERVER_URL}contact/update`, data)
+        .then((user) => {
+          // if (user.response.data.message.message) {
+          //   return setErrorMessage(user.response.data.message.message);
+          // }
+          edit(user);
+          editModal(false);
+          setupdatingList(Math.random());
+          setImg(null);
+          setImgValue("click to upload");
 
-            editModal(false);
-            setupdatingList(Math.random());
-            setImg(null);
-            setImgValue("click to upload");
-            return setContact({ ...contact, number: "", fullName: "" });
-          })
-          .catch((e) => {
-            if (e.response.data.message === "The value cannot be empty") {
-              return edit(e.response.data);
-            }
-            if (e.response.status === 403) {
-              return edit(e.response.data);
-            }
-            console.log(e);
-          });
-      } else {
-        setHasImg(false);
-      }
+          return setContact({ ...contact, number: "", fullName: "" });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
 
@@ -101,6 +93,7 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
       >
         Edit Contact
       </h1>
+      <p>{errorMessage}</p>
       {!hasImg ? <p style={{ color: "red" }}>please upload an avatar</p> : ""}
       <form style={{ width: "100%", marginTop: "5px" }}>
         <label for=""></label>

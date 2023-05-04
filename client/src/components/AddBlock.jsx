@@ -3,8 +3,8 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import axios from "axios";
 import jwt from "jwt-decode";
-
-//require("dotenv").config();
+import Photo from "./UI/photo/Photo";
+import avatarImage from "../components/icon/avatar.svg";
 
 const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
   let className = "otherBlock addBlock";
@@ -13,14 +13,13 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
     className += styleClass;
   }
 
-  const [imageError, setImageError] = useState(null);
-  const [image, setImage] = useState(null);
-  const [socketImage, setSocketImage] = useState(null);
-  const [imageValue, setImageValue] = useState("click to add an avatar");
-  const [socketImageValue, setSocketImageValue] = useState(
-    "click to add an avatar"
-  );
+  const [image, setImage] = useState(avatarImage);
+  const [filePath, setFilePath] = useState(avatarImage);
+  const [socketImage, setSocketImage] = useState("noAvatar");
+  const [imageValue, setImageValue] = useState("Change avatar");
+  const [socketImageValue, setSocketImageValue] = useState("Change avatar");
 
+  const [errorMessage, setErrorMessage] = useState("");
   // The variable receives data from forms for adding a contact
   const [contact, setContact] = useState({
     fullName: "",
@@ -39,29 +38,33 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
     //for the socket block
 
     if (socket) {
-      if (!socketImage) {
-        return setImageError("Please add an avatar");
-      }
       const reader = new FileReader();
-      reader.readAsDataURL(socketImage);
-      reader.onload = () => {
-        const base64Image = reader.result.split(",")[1];
+      if (socketImage !== "noAvatar") {
+        reader.readAsDataURL(socketImage);
+        reader.onload = () => {
+          const base64Image = reader.result.split(",")[1];
 
+          socket.emit("send user value", {
+            fullName: contact.fullName,
+            number: contact.number,
+            ownerId: contact.owner,
+            avatar: base64Image,
+          });
+        };
+      }
+      if (socketImage === "noAvatar") {
         socket.emit("send user value", {
           fullName: contact.fullName,
           number: contact.number,
           ownerId: contact.owner,
-          avatar: base64Image,
+          avatar: socketImage,
         });
-      };
-      setSocketImage(null);
+      }
+      setSocketImage("noAvatar");
+      setFilePath(avatarImage);
       setSocketImageValue("click to upload");
       setContact({ ...contact, number: "", fullName: "" });
-      setImageError(null);
     } else {
-      if (!image) {
-        return setImageError("Please add an avatar");
-      }
       data.append("fullName", contact.fullName);
       data.append("number", contact.number);
       data.append("owner", contact.owner);
@@ -76,39 +79,27 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
             setImage(null);
             setContact({ ...contact, number: "", fullName: "" });
             setImageValue("click to upload");
+            setErrorMessage("");
+            setFilePath(avatarImage);
             return setupdatingList(Math.random());
           }
+
           if (user.response.data.message) {
-            setImageError(null);
-            return add({ success: user.response.data.message });
+            return setErrorMessage(user.response.data.message);
           }
         })
         .catch((e) => {
           console.log(e);
-          setImageError(null);
-          if (e.response.data.message == "The value cannot be empty") {
-            return add({ success: e.response.data.message });
-          }
-
-          if (
-            e.response.data.message == "Name not valid" ||
-            "Number not valid"
-          ) {
-            return add({ success: e.response.data.message });
-          }
-
-          if (e.response.status == 415) {
-            return add({ success: e.response.data.message });
-          }
         });
     }
+
     //photo
   };
 
   return (
     <div className={className}>
       <h1>ADD CONTACT</h1>
-      <p style={{ color: "red" }}>{imageError}</p>
+      <p>{errorMessage}</p>
       <form
         className="addForm"
         style={{ width: "100%" }}
@@ -116,7 +107,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
       >
         <label for=""></label>
         <MyInput
-          style={{ marginTop: "50px", marginBottom: "7px" }}
+          style={{ marginTop: "35px", marginBottom: "0px" }}
           value={contact.fullName}
           onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
           type="text"
@@ -125,52 +116,75 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
         />
         <label for=""></label>
         <MyInput
-          style={{ marginTop: "5px", marginBottom: "5px" }}
           value={contact.number}
           onChange={(e) => setContact({ ...contact, number: e.target.value })}
-          type="text"
+          type="tel"
           maxLength={13}
           minLength={12}
           placeholder="Number: +380..."
         />
-        {socket ? (
-          <div style={{ position: "relative", lineHeight: "25px" }}>
-            <input
-              className="fileInput"
-              id="imageInputS"
-              type="file"
-              onChange={(e) => {
-                setSocketImage(e.target.files[0]);
-                setSocketImageValue("uploaded");
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Photo>
+            <img src={filePath} alt="Foto" />
+          </Photo>
+          {socket ? (
+            <div
+              style={{
+                position: "relative",
+                lineHeight: "25px",
+                marginTop: "10px",
               }}
-            />
-            <span className="fileInputSpan">
-              <label for="imageInputS">{socketImageValue}</label>
-            </span>
-          </div>
-        ) : (
-          ""
-        )}
-        {!socket ? (
-          <div style={{ position: "relative", lineHeight: "25px" }}>
-            <input
-              id="imageInput"
-              className="fileInput"
-              type="file"
-              onChange={(e) => {
-                setImage(e.target.files[0]);
-                setImageValue("uploaded");
+            >
+              <input
+                className="fileInput"
+                id="imageInputS"
+                type="file"
+                onChange={(e) => {
+                  setSocketImage(e.target.files[0]);
+
+                  setSocketImageValue("uploaded");
+                  setFilePath(URL.createObjectURL(e.target.files[0]));
+                }}
+              />
+              <span className="fileInputSpan">
+                <label for="imageInputS">{socketImageValue}</label>
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
+          {!socket ? (
+            <div
+              style={{
+                position: "relative",
+                lineHeight: "25px",
+                marginTop: "10px",
               }}
-            />
-            <span className="fileInputSpan">
-              <label for="imageInput">{imageValue}</label>
-            </span>
-          </div>
-        ) : (
-          ""
-        )}
+            >
+              <input
+                id="imageInput"
+                className="fileInput"
+                type="file"
+                onChange={(e) => {
+                  setImage(e.target.files[0]);
+                  setImageValue("uploaded");
+                  setFilePath(URL.createObjectURL(e.target.files[0]));
+                }}
+              />
+              <span className="fileInputSpan">
+                <label for="imageInput">{imageValue}</label>
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
         <MyButton
-          style={{ marginTop: "30px", marginLeft: "auto", marginRight: "auto" }}
+          style={{
+            marginBottom: "10px",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
           onClick={addContact}
         >
           Add

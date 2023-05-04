@@ -3,14 +3,18 @@ import jwt from "jwt-decode";
 import axios from "axios";
 import "../styles/App.css";
 import Photo from "./UI/photo/Photo";
+import avatarImage from "../components/icon/avatar.svg";
+
 const NavBar = ({
   styleClass,
   history,
   historyList,
   socketConnection,
   changeListVisible,
+  cangeAboutVisible,
   newMessageValue,
 }) => {
+  const jwtAvatarImage = jwt(localStorage.getItem("Authorization")).avatar;
   let className = "navBar ";
   let userRole;
   let userName;
@@ -26,7 +30,6 @@ const NavBar = ({
     className += styleClass.styleClass;
   }
   if (newMessageValue) {
-    //console.log(newMessageValue);
     classNameSupport += " newMessage";
   }
 
@@ -48,14 +51,10 @@ const NavBar = ({
       }
     }
   }
+  //
 
-  function getUnreadMessage() {
-    socketConnection.emit("checking for new messages", {
-      role: jwt(localStorage.getItem("Authorization")).role,
-    });
-    socketConnection.emit("get chat list", {
-      role: jwt(localStorage.getItem("Authorization")).role,
-    });
+  function authorInfo() {
+    cangeAboutVisible(true);
   }
 
   function getChats(e) {
@@ -78,36 +77,44 @@ const NavBar = ({
 
   return (
     <div className={className}>
-      <Photo>
-        <img
-          src={`${process.env.REACT_APP_SERVER_URL}${
-            jwt(localStorage.getItem("Authorization")).avatar
-          }`}
-          alt="Avatar"
-        />
-      </Photo>
+      <div className="headerUserContent" style={{ display: "flex" }}>
+        <Photo>
+          <img
+            src={
+              jwtAvatarImage != "noAvatar"
+                ? `${process.env.REACT_APP_SERVER_URL}${jwtAvatarImage}`
+                : avatarImage
+            }
+            alt="Avatar"
+          />
+        </Photo>
 
-      <p style={{ marginRight: "690px" }}>
-        {userName} ({userRole})
-      </p>
-      {jwt(localStorage.getItem("Authorization")).role === "admin" ? (
-        <p onClick={getChats} className={classNameSupport}>
-          SUPPORT
+        <p>
+          {userName} ({userRole})
         </p>
-      ) : (
-        ""
-      )}
-      {jwt(localStorage.getItem("Authorization")).role == "admin" ? (
-        <p onClick={getHistory} className={"historyLink"}>
-          VIEW HISTORY
+      </div>
+      <div className="navbarLinks">
+        {jwt(localStorage.getItem("Authorization")).role === "admin" ? (
+          <p onClick={getChats} className={classNameSupport}>
+            SUPPORT
+          </p>
+        ) : (
+          ""
+        )}
+        {jwt(localStorage.getItem("Authorization")).role == "admin" ? (
+          <p onClick={getHistory} className="historyLink">
+            VIEW HISTORY
+          </p>
+        ) : (
+          ""
+        )}
+        <p onClick={authorInfo} className={"historyLink"}>
+          ABOUT
         </p>
-      ) : (
-        ""
-      )}
-
-      <p onClick={exit} className={"exitLink"}>
-        EXIT
-      </p>
+        <p onClick={exit} className={"exitLink"}>
+          EXIT
+        </p>
+      </div>
     </div>
   );
 };

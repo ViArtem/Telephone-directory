@@ -87,7 +87,9 @@ const SupportWindow = ({
     setUserHasMessage(false);
     if (checkMessage === 0) {
       socketConnection.emit("getChat", {
+        fullName: jwt(localStorage.getItem("Authorization")).username,
         id: jwt(localStorage.getItem("Authorization")).id,
+        avatar: jwt(localStorage.getItem("Authorization")).avatar,
       });
 
       socketConnection.on("user messages", (data) => {
@@ -183,16 +185,20 @@ const SupportWindow = ({
               )}
             </div>
 
-            <div className="supportInteract">
-              <MyInput
-                value={message}
-                placeholder="Message"
-                type="text"
-                onChange={(e) => setMessage(e.target.value)}
-              ></MyInput>
-              <MyButton className="chatButton" onClick={userSendMessage}>
-                send
-              </MyButton>
+            <div>
+              <form className="supportInteract" action="">
+                <MyInput
+                  value={message}
+                  style={{ color: "white" }}
+                  maxLength={64}
+                  placeholder="Message"
+                  type="text"
+                  onChange={(e) => setMessage(e.target.value)}
+                ></MyInput>
+                <MyButton className="chatButton" onClick={userSendMessage}>
+                  send
+                </MyButton>
+              </form>
             </div>
           </div>
         </div>

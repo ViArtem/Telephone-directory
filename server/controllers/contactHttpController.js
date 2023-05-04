@@ -9,9 +9,11 @@ class contactHttpController {
       const contactName = req.body.fullName.trim();
       const contactNumber = req.body.number.trim();
       const contactOwner = req.body.owner;
-      const contactAvatar = req.file;
+
+      let contactAvatar = req.file;
+
       if (!contactAvatar) {
-        throw ApiError.BadRequest("The image value cannot be empty");
+        contactAvatar = { path: "noAvatar" };
       }
       // number and name validation
       if (contactName == "" || contactNumber == "") {
@@ -91,8 +93,10 @@ class contactHttpController {
   async updateContact(req, res, next) {
     try {
       const { fullName, number, id, owner, userRole } = req.body;
-      const avatar = req.file;
-
+      let avatar = req.file;
+      if (!avatar) {
+        avatar = { path: "noAvatar" };
+      }
       if (fullName == "" || number == "") {
         throw ApiError.BadRequest("The value cannot be empty");
       }

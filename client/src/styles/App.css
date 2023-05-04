@@ -38,6 +38,7 @@ h1{
 }
 
 
+
 .fileInputSpan{
     background: none;
     border: none;
@@ -95,16 +96,38 @@ font-size: 16px;
     padding: 0px 45px;
 }
 
-.navBar > p {
-    font-weight: bold;
-    color: rgba(39, 38, 67, 1);
+.navBar  p {
+     font-weight: bold;
+     color: rgba(39, 38, 67, 1);
+}
+.navbarLinks{
+    display: flex;
+    gap: 20px;
+}
+.fistPageSubtitle{
+    
+    margin-top: 10px;
+}
+
+.headerUserContent{
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .historyLink:hover{
     cursor: pointer;
     color: rgba(39, 38, 67, 0.59);
-    /* color: rgb(200, 255, 210); */
+  
     
+}
+.links{
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    bottom: 0px; 
+    left: 190px;
+
 }
 
 .exitLink:hover{
@@ -119,6 +142,7 @@ font-size: 16px;
     justify-content: center;
     gap: 30px;
     margin-top: 40px;
+   
 }
 
 .contactLiAdmin:hover{
@@ -126,9 +150,14 @@ font-size: 16px;
 }
 
 .mainText{
-    width: 528px;
-    height: 533px;
-    margin-bottom: -20px;
+    margin-top: 10px;
+    text-align: center;
+    width: 530px;
+    height: 350px;
+    border: 2px solid rgba(79, 77, 116, 1);
+    border-radius: 10px;
+    padding: 10px;
+    
 }
 
 .mainText > h1{
@@ -137,7 +166,7 @@ font-size: 16px;
 }
 
 .mainText > p{
-    margin-top: 30px;
+   
     font-size: 18px;
     color: rgba(60, 59, 103, 1);
     line-height: 125%;
@@ -150,16 +179,20 @@ font-size: 16px;
     height: 605px;
     background-color: rgba(176, 204, 221, 1);
     border-radius: 25px;
-    padding-top: 20px;
+    padding-top: 50px;
     text-align: center;
-    margin-left: 60px;
+  
    
 }
-.userList > h1{
+.userList  h1{
     color: rgba(39, 38, 67, 1);
     margin-bottom: 20px;
     font-weight: 700;
     font-size: 24px;
+}
+.userListContent{
+    width: 400px;
+    height: 500px;
 }
 
 .contactLi{
@@ -212,7 +245,7 @@ font-size: 16px;
 .pagination > li > a,
 .pagination > li > span {
     float: left;
-    padding: 8px 15px;
+    padding: 5px 12px;
     line-height: 1.5;
     border: 2px solid rgba(79, 77, 116, 0.3);
     margin-left: 2px;
@@ -263,13 +296,13 @@ font-size: 16px;
     padding: 30px;
     align-items: center;
     justify-content: center;
-
+    height: 284px;
+    width: 312px;
 }
 
 .findBlock{
     position: relative;
-    width: 312px;
-    height: 284px;
+    height: 254px;
 }
 
 .findBlock > h1{
@@ -281,19 +314,21 @@ font-size: 16px;
 
 .operationsBlock{
     position: relative;
-    width: 312px;
-    height: 305px;
+    width: 442px;
+    
     margin-top: 19px;
     overflow-x: hidden;
     overflow-y: auto;
     line-height: 1.5;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .operationsBlock > h1{
     font-size: 24px;
     position: absolute;
     top: 0;
-    margin-top: 50px;
+    margin-top: 15px;
     display: "inline-block";
 }
 
@@ -311,28 +346,38 @@ font-size: 16px;
 .foundContactBlock{
     position: relative;
     width: 442px;
-    height: 611px;
+   
+    /* height: 300px; */
 }
 
 .foundContactBlock h1{
     font-size: 24px;
     position: absolute;
     top: 0;
-    margin-top: 90px;
+    margin-top: 15px;
+    
 
 }
 
 .addBlock{
     position: relative;
-    width: 390px;
-    height: 611px; 
+    padding: 0px 45px;
+    margin-top: 20px;
+    height: 314px;
 }
 
 .addBlock > h1{
     position: absolute;
     top: 0;
-    margin-top: 90px;
+    margin-top: 15px;
     font-size: 24px;
+    font-family: 'Inter', sans-serif;    
+}
+.addBlock > p{
+    position: absolute;
+    top: 0;
+    margin-top: 45px;
+    color: red; 
     font-family: 'Inter', sans-serif;    
 }
 
@@ -358,11 +403,13 @@ font-size: 16px;
 
 
 .container{
+    padding-top: 15px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  
+    justify-content: center;
+    gap: 10px;
+
 }
 
 .container > div > p {
@@ -387,22 +434,21 @@ input:first-child{
 .footer{
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 43px 95px;
+    padding: 33px 0px;
     margin-right: auto;
     margin-left: auto;
     box-shadow: 5px 3px 7px rgba(0, 0, 0, 0.5);
     width: 1350px;
-    height: 260px;
+    height: 100px;
     border-radius: 15px;
     background-color:rgba(130, 162, 162, 1);
 }
 
 .footerContent{
     color: rgba(115, 115, 115, 1);
-    line-height: 50px;
     display: flex;
-    flex-direction:row;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 50px;
 }
 
 .textContent > p{
@@ -450,6 +496,7 @@ input:first-child{
     background-color: rgba(130, 162, 162, 1);
     box-shadow: 5px 3px 7px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
+    
 }
 
 .supportChatContent{
@@ -570,26 +617,28 @@ font-size: 10px;
 
 
 .message{
-    max-width: 90%;
+    max-width: 220px;
     color: rgba(39, 38, 67, 1);
     display: inline-block;
     background-color: rgb(117, 146, 146);
     border-radius: 5px;
     padding: 7px 7px 7px 5px;
     margin-top: 5px;
+    max-height: 200px; 
+    overflow: auto;
+    word-wrap: break-word;
 }
 
 .undefinedWrapper{
-    
     margin-left: auto;
     text-align: right;
 
 
 }
 .messageValue{
-display: flex;
-align-items: end;
-gap: 10px
+    display: flex;
+    align-items: end;
+    gap: 10px
 }
 
 .messageTime{
@@ -614,8 +663,23 @@ gap: 10px
 }
 
 .userNotifications{
+   
     margin-left: auto;
     margin-bottom: auto;
+}
+.footerIcon{
+    width: 35px;
+    height: 35px;
+}
+.linked{
+    margin-top: -4px;
+}
+
+.photoName{
+    width: 520px;
+    margin-left: 20px;
+  
+   
 }
 
 .hasNewMessage{
@@ -625,5 +689,27 @@ gap: 10px
     border-radius: 50%;
     text-align: center;
     color: red;
+
+}
+
+
+/*  */
+.aboutAuthor{
+    position: relative;
+    padding: 10px;
+    width: 530px;
+    height: 250px;
+    border: 2px solid rgba(79, 77, 116, 1);
+    border-radius: 10px;
+
+}
+
+.authorAvatar{
+    width: 100px;
+    height: 100px;
+}
+
+.photoName{
+    display: flex;
 
 }

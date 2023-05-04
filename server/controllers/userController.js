@@ -8,6 +8,10 @@ class userHttpController {
   // user registration controller
   async registrationUser(req, res, next) {
     try {
+      let userAvatar = req.file;
+      if (!userAvatar) {
+        userAvatar = { path: "noAvatar" };
+      }
       const regularForPassword = new RegExp(
         "(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}",
         "g"
@@ -20,7 +24,6 @@ class userHttpController {
 
       // receive data from the form
       const { firstName, lastName, email, password } = req.body;
-      const userAvatar = req.file;
 
       if (
         firstName.trim() == "" ||

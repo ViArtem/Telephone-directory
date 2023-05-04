@@ -16,21 +16,14 @@ class messageService {
 
         checkUser = true;
 
-        const messageList = await messageFileRequest.getNewMessageList();
-
-        messageList.push({
-          userId: elm.userId,
-          message: {
-            message: data.message,
-            date: data.date,
-          },
-        });
-
         //
-        await messageFileRequest.addUnreadMessage(
-          JSON.stringify(messageList, null, 2)
-        );
+        const newMessageData = {
+          userId: elm.userId, //
+          message: data.message,
+          date: data.date,
+        };
 
+        this.addUnreadMessage(newMessageData);
         //
 
         chatValue["messageForEmitAdminMessage"] = { message: elm };
@@ -79,6 +72,24 @@ class messageService {
     }
   }
 
+  // adds a new message to the list of unread messages
+  async addUnreadMessage(data) {
+    const messageList = await messageFileRequest.getNewMessageList();
+
+    messageList.push({
+      userId: data.userId, //elm
+      message: {
+        message: data.message,
+        date: data.date,
+      },
+    });
+
+    //
+    await messageFileRequest.addUnreadMessage(
+      JSON.stringify(messageList, null, 2)
+    );
+  }
+
   //
   async addNewAdminMessage(data) {
     const userList = await messageFileRequest.getUsers();
@@ -111,9 +122,32 @@ class messageService {
     return messageFileRequest.getUsers();
   }
 
+  async addEmptyUserList(data) {
+    const userList = await messageFileRequest.getUsers();
+
+    userList.unshift({
+      userId: data.id,
+      avatar: data.avatar,
+      userName: data.fullName,
+      userMessage: [
+        {
+          message: "Good afternoon, how can I help you?",
+          date: Number(Date.now()),
+          owner: "admin",
+        },
+      ],
+    });
+    await this.addUnreadMessage({
+      userId: data.id, //
+      message: "new user send mess",
+      date: Number(Date.now()),
+    });
+    await messageFileRequest.addMessage(JSON.stringify(userList, null, 2));
+  }
+
   // Returns the user's chat
 
-  async getChat(data) {
+  getChat = async (data) => {
     const userList = await messageFileRequest.getUsers();
 
     const userchat = userList.find((elm) => {
@@ -121,11 +155,15 @@ class messageService {
         return elm;
       }
     });
+
     if (userchat) {
       return userchat;
     }
-    return "";
-  }
+
+    await this.addEmptyUserList(data);
+    return await this.getChat(data);
+    //;
+  };
 
   //
 

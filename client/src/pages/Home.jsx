@@ -17,6 +17,7 @@ import jwt from "jwt-decode";
 import MyModal from "../components/UI/MyModal/MyModal";
 import HistoryBlock from "../components/HistoryBlock";
 import AdminChatWindow from "../components/AdminChatWindow";
+import About from "../components/About";
 
 const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
 //
@@ -75,6 +76,12 @@ function Home() {
   }
   function historyModalValue(value) {
     sethistoryList([...value]);
+  }
+
+  //
+  const [modalAbout, setModalAbout] = useState(false);
+  function aboutModal(value) {
+    setModalAbout(value);
   }
 
   // socket
@@ -142,6 +149,7 @@ function Home() {
         <NavBar
           newMessageValue={newMessageValue}
           changeListVisible={changeChatListVisible}
+          cangeAboutVisible={aboutModal}
           history={historyModal}
           historyList={historyModalValue}
           socketConnection={socket}
@@ -160,25 +168,29 @@ function Home() {
         )}
 
         <div className="firsPageContent">
-          <div className="mainText">
-            <h1 className="fistPageTitle">Artem Vitenko's Project</h1>
-            <p
-              className="fistPageSubtitle"
-              style={{
-                lineHeight: "1.5",
-              }}
-            >
-              This site uses WebSocket and http requests as the basis for
-              interacting with the server. The Add Contact module is responsible
-              for saving a new contact. The Find Contact module sends a request
-              to the server with the name of the contact you need, where the
-              request is processed and contact information is sent as a
-              response. The Found Contacts module receives a response from the
-              server and displays all available information about the contact,
-              including their first name, last name, phone number, and avatar.
-              Buttons for deleting and editing a contact appear if you have
-              created it.
-            </p>
+          {/* */}
+          <div className="findOperationBlock">
+            <FindBlock find={setNewFoundContactHttp} />
+            <AddContactBlock
+              add={setNewAddContactHttp}
+              setupdatingList={setUpdateList}
+            />
+          </div>
+          <div>
+            <FoundBlock
+              foundContactHttp={foundContactHttp}
+              editModal={editModal}
+              editModalValue={editModalValue}
+              deletes={setNewDeleteContactHttp}
+              isHttp={true}
+              setupdatingList={setUpdateList}
+            />
+            <OperationsBlock
+              foundRequest={foundRequest}
+              addRequest={addRequest}
+              deleteRequest={deleteRequest}
+              editRequest={editRequest}
+            />
           </div>
           <UserList
             deletes={setNewDeleteContactHttp}
@@ -207,7 +219,7 @@ function Home() {
         <hr className="line" />
       </div>
       {/* Second page */}
-      <div className="page secondPage">
+      {/* <div className="page secondPage">
         <h1
           style={{
             fontSize: "30px",
@@ -217,31 +229,9 @@ function Home() {
         >
           HTTP Request
         </h1>
-        <div className="secondPageContent">
-          <div className="findOperationBlock">
-            <FindBlock find={setNewFoundContactHttp} />
-            <OperationsBlock
-              foundRequest={foundRequest}
-              addRequest={addRequest}
-              deleteRequest={deleteRequest}
-              editRequest={editRequest}
-            />
-          </div>
-          <FoundBlock
-            foundContactHttp={foundContactHttp}
-            editModal={editModal}
-            editModalValue={editModalValue}
-            deletes={setNewDeleteContactHttp}
-            isHttp={true}
-            setupdatingList={setUpdateList}
-          />
-          <AddContactBlock
-            add={setNewAddContactHttp}
-            setupdatingList={setUpdateList}
-          />
-        </div>
+        <div className="secondPageContent"></div>
         <hr className="line" />
-      </div>
+      </div> */}
 
       {/* Third page */}
       <div className="page secondPage">
@@ -257,15 +247,24 @@ function Home() {
         <div className="secondPageContent">
           <div className="findOperationBlock">
             <FindBlock socket={socket} />
+            <AddContactBlock socket={socket} setupdatingList={setUpdateList} />
+          </div>
+          <div>
+            <FoundBlock
+              socket={socket}
+              editModal={editModal}
+              editModalValue={editModalValue}
+              setupdatingList={setUpdateList}
+            />
             <OperationsBlock socket={socket} setupdatingList={setUpdateList} />
           </div>
-          <FoundBlock
-            socket={socket}
-            editModal={editModal}
+          <UserList
+            deletes={setNewDeleteContactHttp}
             editModalValue={editModalValue}
+            editModal={editModal}
+            updatingList={updatingList}
             setupdatingList={setUpdateList}
           />
-          <AddContactBlock socket={socket} setupdatingList={setUpdateList} />
         </div>
       </div>
 
@@ -283,6 +282,10 @@ function Home() {
 
         <MyModal visible={modalHistory} setVisible={setModalHistory}>
           <HistoryBlock historyList={historyList} />
+        </MyModal>
+
+        <MyModal visible={modalAbout} setVisible={setModalAbout}>
+          <About />
         </MyModal>
         {/*  */}
       </div>

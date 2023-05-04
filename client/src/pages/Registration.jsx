@@ -3,12 +3,11 @@ import MyButton from "../components/UI/button/MyButton";
 import MyInput from "../components/UI/input/MyInput";
 import axios from "axios";
 import { Link } from "react-router-dom";
-//import dotenv from "dotenv";
-//dotenv.config();
+import avatarImage from "../components/icon/avatar.svg";
 import "../styles/Auth.css";
 
 const Registration = () => {
-  const [image, setImageRegist] = useState(null);
+  const [image, setImageRegist] = useState(avatarImage);
   const [imageValue, setImageValueRegist] = useState("click to upload");
   // const [imageTitle, setimageTitle] = useState(null);
   const [newUser, setNewUser] = useState({
@@ -23,32 +22,29 @@ const Registration = () => {
   async function registrationUser(e) {
     try {
       e.preventDefault();
-      if (image) {
-        const data = new FormData();
-        data.append("firstName", newUser.firstName);
-        data.append("lastName", newUser.lastName);
-        data.append("email", newUser.email);
-        data.append("password", newUser.password);
-        data.append("avatar", image);
-        await axios
-          .post(`${process.env.REACT_APP_SERVER_URL}user/registration`, data)
-          .then((response) => {
-            if (response.response.status == 400) {
-              return seterrorValue(response.response.data.message);
-            }
-            setImageRegist("");
-          });
-      } else {
-        seterrorValue("Please upload your avatar");
-      }
+
+      const data = new FormData();
+      data.append("firstName", newUser.firstName);
+      data.append("lastName", newUser.lastName);
+      data.append("email", newUser.email);
+      data.append("password", newUser.password);
+      data.append("avatar", image);
+      await axios
+        .post(`${process.env.REACT_APP_SERVER_URL}user/registration`, data)
+        .then((response) => {
+          if (response.response.status == 400) {
+            return seterrorValue(response.response.data.message);
+          }
+          setImageRegist(avatarImage);
+        });
     } catch (error) {
+      console.log("error");
       console.log(error);
       window.location.href = "/";
       if (error.request.status == 501) {
         console.log(error);
         return console.log(error.response.data.message);
       }
-      console.log(error);
     }
   }
 

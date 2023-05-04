@@ -14,6 +14,7 @@ async function socketChat() {
         });
         return false;
       }
+
       return true;
     }
     //
@@ -34,7 +35,7 @@ async function socketChat() {
       if (!validateMessage(data)) {
         return;
       }
-
+      data.message = data.message.substr(0, 100);
       const message = await messageService.addNewUserMessage(data);
 
       io.to(data.id).emit("allMessage", {
@@ -49,7 +50,7 @@ async function socketChat() {
     // processes messages sent by the administrator
 
     socket.on("admin sent a message", async (data) => {
-      // add validation
+      //  validation
       if (!validateMessage(data)) {
         return;
       }

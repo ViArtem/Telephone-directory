@@ -25,10 +25,12 @@ async function socketData() {
       //validation
 
       const avatar = data.avatar;
-
-      const buffer = Buffer.from(avatar, "base64");
-      const avatarPath = `images/${uniqid()}-contact.jpg`;
-
+      let avatarPath = avatar;
+      let buffer;
+      if (avatar !== "noAvatar") {
+        buffer = Buffer.from(avatar, "base64");
+        avatarPath = `images/${uniqid()}-contact.jpg`;
+      }
       if (data.fullName.trim() == "" || data.number.trim() == "") {
         return io.sockets.emit("add user", {
           userErrorName: "The value cannot be empty",

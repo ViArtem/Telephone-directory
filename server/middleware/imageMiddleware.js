@@ -8,7 +8,8 @@ const storage = multer.diskStorage({
     if (file.originalname) {
       cb(null, `${uniqid()}-${file.originalname}`);
     } else {
-      cb(null, false);
+      //cb(null, false);
+      cb(null, "defaulAvatar");
     }
   },
 });

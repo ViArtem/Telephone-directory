@@ -4,6 +4,7 @@ import Photo from "./UI/photo/Photo";
 import MyButton from "./UI/button/MyButton";
 import jwt from "jwt-decode";
 import MyPaginate from "./UI/pagination/MyPagnation";
+import avatarImage from "../components/icon/avatar.svg";
 
 const UserList = ({
   deletes,
@@ -129,78 +130,88 @@ const UserList = ({
 
   return (
     <div className="userList">
-      <h1>CONTACTS</h1>
+      <div className="userListContent">
+        <h1>CONTACTS</h1>
 
-      {contacts.length ? (
-        <ul style={{ height: "370px" }}>
-          {contacts.map((contact, index) => (
-            <div
-              onClick={() => {
-                adminView(
-                  contact.number,
-                  contact.fullName,
-                  contact.avatar,
-                  contact._id
-                );
-              }}
-              key={Math.random()}
-              className={contactLiClass}
-            >
-              <Photo>
-                <img
-                  src={`${process.env.REACT_APP_SERVER_URL}${contact.avatar}`}
-                  alt="Logo"
-                />
-              </Photo>
-              <div className="liFullname">
-                <p
-                  style={{
-                    marginRight: "auto",
-                    with: "100%",
-                  }}
-                >
-                  {contact.fullName}
-                </p>
-                {viewUser == contact.number ? <p>{viewUser}</p> : ""}
-              </div>
-              <div>
-                {viewUser == contact.number ? (
-                  <MyButton
-                    onClick={editContact}
-                    style={{ width: "65px", height: "25px", fontSize: "14px" }}
-                  >
-                    Edit
-                  </MyButton>
-                ) : (
-                  ""
-                )}
-                {viewUser == contact.number ? (
-                  <MyButton
-                    onClick={deleteContact}
+        {contacts.length ? (
+          <ul style={{ height: "370px" }}>
+            {contacts.map((contact, index) => (
+              <div
+                onClick={() => {
+                  adminView(
+                    contact.number,
+                    contact.fullName,
+                    contact.avatar,
+                    contact._id
+                  );
+                }}
+                key={Math.random()}
+                className={contactLiClass}
+              >
+                <Photo>
+                  <img
+                    src={
+                      contact.avatar !== "noAvatar"
+                        ? `${process.env.REACT_APP_SERVER_URL}${contact.avatar}`
+                        : avatarImage
+                    }
+                    alt="Logo"
+                  />
+                </Photo>
+                <div className="liFullname">
+                  <p
                     style={{
-                      width: "85px",
-                      fontSize: "14px",
-                      height: "25px",
-                      marginTop: "3px",
-                      border: " 1px solid rgb(255, 150, 200)",
+                      marginRight: "auto",
+                      with: "100%",
                     }}
                   >
-                    Delete
-                  </MyButton>
-                ) : (
-                  ""
-                )}
+                    {contact.fullName}
+                  </p>
+                  {viewUser == contact.number ? <p>{viewUser}</p> : ""}
+                </div>
+                <div>
+                  {viewUser == contact.number ? (
+                    <MyButton
+                      onClick={editContact}
+                      style={{
+                        width: "65px",
+                        height: "25px",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Edit
+                    </MyButton>
+                  ) : (
+                    ""
+                  )}
+                  {viewUser == contact.number ? (
+                    <MyButton
+                      onClick={deleteContact}
+                      style={{
+                        width: "65px",
+                        fontSize: "14px",
+                        height: "25px",
+                        marginTop: "3px",
+                        border: " 1px solid rgb(255, 150, 200)",
+                      }}
+                    >
+                      Delete
+                    </MyButton>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </ul>
-      ) : (
-        <p style={{ color: "rgba(39, 38, 67, 1)" }}>
-          The contact list is empty
-        </p>
-      )}
-      <div className="paginateContainer">
-        <MyPaginate handlePageClick={changeList} pageCount={page} />
+            ))}
+          </ul>
+        ) : (
+          <p style={{ color: "rgba(39, 38, 67, 1)" }}>
+            The contact list is empty
+          </p>
+        )}
+        <div className="paginateContainer">
+          <MyPaginate handlePageClick={changeList} pageCount={page} />
+        </div>
       </div>
     </div>
   );
