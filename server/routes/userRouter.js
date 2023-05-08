@@ -7,8 +7,7 @@ userRouter.post("/user/authorization", userController.authorizationUser);
 
 userRouter.post(
   "/user/registration",
-  multer.single("avatar"),
-  userController.registrationUser
+  userController.registrationUser //  multer.single("avatar"),
 );
 
 userRouter.post("/user/refresh", userController.refresh);

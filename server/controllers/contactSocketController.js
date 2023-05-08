@@ -27,17 +27,19 @@ async function socketData() {
       const avatar = data.avatar;
       let avatarPath = avatar;
       let buffer;
+
       if (avatar !== "noAvatar") {
         buffer = Buffer.from(avatar, "base64");
         avatarPath = `images/${uniqid()}-contact.jpg`;
       }
+
       if (data.fullName.trim() == "" || data.number.trim() == "") {
         return io.sockets.emit("add user", {
           userErrorName: "The value cannot be empty",
         });
       }
+
       if (Helpers.dataValidation(data.fullName, data.number)) {
-        //
         return io.sockets.emit("add user", {
           userErrorName: Helpers.dataValidation(
             data.fullName.trim(),
@@ -55,7 +57,7 @@ async function socketData() {
         buffer
       );
 
-      if (newSocketUser.success == "Such a contact already exists") {
+      if (newSocketUser.success === "Such a contact already exists") {
         return io.sockets.emit("add user", {
           userErrorName: newSocketUser.success,
         });
@@ -68,7 +70,7 @@ async function socketData() {
 
       // add an action to the story
       await administratorAdapter.addAction(
-        `Socket: Add ${data.fullName}`,
+        `Socket request to create a contact ${data.fullName}`,
         Date.now()
       );
       //
@@ -90,7 +92,7 @@ async function socketData() {
         Helpers.allFirstLettersCapitalized(data.fullName.trim())
       );
 
-      if (foundData == null) {
+      if (foundData === null) {
         io.sockets.emit("find user", {
           userFirstName: "User not found",
         });
@@ -107,7 +109,7 @@ async function socketData() {
 
         // add an action to the story
         await administratorAdapter.addAction(
-          `Socket: Find ${data.fullName}`,
+          `Socket request to find a contact ${data.fullName}`,
           Date.now()
         );
       }
@@ -130,7 +132,7 @@ async function socketData() {
 
       // add an action to the story
       await administratorAdapter.addAction(
-        `Socket: Delete ${data.fullName}`,
+        `Socket request to delete a contact ${data.fullName}`,
         Date.now()
       );
     });
@@ -176,7 +178,7 @@ async function socketData() {
 
         // add an action to the story
         await administratorAdapter.addAction(
-          `Socket: Edit ${data.fullName}`,
+          `Socket request to update a contact ${data.fullName}`,
           Date.now()
         );
       } else {

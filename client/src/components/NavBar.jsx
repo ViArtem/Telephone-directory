@@ -3,7 +3,7 @@ import jwt from "jwt-decode";
 import axios from "axios";
 import "../styles/App.css";
 import Photo from "./UI/photo/Photo";
-import avatarImage from "../components/icon/avatar.svg";
+import avatarImage from "../components/icon/avatar1.png";
 
 const NavBar = ({
   styleClass,

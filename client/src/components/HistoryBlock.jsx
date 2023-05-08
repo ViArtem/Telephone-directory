@@ -22,10 +22,12 @@ const HistoryBlock = ({ styleClass, historyList }) => {
       {historyList
         ? historyList.map((li) => {
             return (
-              <p key={Math.random()} style={{}}>
-                {li.action}:{" "}
-                {new Date(li.time * 1000).toISOString().slice(14, 22)}
-              </p>
+              <div key={Math.random()} className="historyItem">
+                <p key={Math.random()}>
+                  {li.action}: {new Date(li.time).toLocaleDateString()} /{" "}
+                  {new Date(li.time).toLocaleTimeString()}
+                </p>
+              </div>
             );
           })
         : ""}

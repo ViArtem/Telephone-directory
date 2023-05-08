@@ -10,9 +10,12 @@ const SupportWindow = ({
   changeVisible,
   changeNewMessageValue,
 }) => {
+  const [buttonClass, setButtonClass] = useState("");
+
   const [userHasMessage, setUserHasMessage] = useState(false);
   const [userMessageList, setMessageList] = useState([]);
 
+  //
   useEffect(() => {
     if (jwt(localStorage.getItem("Authorization")).role !== "admin") {
       socketConnection.emit("joinRoom", {
@@ -20,6 +23,8 @@ const SupportWindow = ({
       });
     }
   }, []);
+
+  //
 
   useEffect(() => {
     socketConnection.on("have new message", (data) => {
@@ -30,6 +35,7 @@ const SupportWindow = ({
     });
   }, [userMessageList]);
 
+  //
   useEffect(() => {
     if (jwt(localStorage.getItem("Authorization")).role === "admin") {
       socketConnection.emit("joinAdminRoom", {});
@@ -37,10 +43,25 @@ const SupportWindow = ({
   }, []);
 
   //Users chat
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (message.length >= 1) {
+      setButtonClass("myBtnActive");
+    } else {
+      setButtonClass("");
+    }
+  }, [message]);
 
   async function userSendMessage(e) {
     e.preventDefault();
+    if (message.length < 1) {
+      setButtonClass("myBtnIncorrect");
+      setTimeout(() => {
+        setButtonClass("");
+      }, 1000);
+      return;
+    }
     if (admin) {
       // && chatData
       socketConnection.emit("joinRoom", {
@@ -195,7 +216,7 @@ const SupportWindow = ({
                   type="text"
                   onChange={(e) => setMessage(e.target.value)}
                 ></MyInput>
-                <MyButton className="chatButton" onClick={userSendMessage}>
+                <MyButton className={buttonClass} onClick={userSendMessage}>
                   send
                 </MyButton>
               </form>

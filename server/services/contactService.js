@@ -1,5 +1,6 @@
 import contactAdapter from "../adapters/contactAdapter.js";
 import * as fs from "node:fs/promises";
+import { type } from "node:os";
 import path from "node:path";
 
 class contactService {
@@ -29,9 +30,18 @@ class contactService {
     }
   }
   //
-  async findContact(name) {
+  async findContact(data) {
     try {
-      return await contactAdapter.findContact(name);
+      if (Number(data)) {
+        let newNumber = data;
+
+        if (!data.includes("+")) {
+          newNumber = "+".concat(data);
+        }
+
+        return await contactAdapter.findContactByNumber(newNumber);
+      }
+      return await contactAdapter.findContact(data);
     } catch (error) {
       return error;
     }
@@ -88,6 +98,24 @@ class contactService {
   async getAllContact(pageData) {
     try {
       return await contactAdapter.getAllContact(pageData);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getContactByPartData(data) {
+    try {
+      if (Number(data)) {
+        let newNumber = data;
+
+        if (data.includes("+")) {
+          newNumber = data.replace("+", "");
+        }
+
+        return await contactAdapter.findContactByPartNumber(newNumber);
+      }
+
+      return await contactAdapter.getContactByPartName(data);
     } catch (error) {
       return error;
     }

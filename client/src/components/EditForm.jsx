@@ -52,9 +52,6 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
       axios
         .put(`${process.env.REACT_APP_SERVER_URL}contact/update`, data)
         .then((user) => {
-          // if (user.response.data.message.message) {
-          //   return setErrorMessage(user.response.data.message.message);
-          // }
           edit(user);
           editModal(false);
           setupdatingList(Math.random());
@@ -94,7 +91,7 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
         Edit Contact
       </h1>
       <p>{errorMessage}</p>
-      {!hasImg ? <p style={{ color: "red" }}>please upload an avatar</p> : ""}
+      {/* {!hasImg ? <p style={{ color: "red" }}>Please upload an avatar</p> : ""} */}
       <form style={{ width: "100%", marginTop: "5px" }}>
         <label for=""></label>
         <MyInput

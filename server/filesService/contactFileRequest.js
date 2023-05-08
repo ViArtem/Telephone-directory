@@ -43,6 +43,19 @@ class contactFileRequest {
     }
   }
 
+  // Find a contact by number
+  async findContactByNumber(number) {
+    try {
+      const fileData = JSON.parse(await fs.readFile(contactPath)).filter(
+        (contact) => contact.number.includes(number)
+      );
+      if (fileData === []) {
+        return null;
+      }
+      return fileData;
+    } catch (error) {}
+  }
+
   async getAllContact(pageData) {
     try {
       // get a list of all files in the folder

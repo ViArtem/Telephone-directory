@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import axios from "axios";
@@ -11,10 +11,29 @@ const FindBlock = ({ styleClass, find, socket }) => {
   }
 
   const [contact, setContact] = useState({ fullName: "", action: "Find" });
+  const [activeButton, setActiveButton] = useState("");
+  const [activeNameField, setActiveNameField] = useState("");
+
+  useEffect(() => {
+    if (contact.fullName.length >= 3) {
+      setActiveNameField("");
+      setActiveButton("myBtnActive");
+      return;
+    }
+    //setActiveNameField("incorrectValue");
+    setActiveButton("");
+    return;
+  }, [contact]);
 
   const findContact = (e) => {
     e.preventDefault();
-
+    if (contact.fullName.length <= 3) {
+      setActiveNameField("incorrectValue");
+      setTimeout(() => {
+        setActiveNameField("");
+      }, 800);
+      return;
+    }
     if (socket) {
       socket.emit(
         "find user value",
@@ -29,6 +48,7 @@ const FindBlock = ({ styleClass, find, socket }) => {
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}contact/find`, contact)
         .then((user) => {
+          console.log(user);
           const hasUser = user.data;
 
           if (hasUser) {
@@ -63,16 +83,21 @@ const FindBlock = ({ styleClass, find, socket }) => {
       <form style={{ width: "100%" }}>
         <label for=""></label>
         <MyInput
+          className={activeNameField}
           style={{ marginTop: "65px" }}
           value={contact.fullName}
           onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
           type="text"
           minLength={1}
-          placeholder="Contact name"
+          placeholder="Contact name or number"
           required
         />
 
-        <MyButton style={{ marginTop: "45px" }} onClick={findContact}>
+        <MyButton
+          className={activeButton}
+          style={{ marginTop: "45px" }}
+          onClick={findContact}
+        >
           Find
         </MyButton>
       </form>

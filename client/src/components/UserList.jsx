@@ -4,7 +4,8 @@ import Photo from "./UI/photo/Photo";
 import MyButton from "./UI/button/MyButton";
 import jwt from "jwt-decode";
 import MyPaginate from "./UI/pagination/MyPagnation";
-import avatarImage from "../components/icon/avatar.svg";
+import avatarImage from "../components/icon/avatar3.jpg";
+import MyInput from "./UI/input/MyInput";
 
 const UserList = ({
   deletes,
@@ -33,10 +34,28 @@ const UserList = ({
     id: "",
   });
 
+  const [contactFilter, setContactFilter] = useState("");
+  useEffect(() => {
+    if (contactFilter.trim() === "" || contactFilter.length < 3) {
+      return setupdatingList(Math.random());
+    }
+    if (contactFilter.length < 3) {
+      return;
+    }
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}contact/find/part`, {
+        fullName: contactFilter,
+      })
+      .then((data) => {
+        setHowMany(0);
+        setPage(1);
+        setContact([...data.data]);
+      });
+  }, [contactFilter]);
+
   async function changeList(e) {
-    // console.log(e);
     setHowMany(e.selected);
-    //setHowMany((prevState) => ({ ...prevState, pages: e.selected }));
+
     const allContact = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}contact/all`,
       {
@@ -107,7 +126,6 @@ const UserList = ({
         pages: howMany,
       })
       .then((allContact) => {
-        //console.log(allContact);
         if (allContact === undefined) {
           return console.log("Null");
         }
@@ -205,10 +223,17 @@ const UserList = ({
             ))}
           </ul>
         ) : (
-          <p style={{ color: "rgba(39, 38, 67, 1)" }}>
-            The contact list is empty
-          </p>
+          <div className="emptyList">
+            <p style={{ color: "rgba(39, 38, 67, 1)" }}>
+              The contact list is empty
+            </p>
+          </div>
         )}
+        <MyInput
+          style={{ width: "200px", marginTop: "20px" }}
+          onChange={(e) => setContactFilter(e.target.value)}
+          placeholder="Filter contacts"
+        ></MyInput>
         <div className="paginateContainer">
           <MyPaginate handlePageClick={changeList} pageCount={page} />
         </div>

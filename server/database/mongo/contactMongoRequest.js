@@ -25,6 +25,28 @@ class contactMongoDatabaseRequest {
     );
   }
 
+  // Find a contact by number
+  async findContactByNumber(number) {
+    return await Helpers.handleErrors(
+      Contact.findOne({
+        number,
+      })
+    );
+  }
+  // Find a contact by name part
+  async findContactByPartName(fullName) {
+    return await Helpers.handleErrors(
+      Contact.find({ fullName: { $regex: fullName } })
+    );
+  }
+
+  // Find a contact by part number
+  async findContactByPartNumber(number) {
+    return await Helpers.handleErrors(
+      Contact.find({ number: { $regex: number } })
+    );
+  }
+
   // Find a contact by id
   async findById(_id) {
     return await Helpers.handleErrors(

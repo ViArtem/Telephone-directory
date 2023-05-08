@@ -9,7 +9,7 @@ class contactHttpController {
       const contactName = req.body.fullName.trim();
       const contactNumber = req.body.number.trim();
       const contactOwner = req.body.owner;
-
+      console.log(contactNumber);
       let contactAvatar = req.file;
 
       if (!contactAvatar) {
@@ -56,7 +56,7 @@ class contactHttpController {
         Helpers.allFirstLettersCapitalized(fullName)
       );
 
-      if (foundContactData == null) {
+      if (foundContactData === null) {
         throw ApiError.BadRequest("Contact no found");
       }
 
@@ -124,6 +124,19 @@ class contactHttpController {
   async findAllContact(req, res, next) {
     try {
       return res.status(200).json(await contactService.getAllContact(req.body));
+    } catch (error) {
+      next(error);
+    }
+  }
+  async findContactByPartData(req, res, next) {
+    try {
+      return res
+        .status(200)
+        .json(
+          await contactService.getContactByPartData(
+            Helpers.allFirstLettersCapitalized(req.body.fullName.trim())
+          )
+        );
     } catch (error) {
       next(error);
     }

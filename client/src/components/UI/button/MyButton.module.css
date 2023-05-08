@@ -1,4 +1,5 @@
 .myBtn{
+   transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
     width: 88px;
     height: 36px;
     border-radius: 5px;
@@ -9,3 +10,4 @@
     border: 1px solid  rgba(115, 115, 115, 1);
     cursor: pointer;
 }
+

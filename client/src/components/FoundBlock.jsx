@@ -43,12 +43,12 @@ const FoundBlock = ({
           ) {
             setNoAvatar(false);
             if (foundContactHttp.data.avatar === "noAvatar") {
-              //setHttpImg(avatarImage);
               setNoAvatar(true);
             }
             setHttpImg(foundContactHttp.data.avatar);
             setShowButton(true);
           } else setShowButton(false);
+
           setUserNumber(foundContactHttp.data.number);
           setNoAvatar(false);
           if (foundContactHttp.data.avatar === "noAvatar") {
@@ -58,13 +58,13 @@ const FoundBlock = ({
           return setUserData(foundContactHttp.data.fullName);
         }
       } catch (error) {
-        if (foundContactHttp.success == "The value cannot be empty") {
+        if (foundContactHttp.success === "The value cannot be empty") {
           setShowButton(false);
           setUserNumber(false);
           return setUserData("The value cannot be empty");
         }
 
-        if (foundContactHttp.success == "Contact no found") {
+        if (foundContactHttp.success === "Contact no found") {
           setShowButton(false);
           return setUserData("No found");
         }

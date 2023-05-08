@@ -39,6 +39,16 @@ class contactMySQLDatabaseRequest {
     return rows[0];
   }
 
+  // Find a contact by number
+  async findContactByNumber(number) {
+    return await Helpers.handleErrors(
+      this.pool.query(
+        "SELECT * FROM contacts WHERE number LIKE CONCAT('%', ?, '%')",
+        [number]
+      )
+    );
+  }
+
   // Find a contact by id
   async findById(_id) {
     const rows = await Helpers.handleErrors(

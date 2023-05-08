@@ -16,6 +16,7 @@ import { adminRouter } from "./routes/adminRouter.js";
 import { setHistory } from "./middleware/setHistory.js";
 import errorMiddleware from "./middleware/errors.js";
 
+import multer from "./middleware/imageMiddleware.js";
 //
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -27,7 +28,7 @@ const allMiddleware = [
   express.json({
     type: ["application/json", "text/plain"],
   }),
-
+  multer.single("avatar"),
   userRouter,
   checkToken,
   adminRouter,

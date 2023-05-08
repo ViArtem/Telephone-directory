@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import axios from "axios";
 import jwt from "jwt-decode";
 import Photo from "./UI/photo/Photo";
-import avatarImage from "../components/icon/avatar.svg";
+import avatarImage from "../components/icon/avatar3.jpg";
+import MyInputNumber from "./UI/inputNumber/MyInputNumber";
 
 const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
   let className = "otherBlock addBlock";
@@ -28,10 +29,54 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
     action: "Add",
     avatar: "",
   });
+
+  const [activeButton, setActiveButton] = useState("");
+  const [activeNumberField, setActiveNumberField] = useState("");
+  const [activeNameField, setActiveNameField] = useState("");
+  useEffect(() => {
+    if (contact.fullName.length >= 3 || contact.number.length > 12) {
+      setActiveButton("");
+      if (!/^[a-z]+ [a-z]+$/.test(contact.fullName)) {
+        setActiveNameField("incorrectValue");
+        return;
+      }
+      setActiveNameField("");
+
+      if (
+        !/^(?:\+[1-9]{1,3})?(?:[0-9]{3}[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[0-9]{7})$/.test(
+          contact.number
+        )
+      ) {
+        setActiveNumberField("incorrectValue");
+        return;
+      }
+      setActiveNumberField("");
+      setActiveButton("myBtnActive");
+      return;
+    }
+
+    setActiveButton("");
+  }, [contact]);
   /// The function sends a request with form data to add a contact
 
   const addContact = async (e) => {
     e.preventDefault();
+
+    if (!contact.fullName) {
+      setActiveNameField("incorrectValue");
+      setTimeout(() => {
+        setActiveNameField("");
+      }, 800);
+      return;
+    }
+
+    if (!contact.number) {
+      setActiveNumberField("incorrectValue");
+      setTimeout(() => {
+        setActiveNumberField("");
+      }, 800);
+      return;
+    }
 
     const data = new FormData();
 
@@ -70,6 +115,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
       data.append("owner", contact.owner);
       data.append("action", contact.action);
       data.append("avatar", image);
+
       //for the http block
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}contact/add`, data) //
@@ -107,6 +153,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
       >
         <label for=""></label>
         <MyInput
+          className={activeNameField}
           style={{ marginTop: "35px", marginBottom: "0px" }}
           value={contact.fullName}
           onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
@@ -116,6 +163,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
         />
         <label for=""></label>
         <MyInput
+          className={activeNumberField}
           value={contact.number}
           onChange={(e) => setContact({ ...contact, number: e.target.value })}
           type="tel"
@@ -123,10 +171,23 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
           minLength={12}
           placeholder="Number: +380..."
         />
+        {/* <MyInputNumber
+          // className={activeNumberField}
+          name={"number"}
+          required={true}
+          autoFocus={true}
+          placeholder={""}
+          className={"myInput"}
+          country="ua"
+          value={contact.number}
+          onChange={(number) => setContact({ ...contact, number })}
+        /> */}
+
         <div style={{ display: "flex", gap: "10px" }}>
-          <Photo>
+          <Photo style={{ width: "15px", height: "55px" }}>
             <img src={filePath} alt="Foto" />
           </Photo>
+
           {socket ? (
             <div
               style={{
@@ -185,6 +246,7 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
             marginLeft: "auto",
             marginRight: "auto",
           }}
+          className={activeButton}
           onClick={addContact}
         >
           Add

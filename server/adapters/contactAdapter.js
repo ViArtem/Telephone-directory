@@ -30,6 +30,18 @@ class contactAdapter {
     return await this.service.findContact(fullName);
   }
 
+  async findContactByNumber(number) {
+    return await this.service.findContactByNumber(number);
+  }
+
+  async getContactByPartName(name) {
+    return await this.service.findContactByPartName(name);
+  }
+
+  async findContactByPartNumber(number) {
+    return await this.service.findContactByPartNumber(number);
+  }
+
   async getAllContact(pageData) {
     return await this.service.getAllContact(pageData);
   }
