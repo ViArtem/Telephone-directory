@@ -41,12 +41,17 @@ class contactMySQLDatabaseRequest {
 
   // Find a contact by number
   async findContactByNumber(number) {
-    return await Helpers.handleErrors(
+    const contacts = await Helpers.handleErrors(
       this.pool.query(
         "SELECT * FROM contacts WHERE number LIKE CONCAT('%', ?, '%')",
         [number]
       )
     );
+
+    if (contacts.length === 0) {
+      return null;
+    }
+    return contacts[0];
   }
 
   // Find a contact by id
@@ -58,8 +63,23 @@ class contactMySQLDatabaseRequest {
     if (rows.length === 0) {
       return null;
     }
-    //this.pool.end();
+
     return rows[0];
+  }
+
+  // Find a contact by name part
+  async findContactByPartName(name) {
+    return await Helpers.handleErrors(
+      this.pool.query(`SELECT * FROM contacts WHERE fullName LIKE '%${name}%'`)
+    );
+    console.log(rows);
+  }
+
+  // Find a contact by part number
+  async findContactByPartNumber(number) {
+    return await Helpers.handleErrors(
+      this.pool.query(`SELECT * FROM contacts WHERE number LIKE '%${number}%'`)
+    );
   }
 
   async addContact(fullName, number, owner, id, avatar) {

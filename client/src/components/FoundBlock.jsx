@@ -3,7 +3,7 @@ import jwt from "jwt-decode";
 import MyButton from "./UI/button/MyButton";
 import Photo from "./UI/photo/Photo";
 import axios from "axios";
-import avatarImage from "../components/icon/avatar.svg";
+import avatarImage from "../components/icon/avatar3.jpg";
 const FoundBlock = ({
   styleClass,
   foundContactHttp,
@@ -47,7 +47,9 @@ const FoundBlock = ({
             }
             setHttpImg(foundContactHttp.data.avatar);
             setShowButton(true);
-          } else setShowButton(false);
+          } else {
+            setShowButton(false);
+          }
 
           setUserNumber(foundContactHttp.data.number);
           setNoAvatar(false);
@@ -65,6 +67,8 @@ const FoundBlock = ({
         }
 
         if (foundContactHttp.success === "Contact no found") {
+          setUserNumber(false);
+          setHttpImg(false);
           setShowButton(false);
           return setUserData("No found");
         }

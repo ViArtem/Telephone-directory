@@ -3,7 +3,8 @@ import { createRequire } from "node:module";
 import { socketData } from "../controllers/contactSocketController.js";
 import { socketChat } from "../controllers/chatSocketController.js";
 import connectToDatabase from "../databasesСonnecting/connectToMongo.js";
-
+import helpers from "../exсeptions/helpers.js";
+import path from "node:path";
 const require = createRequire(import.meta.url);
 
 let io;
@@ -23,6 +24,8 @@ function startSocketServer() {
       if (process.env.QUERY_PARAMETERS === "mongo") {
         connectToDatabase();
       }
+
+      await helpers.checkPresenceFolder(path.resolve("images"));
 
       console.log("Started socket server...");
     });

@@ -52,6 +52,22 @@ class userFileRequest {
     return fileData[0];
   }
 
+  // Update user avatar
+  async updateAvatar(userId, newAvatar) {
+    try {
+      const addNewAvatar = JSON.parse(await fs.readFile(userPath));
+      for (let user of addNewAvatar) {
+        if (user.customId === userId) {
+          user.avatar = newAvatar;
+          await fs.writeFile(userPath, JSON.stringify(addRefresh, null, 2));
+          return;
+        }
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
   async addRefreshToken(id, refreshUser) {
     try {
       const addRefresh = JSON.parse(await fs.readFile(userPath));

@@ -1,15 +1,17 @@
 import contactAdapter from "../adapters/contactAdapter.js";
 import * as fs from "node:fs/promises";
-import { type } from "node:os";
 import path from "node:path";
 
 class contactService {
   async addNewContact(name, number, owner, contactAvatar, filePath = null) {
     try {
       // checking the contact for uniqueness
-      const candidate = await contactAdapter.findContact(name);
+      const num = await contactAdapter.findContactByNumber(number);
 
-      if (candidate) {
+      if (
+        (await contactAdapter.findContact(name)) ||
+        (await contactAdapter.findContactByNumber(number))
+      ) {
         return { message: "Such a contact already exists" };
       }
 
@@ -76,15 +78,19 @@ class contactService {
     try {
       //checking for a user in the database
       const validationDeletion = await contactAdapter.findContact(name);
+
       if (!validationDeletion) {
         return { noFound: `Contact with name ${name} does not exist` };
       }
 
       //check if the user can delete the contact
-      if (validationDeletion.owner == userId || userRole == "admin") {
+      if (validationDeletion.owner === userId || userRole === "admin") {
         await contactAdapter.deleteContact(name, validationDeletion.id);
         const newLinc = imgPath.split("\\");
-        await fs.unlink(path.resolve(`images/${newLinc[1]}`));
+
+        if (imgPath !== "noAvatar") {
+          await fs.unlink(path.resolve(`images/${newLinc[1]}`));
+        }
 
         return { success: `Contact ${name} has been deleted` };
       } else {

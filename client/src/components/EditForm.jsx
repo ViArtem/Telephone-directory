@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
+
+import PhoneInput from "react-phone-number-input";
 import jwt from "jwt-decode";
 import axios from "axios";
 const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
-  const [hasImg, setHasImg] = useState(true);
   const [contact, setContact] = useState({
     fullName: "",
     number: "",
@@ -16,10 +17,47 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
   const [img, setImg] = useState(null);
   const [imgValue, setImgValue] = useState("click to upload");
 
+  const [activeButton, setActiveButton] = useState("");
+  const [canSend, setCanSend] = useState(false);
+  const [activeNumberField, setActiveNumberField] = useState("");
+  const [activeNameField, setActiveNameField] = useState("");
+  useEffect(() => {
+    setActiveButton("");
+    if (!/^[a-zA-Z]+ [a-zA-Z]+$/.test(contact.fullName)) {
+      setActiveNameField("incorrectValue");
+      setCanSend(false);
+      return;
+    }
+    setActiveNameField("");
+
+    if (
+      !/^(?:\+[1-9]{1,3})?(?:[0-9]{3}[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[0-9]{7})$/.test(
+        contact.number
+      )
+    ) {
+      setActiveNumberField("PhoneInputInputIncorrect");
+      setCanSend(false);
+      return;
+    }
+    setActiveNumberField("PhoneInputInput");
+    setCanSend(true);
+    setActiveButton("myBtnActive");
+    return;
+  }, [contact]);
+
   const [errorMessage, setErrorMessage] = useState("");
   const editContact = (e) => {
     /// The function sends a request with form data to edit a contact
     e.preventDefault();
+    if (!canSend) {
+      setActiveButton("myBtnIncorrect");
+      setTimeout(() => {
+        setActiveButton("");
+      }, 600);
+
+      return;
+    }
+
     if (userValue.socket) {
       const reader = new FileReader();
 
@@ -66,6 +104,13 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
     }
   };
 
+  const handlePhoneInputChange = (value) => {
+    if (value === undefined) {
+      return setContact({ ...contact });
+    }
+    setContact({ ...contact, number: value });
+  };
+
   useEffect(() => {
     if (userValue) {
       setContact({
@@ -91,10 +136,11 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
         Edit Contact
       </h1>
       <p>{errorMessage}</p>
-      {/* {!hasImg ? <p style={{ color: "red" }}>Please upload an avatar</p> : ""} */}
+
       <form style={{ width: "100%", marginTop: "5px" }}>
         <label for=""></label>
         <MyInput
+          className={activeNameField}
           style={{ marginTop: "20px", marginBottom: "20px" }}
           value={contact.fullName}
           onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
@@ -102,15 +148,17 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
           placeholder="Full name"
         />
         <label for=""></label>
-        <MyInput
+        <PhoneInput
+          class={activeNumberField}
           style={{ marginTop: "20px", marginBottom: "20px" }}
+          country="UA"
+          placeholder="Telephone"
           value={contact.number}
-          onChange={(e) => setContact({ ...contact, number: e.target.value })}
-          type="text"
-          maxLength={13}
+          onChange={handlePhoneInputChange}
+          maxLength={16}
           minLength={12}
-          placeholder="+380685452894"
         />
+
         <div style={{ position: "relative", lineHeight: "25px" }}>
           <input
             className="fileInput"
@@ -125,7 +173,11 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
             <label for="imageInputEdit">{imgValue}</label>
           </span>
         </div>
-        <MyButton onClick={editContact} style={{ marginTop: "10px" }}>
+        <MyButton
+          onClick={editContact}
+          style={{ marginTop: "10px" }}
+          className={activeButton}
+        >
           Update
         </MyButton>
       </form>

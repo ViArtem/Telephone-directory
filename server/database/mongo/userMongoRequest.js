@@ -13,6 +13,20 @@ class userMongoRequest {
     return await Helpers.handleErrors(Users.findOne({ customId }));
   }
 
+  // Update user avatar
+  async updateAvatar(userId, newAvatar) {
+    return await Helpers.handleErrors(
+      Users.updateOne(
+        { customId: userId },
+        {
+          $set: {
+            avatar: newAvatar,
+          },
+        }
+      )
+    );
+  }
+
   // function for user registration
   async registrationUser(
     firstName,

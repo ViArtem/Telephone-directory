@@ -3,22 +3,26 @@ import Helpers from "../exсeptions/helpers.js";
 import ApiError from "../exсeptions/apiError.js";
 
 class contactHttpController {
-  // controller to receive data to create a new contact
+  //Creates a new contact
+  //Accepts name, phone number, contact owner id, and contact avatar (optional).
+  //Returns the object of the created contact
   async addContact(req, res, next) {
     try {
       const contactName = req.body.fullName.trim();
       const contactNumber = req.body.number.trim();
       const contactOwner = req.body.owner;
-      console.log(contactNumber);
+
       let contactAvatar = req.file;
 
       if (!contactAvatar) {
         contactAvatar = { path: "noAvatar" };
       }
+
       // number and name validation
-      if (contactName == "" || contactNumber == "") {
+      if (contactName === "" || contactNumber === "") {
         throw ApiError.BadRequest("The value cannot be empty");
       }
+
       if (Helpers.dataValidation(contactName, contactNumber)) {
         throw ApiError.BadRequest(
           Helpers.dataValidation(contactName, contactNumber).message
@@ -33,7 +37,7 @@ class contactHttpController {
         contactAvatar.path
       );
 
-      if (newContact.message == "Such a contact already exists") {
+      if (newContact.message === "Such a contact already exists") {
         throw ApiError.BadRequest(newContact.message);
       }
 
@@ -42,18 +46,21 @@ class contactHttpController {
       next(error);
     }
   }
-  // controller for receiving data to find a contact
+
+  // Finds a contact by parameter
+  // Аccepts full name or phone number
+  // Returns the object of the found contact
   async findContact(req, res, next) {
     try {
-      const fullName = req.body.fullName.trim();
+      const numberOrFullName = req.body.fullName.trim();
 
-      if (fullName == "") {
+      if (numberOrFullName === "") {
         throw ApiError.BadRequest("The value cannot be empty");
       }
 
       // request to find a contact
       const foundContactData = await contactService.findContact(
-        Helpers.allFirstLettersCapitalized(fullName)
+        Helpers.allFirstLettersCapitalized(numberOrFullName)
       );
 
       if (foundContactData === null) {
@@ -65,7 +72,9 @@ class contactHttpController {
       next(error);
     }
   }
+
   // controller to receive data to delete a contact
+  // returns an object with the deletion status
   async deleteContact(req, res, next) {
     try {
       const { fullName, userId, userRole, imgPath } = req.body;
@@ -79,25 +88,30 @@ class contactHttpController {
       );
 
       if (
-        deleteSuccess.success == "You don't have enough rights" ||
+        deleteSuccess.success === "You don't have enough rights" ||
         deleteSuccess.noFound
       ) {
         throw ApiError.RefreshError(deleteSuccess.success);
       }
+
       return res.status(200).json(deleteSuccess);
     } catch (error) {
       next(error);
     }
   }
-  // controller to receive data to update the contact
+
+  // controller for editing contacts
+  // returns the contact with the data before the update
   async updateContact(req, res, next) {
     try {
       const { fullName, number, id, owner, userRole } = req.body;
       let avatar = req.file;
+
       if (!avatar) {
         avatar = { path: "noAvatar" };
       }
-      if (fullName == "" || number == "") {
+
+      if (fullName === "" || number === "") {
         throw ApiError.BadRequest("The value cannot be empty");
       }
 
@@ -120,7 +134,8 @@ class contactHttpController {
       next(error);
     }
   }
-  // data retrieval controller to find all available contacts
+
+  // data retrieval controller to find all available contacts (returns an array of all contacts )
   async findAllContact(req, res, next) {
     try {
       return res.status(200).json(await contactService.getAllContact(req.body));
@@ -128,6 +143,8 @@ class contactHttpController {
       next(error);
     }
   }
+
+  // returns an array of contacts that match the filter parameters
   async findContactByPartData(req, res, next) {
     try {
       return res

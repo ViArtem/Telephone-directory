@@ -5,8 +5,9 @@ import axios from "axios";
 import jwt from "jwt-decode";
 import Photo from "./UI/photo/Photo";
 import avatarImage from "../components/icon/avatar3.jpg";
-import MyInputNumber from "./UI/inputNumber/MyInputNumber";
 
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
   let className = "otherBlock addBlock";
 
@@ -30,14 +31,24 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
     avatar: "",
   });
 
+  const handlePhoneInputChange = (value) => {
+    if (value === undefined) {
+      return setContact({ ...contact });
+    }
+    setContact({ ...contact, number: value });
+  };
+
   const [activeButton, setActiveButton] = useState("");
+
+  const [canSend, setCanSend] = useState(false);
   const [activeNumberField, setActiveNumberField] = useState("");
   const [activeNameField, setActiveNameField] = useState("");
   useEffect(() => {
     if (contact.fullName.length >= 3 || contact.number.length > 12) {
       setActiveButton("");
-      if (!/^[a-z]+ [a-z]+$/.test(contact.fullName)) {
+      if (!/^[a-zA-Z]+ [a-zA-Z]+$/.test(contact.fullName)) {
         setActiveNameField("incorrectValue");
+        setCanSend(false);
         return;
       }
       setActiveNameField("");
@@ -47,10 +58,12 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
           contact.number
         )
       ) {
-        setActiveNumberField("incorrectValue");
+        setActiveNumberField("PhoneInputInputIncorrect");
+        setCanSend(false);
         return;
       }
       setActiveNumberField("");
+      setCanSend(true);
       setActiveButton("myBtnActive");
       return;
     }
@@ -61,20 +74,12 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
 
   const addContact = async (e) => {
     e.preventDefault();
-
-    if (!contact.fullName) {
-      setActiveNameField("incorrectValue");
+    if (!canSend) {
+      setActiveButton("myBtnIncorrect");
       setTimeout(() => {
-        setActiveNameField("");
-      }, 800);
-      return;
-    }
+        setActiveButton("");
+      }, 600);
 
-    if (!contact.number) {
-      setActiveNumberField("incorrectValue");
-      setTimeout(() => {
-        setActiveNumberField("");
-      }, 800);
       return;
     }
 
@@ -162,26 +167,16 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
           placeholder="Full name"
         />
         <label for=""></label>
-        <MyInput
-          className={activeNumberField}
+
+        <PhoneInput
+          country="UA"
+          class={`PhoneInputInput ${activeNumberField}`}
           value={contact.number}
-          onChange={(e) => setContact({ ...contact, number: e.target.value })}
-          type="tel"
-          maxLength={13}
+          onChange={handlePhoneInputChange}
+          maxLength={16}
           minLength={12}
-          placeholder="Number: +380..."
+          placeholder="Telephone"
         />
-        {/* <MyInputNumber
-          // className={activeNumberField}
-          name={"number"}
-          required={true}
-          autoFocus={true}
-          placeholder={""}
-          className={"myInput"}
-          country="ua"
-          value={contact.number}
-          onChange={(number) => setContact({ ...contact, number })}
-        /> */}
 
         <div style={{ display: "flex", gap: "10px" }}>
           <Photo style={{ width: "15px", height: "55px" }}>

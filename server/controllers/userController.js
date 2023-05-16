@@ -1,8 +1,5 @@
 import ApiError from "../exсeptions/apiError.js";
 import userService from "../services/userService.js";
-import jwt from "jsonwebtoken";
-import jwt_decode from "jwt-decode";
-import userAdapter from "../adapters/userAdapter.js";
 
 class userHttpController {
   // user registration controller
@@ -98,35 +95,56 @@ class userHttpController {
       next(error);
     }
   }
+
+  async changeAvatar(req, res, next) {
+    try {
+      const newAvatar = req.file;
+      const accessToken = req.headers.authorization.split(" ")[1];
+
+      if (!newAvatar) {
+        throw ApiError.BadRequest(`No Empty`);
+      }
+
+      const newAvatarUser = await userService.changeAvatar(
+        accessToken,
+        newAvatar.path
+      );
+
+      return res.status(200).json({
+        success: "Avatar updated",
+        access: newAvatarUser,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // validate refresh token
   async refresh(req, res, next) {
     try {
-      const refreshData = jwt.verify(
-        req.headers.refresh,
-        process.env.REFRESH_KEY
-      );
+      const refreshToken = req.headers.refresh;
+      const accessToken = req.headers.authorization.split(" ")[1];
 
-      const refreshFromDatabase = await userAdapter.findUserById(
-        refreshData.id
-      );
-
-      const correctRefresh = req.headers.refresh;
-
-      const accessData = jwt_decode(req.headers.authorization.split(" ")[1]);
-      if (correctRefresh === refreshFromDatabase.refresh) {
-        const validateRefresh = await userService.verifyRefresh(
-          refreshData,
-          accessData
-        );
-
-        return res.json({
-          access: validateRefresh.newAccess,
-          refresh: validateRefresh.newRefresh,
-        });
-      } else {
-        throw ApiError.RefreshError("incorrect refresh");
+      if (!refreshToken || !accessToken) {
+        throw ApiError.UnauthorizedError("token error");
       }
+
+      const validateRefresh = await userService.verifyRefresh(
+        refreshToken,
+        accessToken
+      );
+
+      if (validateRefresh === "authorization error") {
+        throw ApiError.UnauthorizedError("the refresh token is not valid");
+      }
+
+      return res.json({
+        access: validateRefresh.newAccess,
+        refresh: validateRefresh.newRefresh,
+      });
     } catch (error) {
-      res.status(403).json({ error: "incorrect refresh" });
+      console.log(error);
+      //res.status(403).json({ error: "incorrect refresh" });
       next(error);
     }
   }

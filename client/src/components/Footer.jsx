@@ -6,14 +6,26 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="footerContent">
-        <a href="https://www.linkedin.com/in/artem-vitenko-3b270924a/">
+        <a
+          className="linkedinLogo"
+          href="https://www.linkedin.com/in/artem-vitenko-3b270924a/"
+          target="_blank"
+        >
           <img className="footerIcon" src={linkedInImage} alt="linkedIn" />
         </a>
-        <a href="https://github.com/ViArtem?tab=repositories">
+        <a
+          className="githubLogo"
+          href="https://github.com/ViArtem?tab=repositories"
+          target="_blank"
+        >
           <img className="footerIcon" src={gitHubImage} alt="github" />
         </a>
 
-        <a href="mailto:vitenkoartem.official.com">
+        <a
+          className="gmailLogo"
+          href="mailto:vitenkoartem.official.com"
+          target="_blank"
+        >
           <img className="footerIcon" src={gmailImage} alt="gmail" />
         </a>
       </div>

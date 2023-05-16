@@ -2,6 +2,10 @@ import userAdapter from "../adapters/userAdapter.js";
 import tokenGeneration from "../tokenFunction/tokenGeneration.js";
 import bcrypt from "bcrypt";
 import uniqid from "uniqid";
+import jwt from "jsonwebtoken";
+import jwt_decode from "jwt-decode";
+import * as fs from "node:fs/promises";
+import path from "node:path";
 
 class userService {
   async registrationUser(firstName, lastName, email, password, avatar) {
@@ -89,22 +93,62 @@ class userService {
       return error;
     }
   }
-  async verifyRefresh(refreshData, accessData) {
-    const newAccess = await tokenGeneration.accessToken(
-      accessData.id,
-      accessData.username,
-      accessData.role,
-      accessData.avatar
-    );
-    const newRefresh = await tokenGeneration.refreshAfterUpdatingAccessToken(
-      accessData.id,
-      accessData.username,
-      refreshData.exp,
-      refreshData.iat
-    );
 
-    await userAdapter.addRefreshToken(refreshData.id, newRefresh);
-    return { newAccess, newRefresh };
+  async changeAvatar(accessToken, newAvatarPath) {
+    try {
+      const accessData = jwt_decode(accessToken, process.env.ACCESS_KEY);
+
+      await userAdapter.changeAvatar(accessData.id, newAvatarPath);
+
+      // if (accessData.avatar !== "noAvatar") {
+      //   await fs.unlink(path.resolve(accessData.avatar));
+      // }
+
+      return await tokenGeneration.accessToken(
+        accessData.id,
+        accessData.username,
+        accessData.role,
+        newAvatarPath
+      );
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
+  //
+  async verifyRefresh(refreshToken, accessToken) {
+    try {
+      const refreshData = jwt.verify(refreshToken, process.env.REFRESH_KEY);
+      const accessData = jwt_decode(accessToken);
+
+      const userDataFromDatabase = await userAdapter.findUserById(
+        refreshData.id
+      );
+
+      if (refreshToken === userDataFromDatabase.refresh) {
+        const newAccess = await tokenGeneration.accessToken(
+          accessData.id,
+          accessData.username,
+          accessData.role,
+          accessData.avatar
+        );
+
+        const newRefresh =
+          await tokenGeneration.refreshAfterUpdatingAccessToken(
+            accessData.id,
+            accessData.username,
+            refreshData.exp,
+            refreshData.iat
+          );
+
+        await userAdapter.addRefreshToken(refreshData.id, newRefresh);
+        return { newAccess, newRefresh };
+      }
+      return "authorization error";
+    } catch (error) {
+      return error;
+    }
   }
 }
 

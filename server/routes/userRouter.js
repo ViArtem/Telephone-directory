@@ -10,6 +10,8 @@ userRouter.post(
   userController.registrationUser //  multer.single("avatar"),
 );
 
+userRouter.post("/user/change/avatar", userController.changeAvatar);
+
 userRouter.post("/user/refresh", userController.refresh);
 
 export { userRouter };

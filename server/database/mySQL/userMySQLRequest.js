@@ -32,8 +32,18 @@ class userMySQLDatabaseRequest {
     if (rows.length === 0) {
       return null;
     }
-    //this.pool.end();
+
     return rows[0];
+  }
+
+  // Update user avatar
+  async updateAvatar(userId, newAvatar) {
+    await Helpers.handleErrors(
+      this.pool.query("UPDATE users SET avatar = ? WHERE customId = ?", [
+        newAvatar,
+        userId,
+      ])
+    );
   }
 
   // function for user registration

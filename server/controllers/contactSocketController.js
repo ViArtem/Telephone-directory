@@ -20,11 +20,14 @@ async function socketData() {
       console.log("Disconnect");
     });
 
-    // Adding a user
+    //Creates a new contact
+    //Accepts name, phone number, contact owner id, and contact avatar (optional).
+    //Returns the object of the created contact
     socket.on("send user value", async (data) => {
       //validation
 
       const avatar = data.avatar;
+
       let avatarPath = avatar;
       let buffer;
 
@@ -33,7 +36,7 @@ async function socketData() {
         avatarPath = `images/${uniqid()}-contact.jpg`;
       }
 
-      if (data.fullName.trim() == "" || data.number.trim() == "") {
+      if (data.fullName.trim() === "" || data.number.trim() === "") {
         return io.sockets.emit("add user", {
           userErrorName: "The value cannot be empty",
         });
@@ -78,7 +81,7 @@ async function socketData() {
 
     //controller for receiving data to find a contact
     socket.on("find user value", async (data) => {
-      if (data.fullName.trim() == "") {
+      if (data.fullName.trim() === "") {
         io.sockets.emit("find user", {
           userFirstName: "The value cannot be empty",
         });
@@ -143,7 +146,7 @@ async function socketData() {
 
       const buffer = Buffer.from(data.avatar, "base64");
       const avatarPath = `images/${uniqid()}-contact.jpg`;
-      if (data.newFullName.trim() == "" || data.newNumber.trim() == "") {
+      if (data.newFullName.trim() === "" || data.newNumber.trim() === "") {
         return io.sockets.emit("edit user", {
           userErrorName: "The value cannot be empty",
         });
@@ -186,6 +189,18 @@ async function socketData() {
           userFirstName: "User don't update",
         });
       }
+    });
+
+    socket.on("filter", async (filterData) => {
+      if (filterData.fullName.trim() === "") {
+        return;
+      }
+      const filterUserList = await contactService.getContactByPartData(
+        Helpers.allFirstLettersCapitalized(filterData.fullName.trim())
+      );
+      io.sockets.emit("filter data", {
+        filterUserList,
+      });
     });
   });
 }

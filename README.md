@@ -22,12 +22,14 @@ An authorized user can:
 2. Add your own contacts.
 3. All contacts that the user has added to the database can be edited and deleted, all others can only be viewed.
 4. View the history of your requests
+5. Write to technical support by clicking the "Support" button
 
 Additional features of the administrator:
 
 1. Edit and delete all contacts
 2. View the history of requests for all time
 3. View information about a contact when you click on it
+4. Receives a list of all chats with users and has the ability to communicate with them all
 
 ---
 

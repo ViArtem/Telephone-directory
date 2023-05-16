@@ -211,7 +211,7 @@ const SupportWindow = ({
                 <MyInput
                   value={message}
                   style={{ color: "white" }}
-                  maxLength={64}
+                  maxLength={256}
                   placeholder="Message"
                   type="text"
                   onChange={(e) => setMessage(e.target.value)}

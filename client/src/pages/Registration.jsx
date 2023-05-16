@@ -8,7 +8,9 @@ import "../styles/Auth.css";
 
 const Registration = () => {
   const [image, setImageRegist] = useState(avatarImage);
-  const [imageValue, setImageValueRegist] = useState("click to upload");
+  const [imageValue, setImageValueRegist] = useState(
+    "click to upload an avatar"
+  );
   // const [imageTitle, setimageTitle] = useState(null);
   const [newUser, setNewUser] = useState({
     firstName: "",

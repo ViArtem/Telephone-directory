@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Photo from "./UI/photo/Photo";
-import avatarImage from "../components/icon/avatar.svg";
+import avatarImage from "../components/icon/avatar2.jpg";
 import linkedInImage from "../components/icon/LinkedIn_icon.svg.png";
 import gmailImage from "../components/icon/gmailColor.png";
 import gitHubImage from "../components/icon/github.svg";
@@ -11,20 +11,37 @@ const About = ({}) => {
         <div className="aboutAuthor">
           <div className="photoName">
             <Photo className="authorAvatar">
-              <img src={avatarImage} alt="" />
+              <img
+                style={{ width: "107%", height: "96%", borderRadius: "50%" }}
+                src={avatarImage}
+                alt=""
+              />
             </Photo>
-            <div style={{ maxWidth: "390px" }}>
-              <h1>Artem Vitenko's Project</h1>
-              <p style={{ lineHeight: "1.5", marginTop: "10px" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                maximus placerat ex, eu mollis lacus molestie eget. Donec ac
-                urna ac nisl pulvinar viverra nec sed turpis.
+            <div style={{ maxWidth: "370px", marginLeft: "25px" }}>
+              <h1 style={{ color: "rgba(39, 38, 67, 1)" }}>
+                Artem Vitenko's Project
+              </h1>
+              <p
+                style={{
+                  color: "rgba(60, 59, 103, 1)",
+                  lineHeight: "1.5",
+                  marginTop: "5px",
+                }}
+              >
+                Hello! My name is Artem and I am the author of this project. My
+                main occupation is developing web applications on Node.js.
+                Additionally, I am currently studying cybersecurity at
+                university. I am always open to communication and ready to
+                assist you whenever needed.
               </p>
             </div>
           </div>
 
           <div className="links ">
-            <a href="https://www.linkedin.com/in/artem-vitenko-3b270924a/">
+            <a
+              href="https://www.linkedin.com/in/artem-vitenko-3b270924a/"
+              target="_blank"
+            >
               <img
                 className="aboutIcon linked"
                 src={linkedInImage}
@@ -32,7 +49,10 @@ const About = ({}) => {
               />
             </a>
 
-            <a href="https://github.com/ViArtem?tab=repositories">
+            <a
+              href="https://github.com/ViArtem?tab=repositories"
+              target="_blank"
+            >
               <img
                 className="aboutIcon linked"
                 src={gitHubImage}
@@ -40,7 +60,7 @@ const About = ({}) => {
               />
             </a>
 
-            <a href="mailto:vitenkoartem.official.com">
+            <a href="mailto:vitenkoartem.official.com" target="_blank">
               <img className="aboutIcon linked" src={gmailImage} alt="gmail" />
             </a>
           </div>

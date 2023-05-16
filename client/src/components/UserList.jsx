@@ -13,6 +13,7 @@ const UserList = ({
   setupdatingList,
   editModal,
   editModalValue,
+  socketConnection,
 }) => {
   const [contactLiClass, setContactLiClass] = useState("contactLi");
   useEffect(() => {
@@ -36,21 +37,27 @@ const UserList = ({
 
   const [contactFilter, setContactFilter] = useState("");
   useEffect(() => {
-    if (contactFilter.trim() === "" || contactFilter.length < 3) {
+    if (contactFilter.trim() === "" || contactFilter.length < 2) {
       return setupdatingList(Math.random());
     }
-    if (contactFilter.length < 3) {
+    if (contactFilter.length < 2) {
       return;
     }
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}contact/find/part`, {
-        fullName: contactFilter,
-      })
-      .then((data) => {
-        setHowMany(0);
-        setPage(1);
-        setContact([...data.data]);
-      });
+    socketConnection.emit("filter", { fullName: contactFilter });
+    socketConnection.on("filter data", (data) => {
+      setHowMany(0);
+      setPage(1);
+      setContact([...data.filterUserList]);
+    });
+    // axios
+    //   .post(`${process.env.REACT_APP_SERVER_URL}contact/find/part`, {
+    //     fullName: contactFilter,
+    //   })
+    //   .then((data) => {
+    //     setHowMany(0);
+    //     setPage(1);
+    //     setContact([...data.data]);
+    //   });
   }, [contactFilter]);
 
   async function changeList(e) {
@@ -230,9 +237,10 @@ const UserList = ({
           </div>
         )}
         <MyInput
-          style={{ width: "200px", marginTop: "20px" }}
+          style={{ width: "200px", marginTop: "20px", textAlign: "center" }}
           onChange={(e) => setContactFilter(e.target.value)}
           placeholder="Filter contacts"
+          maxLength={15}
         ></MyInput>
         <div className="paginateContainer">
           <MyPaginate handlePageClick={changeList} pageCount={page} />

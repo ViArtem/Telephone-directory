@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import jwt from "jwt-decode";
 import axios from "axios";
 import "../styles/App.css";
@@ -13,8 +13,21 @@ const NavBar = ({
   changeListVisible,
   cangeAboutVisible,
   newMessageValue,
+  avatarChange,
+  changeAvatarVisibleFunc,
+  changeAvatarVisible,
 }) => {
-  const jwtAvatarImage = jwt(localStorage.getItem("Authorization")).avatar;
+  const [arrowClass, setArrowClass] = useState("arrow up");
+
+  const [jwtAvatarImage, setJwtAvatarImage] = useState(
+    jwt(localStorage.getItem("Authorization")).avatar
+  );
+
+  useEffect(() => {
+    setJwtAvatarImage(jwt(localStorage.getItem("Authorization")).avatar);
+  }, [avatarChange]);
+
+  //const jwtAvatarImage = ;
   let className = "navBar ";
   let userRole;
   let userName;
@@ -25,12 +38,10 @@ const NavBar = ({
     }
   }
 
-  let classNameSupport = "historyLink";
+  const [classNameSupport, setClassNameSupport] = useState("historyLink");
+
   if (styleClass) {
-    className += styleClass.styleClass;
-  }
-  if (newMessageValue) {
-    classNameSupport += " newMessage";
+    setClassNameSupport((classNameSupport += styleClass.styleClass));
   }
 
   //admin history
@@ -91,6 +102,19 @@ const NavBar = ({
 
         <p>
           {userName} ({userRole})
+        </p>
+        <p
+          onClick={() => {
+            if (changeAvatarVisible) {
+              changeAvatarVisibleFunc(false);
+              return setArrowClass("up arrow");
+            }
+            changeAvatarVisibleFunc(true);
+            setArrowClass("down arrow");
+          }}
+          className="changeAvatarTriangle"
+        >
+          <i class={arrowClass}></i>
         </p>
       </div>
       <div className="navbarLinks">

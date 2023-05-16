@@ -24,8 +24,8 @@ const HistoryBlock = ({ styleClass, historyList }) => {
             return (
               <div key={Math.random()} className="historyItem">
                 <p key={Math.random()}>
-                  {li.action}: {new Date(li.time).toLocaleDateString()} /{" "}
-                  {new Date(li.time).toLocaleTimeString()}
+                  {li.action}: {new Date(Number(li.time)).toLocaleDateString()}{" "}
+                  / {new Date(Number(li.time)).toLocaleTimeString()}
                 </p>
               </div>
             );

@@ -34,7 +34,7 @@ class contactFileRequest {
       const fileData = JSON.parse(await fs.readFile(contactPath)).filter(
         (contact) => contact.fullName == fullName
       );
-      if (fileData === []) {
+      if (fileData.length === 0) {
         return null;
       }
       return fileData[0];
@@ -49,18 +49,42 @@ class contactFileRequest {
       const fileData = JSON.parse(await fs.readFile(contactPath)).filter(
         (contact) => contact.number.includes(number)
       );
-      if (fileData === []) {
-        return null;
+      if (fileData.length === 0) {
+        return [];
       }
       return fileData;
     } catch (error) {}
+  }
+
+  // Find a contact by name part
+  async findContactByPartName(fullName) {
+    const fileData = JSON.parse(await fs.readFile(contactPath)).filter(
+      (contact) => contact.fullName.includes(fullName)
+    );
+    if (fileData.length === 0) {
+      return [];
+    }
+    return fileData;
+  }
+
+  // Find a contact by part number
+  async findContactByPartNumber(number) {
+    const fileData = JSON.parse(await fs.readFile(contactPath)).filter(
+      (contact) => contact.number.includes(number)
+    );
+    if (fileData.length === 0) {
+      return null;
+    }
+    return fileData;
   }
 
   async getAllContact(pageData) {
     try {
       // get a list of all files in the folder
       const allContacts = JSON.parse(await fs.readFile(contactPath));
-
+      if (allContacts.length === 0) {
+        return null;
+      }
       return allContacts.slice(
         pageData.pages * 5,
         pageData.pages > 0 ? pageData.pages * 5 : 5

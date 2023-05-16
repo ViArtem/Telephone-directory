@@ -44,6 +44,10 @@ class userAdapter {
     return await this.service.findUserById(id);
   }
 
+  async changeAvatar(id, avatar) {
+    return await this.service.updateAvatar(id, avatar);
+  }
+
   async addRefreshToken(id, refresh) {
     return await this.service.addRefreshToken(id, refresh);
   }

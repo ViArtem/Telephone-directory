@@ -5,10 +5,11 @@
     border: 3px solid rgb(255, 255, 255);
     width: 560px;
     height: 400px;
-    padding: 100px;
+    padding: 60px 100px 0px 100px;
     border-radius: 50px;
     margin: auto;
     font-weight: 500;
+   
 }
 .containers{
     text-align: center;
@@ -31,3 +32,12 @@
     text-align: center;
     
 }
+
+.authFormHeader{
+    font-size: 24px; 
+    margin-bottom: 20px
+}
+
+/* .authFormForm{
+   margin-bottom: 350px;
+} */

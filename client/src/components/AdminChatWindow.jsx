@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Photo from "./UI/photo/Photo";
-import avatarImage from "../components/icon/avatar.svg";
-import jwt from "jwt-decode";
+import avatarImage from "../components/icon/avatar1.png";
 const AdminChatWindow = ({
   socketConnection,
   userChatData,
@@ -97,32 +96,35 @@ const AdminChatWindow = ({
       <div className="supportAdminContent">
         {messageList.map((elm) => {
           return (
-            <div
-              key={Math.random()}
-              onClick={() => {
-                openChat(elm);
-              }}
-              className="userChatMessage"
-            >
-              <Photo>
-                <img
-                  src={
-                    elm.avatar !== "noAvatar"
-                      ? `${process.env.REACT_APP_SERVER_URL}${elm.avatar}`
-                      : avatarImage
-                  }
-                  alt="Logo"
-                />
-              </Photo>
-              <p className="n">{elm.userName}</p>
+            <div>
+              <div
+                key={Math.random()}
+                onClick={() => {
+                  openChat(elm);
+                }}
+                className="userChatMessage"
+              >
+                <Photo>
+                  <img
+                    src={
+                      elm.avatar !== "noAvatar"
+                        ? `${process.env.REACT_APP_SERVER_URL}${elm.avatar}`
+                        : avatarImage
+                    }
+                    alt="Logo"
+                  />
+                </Photo>
+                <p className="n">{elm.userName}</p>
 
-              {messageId.has(elm.userId) ? (
-                <div key={Math.random()} className={newMessage}>
-                  {messageCount}
-                </div>
-              ) : (
-                ""
-              )}
+                {messageId.has(elm.userId) ? (
+                  <div key={Math.random()} className={newMessage}>
+                    {messageCount}
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              {messageList.length === 0 ? <p>Empty</p> : ""}
             </div>
           );
         })}

@@ -27,48 +27,47 @@ const Authorization = () => {
   return (
     <div className="containers container">
       <div className="authForm">
-        <h1 style={{ fontSize: "24px", marginTop: "-20px" }}>
-          Log in to your account
-        </h1>
-        <form>
-          <label htmlFor=""></label>
+        <h1 className="authFormHeader">Log in to your account</h1>
+        <div className="authFormForm">
+          <form>
+            <label htmlFor=""></label>
 
-          {serverResponse ? (
-            <p style={{ color: "red" }}>{serverResponse}</p>
-          ) : (
-            ""
-          )}
+            {serverResponse ? (
+              <p style={{ color: "red" }}>{serverResponse}</p>
+            ) : (
+              ""
+            )}
 
-          <MyInput
-            style={{
-              marginTop: "10px",
-              marginBottom: "20px",
-              background: "transparent",
-            }}
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-            type="text"
-            placeholder="Email"
-          />
+            <MyInput
+              style={{
+                marginTop: "10px",
+                marginBottom: "20px",
+                background: "transparent",
+              }}
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              type="text"
+              placeholder="Email"
+            />
 
-          <label htmlFor=""></label>
-          <MyInput
-            style={{
-              marginTop: "30px",
-              marginBottom: "20px",
-              background: "transparent",
-            }}
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-            type="Password"
-            placeholder="your password"
-          />
+            <label htmlFor=""></label>
+            <MyInput
+              style={{
+                marginTop: "30px",
+                marginBottom: "20px",
+                background: "transparent",
+              }}
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              type="Password"
+              placeholder="your password"
+            />
 
-          <MyButton onClick={exit} style={{ width: "200px" }}>
-            Log in
-          </MyButton>
-        </form>
-
+            <MyButton onClick={exit} style={{ width: "200px" }}>
+              Log in
+            </MyButton>
+          </form>
+        </div>
         <p
           style={{ fontSize: "18px", marginTop: "25px", marginBottom: "10px" }}
         >

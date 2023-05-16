@@ -6,58 +6,71 @@ axios.interceptors.request.use(function (req) {
 
 axios.interceptors.response.use(
   (res) => {
-    if (res.data.success == `User is authorized`) {
+    if (res.data.success === "Avatar updated") {
+      return localStorage.setItem("Authorization", res.data.access);
+    }
+
+    if (res.data.success === "User is authorized") {
       localStorage.setItem("Refresh", res.data.refresh);
       return localStorage.setItem("Authorization", res.data.data);
     }
-    if (res.data.success == "The user is registered") {
+
+    if (res.data.success === "The user is registered") {
       localStorage.setItem("Refresh", res.data.refreshToken);
 
       return localStorage.setItem("Authorization", res.data.accessToken);
     }
+
     return res;
   },
   async (error) => {
     if (error.response.status == 401) {
       try {
         const originalRequest = error.config;
+
         const isValidate = await validateRefresh();
 
         if (!isValidate) {
           localStorage.clear();
           return (window.location.href = "/");
         }
-        localStorage.setItem("Authorization", isValidate.data.access);
-        localStorage.setItem("Refresh", isValidate.data.refresh);
-        setAuthToken(
-          localStorage.getItem("Authorization"),
-          localStorage.getItem("Refresh")
-        );
-        //return axios.request(originalRequest);
 
-        if (originalRequest.method == "get") {
-          return axios.get(originalRequest.url);
-        }
+        if (isValidate.data.access) {
+          localStorage.setItem("Authorization", isValidate.data.access);
+          localStorage.setItem("Refresh", isValidate.data.refresh);
 
-        if (originalRequest.method == "post") {
-          return axios.post(
-            originalRequest.url,
-            JSON.parse(originalRequest.data)
+          setAuthToken(
+            localStorage.getItem("Authorization"),
+            localStorage.getItem("Refresh")
           );
-        }
+          console.log(typeof originalRequest.data);
+          if (originalRequest.method == "get") {
+            return axios.get(originalRequest.url);
+          }
 
-        if (originalRequest.method == "put") {
-          return axios.put(
-            originalRequest.url,
-            JSON.parse(originalRequest.data)
-          );
-        }
+          if (originalRequest.method == "post") {
+            return axios.post(
+              originalRequest.url,
+              typeof originalRequest.data === "string"
+                ? JSON.parse(originalRequest.data)
+                : originalRequest.data
+            );
+          }
 
-        if (originalRequest.method == "delete") {
-          return axios.delete(originalRequest.url, {
-            data: JSON.parse(originalRequest.data),
-          });
+          if (originalRequest.method == "put") {
+            return axios.put(
+              originalRequest.url,
+              JSON.parse(originalRequest.data)
+            );
+          }
+
+          if (originalRequest.method == "delete") {
+            return axios.delete(originalRequest.url, {
+              data: JSON.parse(originalRequest.data),
+            });
+          }
         }
+        return error;
       } catch (error) {
         console.log(error);
         return error;
@@ -65,6 +78,7 @@ axios.interceptors.response.use(
     }
     if (error.response.status == 403) {
       localStorage.clear();
+
       return (window.location.href = "/");
     }
     return error;

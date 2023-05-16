@@ -18,7 +18,7 @@ import MyModal from "../components/UI/MyModal/MyModal";
 import HistoryBlock from "../components/HistoryBlock";
 import AdminChatWindow from "../components/AdminChatWindow";
 import About from "../components/About";
-
+import ChangeAvatar from "../components/ChangeAvatar";
 const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
 //
 function Home() {
@@ -142,6 +142,15 @@ function Home() {
   function changeNewMessageValue(data) {
     setNewMessageValue(data);
   }
+
+  const [changeAvatar, setChangeAvatar] = useState();
+  function changeAvatarFunc(data) {
+    setChangeAvatar(data);
+  }
+  const [changeAvatarVisible, setChangeAvatarVisible] = useState(false);
+  function changeAvatarVisibleFunc(data) {
+    setChangeAvatarVisible(data);
+  }
   return (
     <div className="App">
       {/* First page */}
@@ -153,7 +162,19 @@ function Home() {
           history={historyModal}
           historyList={historyModalValue}
           socketConnection={socket}
+          avatarChange={changeAvatar}
+          changeAvatarVisibleFunc={changeAvatarVisibleFunc}
+          changeAvatarVisible={changeAvatarVisible}
         />
+        {changeAvatarVisible ? (
+          <ChangeAvatar
+            avatarChange={changeAvatarFunc}
+            changeAvatarVisibleFunc={changeAvatarVisibleFunc}
+          />
+        ) : (
+          ""
+        )}
+
         {jwt(localStorage.getItem("Authorization")).role == "admin" &&
         chatListVisible ? (
           <AdminChatWindow
@@ -198,6 +219,7 @@ function Home() {
             editModal={editModal}
             updatingList={updatingList}
             setupdatingList={setUpdateList}
+            socketConnection={socket}
           />
         </div>
         {jwt(localStorage.getItem("Authorization")).role == "admin" ? (
@@ -219,21 +241,7 @@ function Home() {
         <hr className="line" />
       </div>
       {/* Second page */}
-      {/* <div className="page secondPage">
-        <h1
-          style={{
-            fontSize: "30px",
-            fontWeight: "700",
-            marginBottom: "10px",
-          }}
-        >
-          HTTP Request
-        </h1>
-        <div className="secondPageContent"></div>
-        <hr className="line" />
-      </div> */}
 
-      {/* Third page */}
       <div className="page secondPage">
         <h1
           style={{
@@ -264,6 +272,7 @@ function Home() {
             editModal={editModal}
             updatingList={updatingList}
             setupdatingList={setUpdateList}
+            socketConnection={socket}
           />
         </div>
       </div>

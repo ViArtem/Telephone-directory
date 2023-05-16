@@ -35,7 +35,7 @@ async function socketChat() {
       if (!validateMessage(data)) {
         return;
       }
-      data.message = data.message.substr(0, 100);
+      data.message = data.message.substr(0, 256);
       const message = await messageService.addNewUserMessage(data);
 
       io.to(data.id).emit("allMessage", {

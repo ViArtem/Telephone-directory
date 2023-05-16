@@ -48,7 +48,6 @@ const FindBlock = ({ styleClass, find, socket }) => {
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}contact/find`, contact)
         .then((user) => {
-          console.log(user);
           const hasUser = user.data;
 
           if (hasUser) {
