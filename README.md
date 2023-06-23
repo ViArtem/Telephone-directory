@@ -1,12 +1,12 @@
 ### Telephone directory project
 
-This project was created to demonstrate my skill in web development
+This project was developed with the purpose of practically implementing the overall concept of building web applications, gaining an understanding of how JWT authentication works, and acquiring experience working with databases such as MongoDB and MySQL. It also involved working with the file system, establishing WebSocket connections, and handling regular HTTP requests. Throughout this project, I also learned how to work with Docker and grasped the concept of CI/CD. Additionally, basic-level testing was implemented.
 
 ---
 
 ### Stacks
 
-The application server uses `Node.js` in combination with the `Express` framework. The server supports two types of connections: `http` and `WebSocket`. WebSockets are supported by the `socket.io` library. The databases used is `mongodb` with the `mongoose` and `MySQL`. Also, the project has the ability to change the QUERY_PARAMETERS variable to change the data storage location from the database to the `file system`. `Jwt` tokens are used to authorize users. The client uses `React` to interact with the server. The entire project is placed in `Docker` containers.
+The application server uses `Node.js` in combination with the `Express` framework. The server supports two types of connections: `http` and `WebSocket`. WebSockets are supported by the `socket.io` library. The databases used is `mongodb` with the `mongoose` and `MySQL` with the `mysql2`. Also, the project has the ability to change the QUERY_PARAMETERS variable to change the data storage location from the database to the `file system`. `Jwt` tokens are used to authorize users. The client uses `React` to interact with the server. The entire project is placed in `Docker` containers.
 
 ---
 
@@ -23,6 +23,7 @@ An authorized user can:
 3. All contacts that the user has added to the database can be edited and deleted, all others can only be viewed.
 4. View the history of your requests
 5. Write to technical support by clicking the "Support" button
+6. Сhange your avatar
 
 Additional features of the administrator:
 
