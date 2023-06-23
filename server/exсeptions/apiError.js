@@ -8,6 +8,7 @@ class ApiError extends Error {
   }
   // error during authorization
   static UnauthorizedError(message) {
+    console.log(message);
     return new ApiError(401, message);
   }
   // request error

@@ -66,6 +66,7 @@ class userHttpController {
       next(error);
     }
   }
+
   // user authorization controller
   async authorizationUser(req, res, next) {
     try {
@@ -143,8 +144,6 @@ class userHttpController {
         refresh: validateRefresh.newRefresh,
       });
     } catch (error) {
-      console.log(error);
-      //res.status(403).json({ error: "incorrect refresh" });
       next(error);
     }
   }

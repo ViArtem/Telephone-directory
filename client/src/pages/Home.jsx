@@ -84,6 +84,12 @@ function Home() {
     setModalAbout(value);
   }
 
+  // a function that transfers filtered contacts from the Find block to the UserList block
+  const [filteredContacts, setFilteredContacts] = useState([]);
+  function sendFilteredUsers(contacts) {
+    setFilteredContacts(contacts);
+  }
+
   // socket
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState(null);
@@ -254,7 +260,11 @@ function Home() {
         </h1>
         <div className="secondPageContent">
           <div className="findOperationBlock">
-            <FindBlock socket={socket} />
+            <FindBlock
+              sendFilteredUsers={sendFilteredUsers}
+              socket={socket}
+              setUpdatingList={setUpdateList}
+            />
             <AddContactBlock socket={socket} setupdatingList={setUpdateList} />
           </div>
           <div>
@@ -267,6 +277,7 @@ function Home() {
             <OperationsBlock socket={socket} setupdatingList={setUpdateList} />
           </div>
           <UserList
+            filteredContacts={filteredContacts}
             deletes={setNewDeleteContactHttp}
             editModalValue={editModalValue}
             editModal={editModal}

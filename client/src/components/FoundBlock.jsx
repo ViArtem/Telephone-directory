@@ -91,6 +91,7 @@ const FoundBlock = ({
       if (socket) {
         socket.emit("delete user value", {
           fullName: deleteUserDataSocket,
+          ownerName: jwt(localStorage.getItem("Authorization")).username,
           ownerId: jwt(localStorage.getItem("Authorization")).id,
           userRole: jwt(localStorage.getItem("Authorization")).role,
           imagePath: socketImg,

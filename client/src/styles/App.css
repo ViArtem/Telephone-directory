@@ -59,8 +59,9 @@ h1{
     position: absolute;
     visibility: hidden;
     opacity: 0;
-  
 }
+
+
 
 
 
@@ -357,21 +358,19 @@ i {
 }
 
 .findBlock{
-    position: relative;
-    height: 254px;
+    position: relative;  
 }
 
 .findBlock > h1{
     font-size: 24px;
     position: absolute;
     top: 0;
-    margin-top: 50px;
+    margin-top: 65px;
 }
 
 .operationsBlock{
     position: relative;
     width: 442px;
-    
     margin-top: 19px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -395,15 +394,12 @@ i {
 
 .operationsBlock > ul > p{
     color: rgba(115, 115, 115, 1);
-
 }
 
 
 .foundContactBlock{
     position: relative;
-    width: 442px;
-   
-    /* height: 300px; */
+    width: 442px;  
 }
 
 .foundContactBlock h1{
@@ -411,21 +407,19 @@ i {
     position: absolute;
     top: 0;
     margin-top: 15px;
-    
-
 }
 
 .addBlock{
     position: relative;
     padding: 0px 45px;
     margin-top: 20px;
-    height: 314px;
+   
 }
 
 .addBlock > h1{
     position: absolute;
     top: 0;
-    margin-top: 15px;
+    margin-top: 19px;
     font-size: 24px;
     font-family: 'Inter', sans-serif;    
 }
@@ -537,13 +531,12 @@ input:first-child{
 .support{
     color: rgba(39, 38, 67, 1);
     display: flex;
-    /* margin-left: 50px; */
     position: absolute;
     right: 0;
     bottom: 0;
     margin-right: 130px;
     margin-bottom: 30px;
-    /* z-index: 1000000; */
+    
 }
 
 .supportChat{
@@ -845,47 +838,6 @@ font-size: 10px;
     line-height: 130%;
 }
 
-/* .linkedinLogo:hover{
-    transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); 
-    width: 40px;
-} */
-
-/* country number */
-/* .react-tel-input .form-control {
-    border: none;
-    border-bottom: 2px solid rgba(64, 63, 67, 0.7);
-    width: 100%;
-    background: transparent;
-    font-size: 16px;
-    color: rgba(64, 63, 67, 1);
-} */
-
-
-
-/* .react-tel-input .country-list {
-    outline: none;
-    z-index: 1;
-    list-style: none;
-    position: absolute;
-    padding: 0;
-    margin: 10px 0 10px -1px;
-    box-shadow: 1px 2px 10px rgba(0,0,0,0.35);
-    background-color: white;
-    width: 203px;
-    max-height: 140px;
-    overflow-y: scroll;
-    border-radius: 15px;
-}
-
-.react-tel-input .flag-dropdown{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    padding: 0;
-    border-radius: 5px;
-    background: none;
-} */
-
 .PhoneInputInput{
     border: none;
     border-bottom: 2px solid rgba(64, 63, 67, 0.7);
@@ -962,3 +914,18 @@ font-size: 10px;
 }
 
 
+/* new image uploader */
+
+.avatarFullNameContainer{
+    margin-top: 30px;
+    display: flex;
+    gap: 30px;
+}
+
+.fullNameInputs :last-child{
+   margin-top: 15px;
+}
+
+.imageInput:hover{
+cursor: pointer;
+}

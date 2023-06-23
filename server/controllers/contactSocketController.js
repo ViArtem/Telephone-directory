@@ -72,8 +72,9 @@ async function socketData() {
       });
 
       // add an action to the story
+
       await administratorAdapter.addAction(
-        `Socket request to create a contact ${data.fullName}`,
+        `User ${data.ownerName} send socket request to create a contact ${data.fullName}`,
         Date.now()
       );
       //
@@ -112,7 +113,7 @@ async function socketData() {
 
         // add an action to the story
         await administratorAdapter.addAction(
-          `Socket request to find a contact ${data.fullName}`,
+          `User ${data.ownerName} send socket request to find a contact ${data.fullName}`,
           Date.now()
         );
       }
@@ -135,7 +136,7 @@ async function socketData() {
 
       // add an action to the story
       await administratorAdapter.addAction(
-        `Socket request to delete a contact ${data.fullName}`,
+        `User ${data.ownerName} send socket request to delete a contact ${data.fullName}`,
         Date.now()
       );
     });
@@ -181,7 +182,7 @@ async function socketData() {
 
         // add an action to the story
         await administratorAdapter.addAction(
-          `Socket request to update a contact ${data.fullName}`,
+          `User ${data.ownerName} send socket request to edit a contact ${data.fullName}`,
           Date.now()
         );
       } else {

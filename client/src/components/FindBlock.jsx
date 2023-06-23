@@ -3,7 +3,13 @@ import MyButton from "./UI/button/MyButton";
 import MyInput from "./UI/input/MyInput";
 import axios from "axios";
 import jwt from "jwt-decode";
-const FindBlock = ({ styleClass, find, socket }) => {
+const FindBlock = ({
+  styleClass,
+  find,
+  socket,
+  setUpdatingList,
+  sendFilteredUsers,
+}) => {
   let className = "otherBlock findBlock";
 
   if (styleClass) {
@@ -14,13 +20,32 @@ const FindBlock = ({ styleClass, find, socket }) => {
   const [activeButton, setActiveButton] = useState("");
   const [activeNameField, setActiveNameField] = useState("");
 
+  // фільтр по частині значень
+  const [contactFilter, setContactFilter] = useState("");
+  useEffect(() => {
+    if (socket) {
+      if (contactFilter.trim() === "" || contactFilter.length < 2) {
+        return setUpdatingList(Math.random());
+      }
+
+      socket.emit("filter", { fullName: contactFilter });
+      socket.on("filter data", (data) => {
+        if (data.filterUserList.length > 5) {
+          data.filterUserList.splice(5);
+        }
+        sendFilteredUsers([...data.filterUserList]);
+      });
+    }
+  }, [contactFilter]);
+  //
+
   useEffect(() => {
     if (contact.fullName.length >= 3) {
       setActiveNameField("");
       setActiveButton("myBtnActive");
       return;
     }
-    //setActiveNameField("incorrectValue");
+
     setActiveButton("");
     return;
   }, [contact]);
@@ -34,11 +59,14 @@ const FindBlock = ({ styleClass, find, socket }) => {
       }, 800);
       return;
     }
+
+    //
     if (socket) {
       socket.emit(
         "find user value",
         {
           fullName: contact.fullName,
+          ownerName: jwt(localStorage.getItem("Authorization")).username,
         },
         jwt(localStorage.getItem("Authorization")).id
       );
@@ -83,9 +111,12 @@ const FindBlock = ({ styleClass, find, socket }) => {
         <label for=""></label>
         <MyInput
           className={activeNameField}
-          style={{ marginTop: "65px" }}
+          style={{ marginTop: "55px" }}
           value={contact.fullName}
-          onChange={(e) => setContact({ ...contact, fullName: e.target.value })}
+          onChange={(e) => {
+            setContactFilter(e.target.value);
+            setContact({ ...contact, fullName: e.target.value });
+          }}
           type="text"
           minLength={1}
           placeholder="Contact name or number"

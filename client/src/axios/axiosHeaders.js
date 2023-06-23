@@ -24,13 +24,13 @@ axios.interceptors.response.use(
     return res;
   },
   async (error) => {
-    if (error.response.status == 401) {
+    if (error.response.status === 401) {
       try {
         const originalRequest = error.config;
 
         const isValidate = await validateRefresh();
 
-        if (!isValidate) {
+        if (!Object.keys(isValidate.data).length) {
           localStorage.clear();
           return (window.location.href = "/");
         }
@@ -43,12 +43,12 @@ axios.interceptors.response.use(
             localStorage.getItem("Authorization"),
             localStorage.getItem("Refresh")
           );
-          console.log(typeof originalRequest.data);
-          if (originalRequest.method == "get") {
+
+          if (originalRequest.method === "get") {
             return axios.get(originalRequest.url);
           }
 
-          if (originalRequest.method == "post") {
+          if (originalRequest.method === "post") {
             return axios.post(
               originalRequest.url,
               typeof originalRequest.data === "string"
@@ -57,30 +57,30 @@ axios.interceptors.response.use(
             );
           }
 
-          if (originalRequest.method == "put") {
+          if (originalRequest.method === "put") {
             return axios.put(
               originalRequest.url,
               JSON.parse(originalRequest.data)
             );
           }
 
-          if (originalRequest.method == "delete") {
+          if (originalRequest.method === "delete") {
             return axios.delete(originalRequest.url, {
               data: JSON.parse(originalRequest.data),
             });
           }
         }
         return error;
-      } catch (error) {
-        console.log(error);
-        return error;
+      } catch (e) {
+        return e;
       }
     }
-    if (error.response.status == 403) {
+    if (error.response.status === 403) {
       localStorage.clear();
 
       return (window.location.href = "/");
     }
+
     return error;
   }
 );

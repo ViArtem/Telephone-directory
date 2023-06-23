@@ -1,39 +1,26 @@
 import administratorAdapter from "../adapters/adminAdapter.js";
+import jwt_decode from "jwt-decode";
+
 async function setHistory(req, res, next) {
   try {
     if (req.body.action) {
-      if (req.body.action === "Find") {
-        await administratorAdapter.addAction(
-          `Http request to search for a contact ${req.body.fullName}`,
-          new Date()
-        );
-      }
+      const userActions = req.body.action;
+      const userName = jwt_decode(req.headers.authorization).username;
 
-      if (req.body.action === "Add") {
-        await administratorAdapter.addAction(
-          `Http request to create a contact ${req.body.fullName}`,
-          new Date()
-        );
-      }
-      if (req.body.action === "Delete") {
-        await administratorAdapter.addAction(
-          `Http request to delete a contact ${req.body.fullName}`,
-          new Date()
-        );
-      }
-      if (req.body.action === "Edit") {
-        await administratorAdapter.addAction(
-          `Http request to update a contact ${req.body.fullName}`,
-          new Date()
-        );
-      }
+      const actionsArray = ["Find", "Add", "Delete", "Edit"];
 
-      // await administratorAdapter.addAction(
-      //   `Http: ${req.body.action} ${req.body.fullName}`,
-      //   new Date()
-      // );
+      actionsArray.forEach(async (actions) => {
+        if (actions === userActions) {
+          await administratorAdapter.addAction(
+            `User ${userName} send http request for a ${actions.toLowerCase()} contact ${
+              req.body.fullName
+            }`,
+            new Date()
+          );
+          return;
+        }
+      });
     }
-
     next();
   } catch (error) {
     console.log(error);

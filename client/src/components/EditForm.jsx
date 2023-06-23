@@ -69,6 +69,7 @@ const EditForm = ({ userValue, edit, editModal, socket, setupdatingList }) => {
           newFullName: contact.fullName,
           newNumber: contact.number,
           idForUpdate: userValue.id,
+          ownerName: jwt(localStorage.getItem("Authorization")).username,
           owner: contact.owner,
           userRole: contact.userRole,
           avatar: base64Image,

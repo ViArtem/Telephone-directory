@@ -8,6 +8,7 @@ import avatarImage from "../components/icon/avatar3.jpg";
 import MyInput from "./UI/input/MyInput";
 
 const UserList = ({
+  filteredContacts,
   deletes,
   updatingList,
   setupdatingList,
@@ -37,6 +38,7 @@ const UserList = ({
 
   const [contactFilter, setContactFilter] = useState("");
   useEffect(() => {
+    console.log(contacts);
     if (contactFilter.trim() === "" || contactFilter.length < 2) {
       return setupdatingList(Math.random());
     }
@@ -49,16 +51,15 @@ const UserList = ({
       setPage(1);
       setContact([...data.filterUserList]);
     });
-    // axios
-    //   .post(`${process.env.REACT_APP_SERVER_URL}contact/find/part`, {
-    //     fullName: contactFilter,
-    //   })
-    //   .then((data) => {
-    //     setHowMany(0);
-    //     setPage(1);
-    //     setContact([...data.data]);
-    //   });
   }, [contactFilter]);
+
+  useEffect(() => {
+    if (filteredContacts) {
+      setHowMany(0);
+      setPage(1);
+      setContact([...filteredContacts]);
+    }
+  }, [filteredContacts]);
 
   async function changeList(e) {
     setHowMany(e.selected);
@@ -236,12 +237,17 @@ const UserList = ({
             </p>
           </div>
         )}
-        <MyInput
-          style={{ width: "200px", marginTop: "20px", textAlign: "center" }}
-          onChange={(e) => setContactFilter(e.target.value)}
-          placeholder="Filter contacts"
-          maxLength={15}
-        ></MyInput>
+        {!filteredContacts ? (
+          <MyInput
+            style={{ width: "200px", marginTop: "20px", textAlign: "center" }}
+            onChange={(e) => setContactFilter(e.target.value)}
+            placeholder="Filter contacts"
+            maxLength={15}
+          ></MyInput>
+        ) : (
+          ""
+        )}
+
         <div className="paginateContainer">
           <MyPaginate handlePageClick={changeList} pageCount={page} />
         </div>

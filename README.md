@@ -1,4 +1,4 @@
-## #Telephone directory MERN project
+### Telephone directory project
 
 This project was created to demonstrate my skill in web development
 
@@ -6,7 +6,7 @@ This project was created to demonstrate my skill in web development
 
 ### Stacks
 
-The application server uses Node.js in combination with the Express framework. The server supports two types of connections: http and WebSocket. WebSockets are supported by the socket.io library. The databases used is mongodb with the mongoose and MySQL. Also, the project has the ability to change the QUERY_PARAMETERS variable to change the data storage location from the database to the file system. Jwt tokens are used to authorize users. The client uses React to interact with the server. The entire project is placed in Docker containers.
+The application server uses `Node.js` in combination with the `Express` framework. The server supports two types of connections: `http` and `WebSocket`. WebSockets are supported by the `socket.io` library. The databases used is `mongodb` with the `mongoose` and `MySQL`. Also, the project has the ability to change the QUERY_PARAMETERS variable to change the data storage location from the database to the `file system`. `Jwt` tokens are used to authorize users. The client uses `React` to interact with the server. The entire project is placed in `Docker` containers.
 
 ---
 
@@ -35,7 +35,7 @@ Additional features of the administrator:
 
 ### Quick start
 
-####Start the server:
+#### Start the server:
 
 After cloning the project to your computer, add the `.env ` file to the root of the `server` folder and add the following parameters to it:
 
@@ -69,7 +69,7 @@ npm install
 node server.js
 ```
 
-####Start the client:
+#### Start the client:
 
 To run the client, first add the `.env` file and add the following parameter
 
@@ -85,7 +85,8 @@ npm install
 npm start
 ```
 
-####Start for the Docker container:
+#### Start for the Docker container:
+
 Start the docker, then open the main project folder in the terminal and enter the following commands:
 
 ```JS

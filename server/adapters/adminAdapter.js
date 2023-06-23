@@ -15,6 +15,8 @@ class administratorAdapter {
       this.service = administratorFileRequest;
     }
   }
+
+  // receiving all action logs
   async getAllHistory() {
     try {
       return await this.service.getAllHistory();
@@ -22,6 +24,8 @@ class administratorAdapter {
       console.log(error);
     }
   }
+
+  // adding new actions to the database
   async addAction(action, time) {
     return await this.service.addNewAction(action, time);
   }
