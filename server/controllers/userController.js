@@ -1,47 +1,28 @@
 import ApiError from "../exсeptions/apiError.js";
 import userService from "../services/userService.js";
+import Helpers from "../exсeptions/helpers.js";
 
 class userHttpController {
   // user registration controller
   async registrationUser(req, res, next) {
     try {
+      const { firstName, lastName, email, password } = req.body;
       let userAvatar = req.file;
+
       if (!userAvatar) {
         userAvatar = { path: "noAvatar" };
       }
-      const regularForPassword = new RegExp(
-        "(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}",
-        "g"
+
+      // validation of user data
+      const validatedData = Helpers.userDataValidation(
+        firstName,
+        lastName,
+        email,
+        password
       );
 
-      const regularForEmail = new RegExp(
-        "^[a-zA-Z0-9_]+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$",
-        "g"
-      );
-
-      // receive data from the form
-      const { firstName, lastName, email, password } = req.body;
-
-      if (
-        firstName.trim() == "" ||
-        password.trim() == "" ||
-        lastName.trim() == "" ||
-        email.trim() == ""
-      ) {
-        throw ApiError.BadRequest("Fields cannot be empty");
-      }
-
-      const validateUserPassword = regularForPassword.test(password.trim());
-      const validateUserEmail = regularForEmail.test(email.trim());
-
-      if (validateUserPassword === false) {
-        throw ApiError.BadRequest(
-          "The password does not meet the requirements. It must contain the following characters: 'A-Z', 'a-z', '0-9', '!,@, #' and be at least 6 characters long"
-        );
-      }
-
-      if (validateUserEmail === false) {
-        throw ApiError.BadRequest("The email does not meet the requirements");
+      if (validatedData) {
+        throw ApiError.BadRequest(validatedData.message);
       }
 
       const registrationStatus = await userService.registrationUser(
@@ -75,6 +56,7 @@ class userHttpController {
       if (password.trim() === "" || email.trim() === "") {
         throw ApiError.BadRequest("Fields cannot be empty");
       }
+
       const authenticationResult = await userService.authenticationUser(
         password.trim(),
         email.trim()

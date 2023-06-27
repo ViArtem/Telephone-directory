@@ -8,9 +8,7 @@ class contactHttpController {
   //Returns the object of the created contact
   async addContact(req, res, next) {
     try {
-      const contactName = req.body.fullName.trim();
-      const contactNumber = req.body.number.trim();
-      const contactOwner = req.body.owner;
+      const { fullName, number, owner } = req.body;
 
       let contactAvatar = req.file;
 
@@ -19,21 +17,16 @@ class contactHttpController {
       }
 
       // number and name validation
-      if (contactName === "" || contactNumber === "") {
-        throw ApiError.BadRequest("The value cannot be empty");
-      }
-
-      if (Helpers.dataValidation(contactName, contactNumber)) {
-        throw ApiError.BadRequest(
-          Helpers.dataValidation(contactName, contactNumber).message
-        );
+      const validatedData = Helpers.dataValidation(fullName, number);
+      if (validatedData) {
+        throw ApiError.BadRequest(validatedData.message);
       }
 
       //request to create a contact
       const newContact = await contactService.addNewContact(
-        Helpers.allFirstLettersCapitalized(contactName),
-        contactNumber,
-        contactOwner,
+        Helpers.allFirstLettersCapitalized(fullName),
+        number,
+        owner,
         contactAvatar.path
       );
 
