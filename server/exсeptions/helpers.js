@@ -22,7 +22,7 @@ class Helpers {
 
     const regularExpretionName = new RegExp("^[a-zA-Z]+ [a-zA-Z]+$", "gi");
 
-    if (!regularExpretionName.test(fullName)) {
+    if (!regularExpretionName.test(fullName.trim())) {
       return { message: "Name not valid" };
     }
 

@@ -24,8 +24,8 @@ class contactHttpController {
 
       //request to create a contact
       const newContact = await contactService.addNewContact(
-        Helpers.allFirstLettersCapitalized(fullName),
-        number,
+        Helpers.allFirstLettersCapitalized(fullName).trim(),
+        number.trim(),
         owner,
         contactAvatar.path
       );
