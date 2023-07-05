@@ -6,7 +6,6 @@ class contactService {
   async addNewContact(name, number, owner, contactAvatar, filePath = null) {
     try {
       // checking the contact for uniqueness
-      const num = await contactAdapter.findContactByNumber(number);
 
       if (
         (await contactAdapter.findContact(name)) ||
@@ -61,7 +60,7 @@ class contactService {
     try {
       const validateRights = await contactAdapter.findContactById(id);
 
-      if (validateRights.owner == owner || userRole == "admin") {
+      if (validateRights.owner === owner || userRole === "admin") {
         if (avatarBuffer) {
           await fs.writeFile(path.resolve(avatar), avatarBuffer);
         }

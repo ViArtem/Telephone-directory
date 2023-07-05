@@ -154,6 +154,10 @@ const AddContactBlock = ({ styleClass, add, socket, setupdatingList }) => {
             return setupdatingList(Math.random());
           }
 
+          if (user.response.data.message === "File too large") {
+            return setErrorMessage("File too large, max avatar size 20kb");
+          }
+
           if (user.response.data.message) {
             return setErrorMessage(user.response.data.message);
           }

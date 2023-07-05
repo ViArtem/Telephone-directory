@@ -45,15 +45,19 @@ class contactHttpController {
   // Returns the object of the found contact
   async findContact(req, res, next) {
     try {
-      const numberOrFullName = req.body.fullName.trim();
+      const numberOrFullName = req.body.fullName;
 
-      if (numberOrFullName === "") {
+      if (
+        numberOrFullName === undefined ||
+        numberOrFullName === null ||
+        numberOrFullName.trim() === ""
+      ) {
         throw ApiError.BadRequest("The value cannot be empty");
       }
 
       // request to find a contact
       const foundContactData = await contactService.findContact(
-        Helpers.allFirstLettersCapitalized(numberOrFullName)
+        Helpers.allFirstLettersCapitalized(numberOrFullName.trim())
       );
 
       if (foundContactData === null) {
@@ -104,12 +108,9 @@ class contactHttpController {
         avatar = { path: "noAvatar" };
       }
 
-      if (fullName === "" || number === "") {
-        throw ApiError.BadRequest("The value cannot be empty");
-      }
-
-      if (Helpers.dataValidation(fullName, number)) {
-        throw ApiError.BadRequest(Helpers.dataValidation(fullName, number));
+      const validatedData = Helpers.dataValidation(fullName, number);
+      if (validatedData) {
+        throw ApiError.BadRequest(validatedData.message);
       }
 
       // request to update a contact
