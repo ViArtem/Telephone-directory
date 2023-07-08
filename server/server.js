@@ -21,6 +21,7 @@ import multer from "./middleware/imageMiddleware.js";
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 app.use("/images", express.static(path.resolve("images")));
+
 const allMiddleware = [
   bodyParser.urlencoded({ extended: true }),
   cors(),

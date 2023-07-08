@@ -38,7 +38,6 @@ const UserList = ({
 
   const [contactFilter, setContactFilter] = useState("");
   useEffect(() => {
-    console.log(contacts);
     if (contactFilter.trim() === "" || contactFilter.length < 2) {
       return setupdatingList(Math.random());
     }

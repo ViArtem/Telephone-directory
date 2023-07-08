@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import * as fs from "node:fs/promises";
 dotenv.config();
+
 class Helpers {
   // validation of the contact number and name
   dataValidation(fullName, number) {
@@ -66,6 +67,7 @@ class Helpers {
     );
 
     const validateUserPassword = regularForPassword.test(password.trim());
+
     const validateUserEmail = regularForEmail.test(email.trim());
 
     if (validateUserPassword === false) {
@@ -107,6 +109,17 @@ class Helpers {
         const result = await promise;
         return result;
       }
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
+  // function for handling asynchronous code errors
+  async handleFileSystemErrors(promise) {
+    try {
+      const result = await promise;
+      return result;
     } catch (error) {
       console.log(error);
       return error;

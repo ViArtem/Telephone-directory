@@ -2,15 +2,20 @@ import * as fs from "node:fs/promises";
 import path from "node:path";
 import uniqid from "uniqid";
 import Helpers from "../exсeptions/helpers.js";
-const filePath = path.resolve("files", "administratorHistory", `History.txt`);
+
 class administratorFileRequest {
+  constructor() {
+    this.filePath = path.resolve(
+      "files",
+      "administratorHistory",
+      `History.txt`
+    );
+  }
+
   async getAllHistory() {
-    return JSON.parse(await Helpers.handleErrors(fs.readFile(filePath)));
-    try {
-      return JSON.parse(await fs.readFile(filePath));
-    } catch (error) {
-      return error;
-    }
+    return JSON.parse(
+      await Helpers.handleFileSystemErrors(fs.readFile(this.filePath))
+    );
   }
   //
   async addNewAction(action, time) {
@@ -21,13 +26,15 @@ class administratorFileRequest {
         time: Number(time),
       };
 
-      const allDataBuffer = await Helpers.handleErrors(fs.readFile(filePath));
-      let allBataJson = JSON.parse(allDataBuffer.toString());
+      const allDataBuffer = await Helpers.handleFileSystemErrors(
+        fs.readFile(this.filePath)
+      );
+      const allDataJson = JSON.parse(allDataBuffer.toString());
 
-      allBataJson.push(newActions);
+      allDataJson.push(newActions);
 
-      return await Helpers.handleErrors(
-        fs.writeFile(filePath, JSON.stringify(allBataJson, null, 2))
+      return await Helpers.handleFileSystemErrors(
+        fs.writeFile(this.filePath, JSON.stringify(allDataJson, null, 2))
       );
     } catch (error) {
       return error;

@@ -16,9 +16,9 @@ class userHttpController {
       // validation of user data
       const validatedData = Helpers.userDataValidation(
         firstName,
+        password,
         lastName,
-        email,
-        password
+        email
       );
 
       if (validatedData) {

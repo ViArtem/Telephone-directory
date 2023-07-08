@@ -78,7 +78,7 @@ class contactService {
       //checking for a user in the database
       const validationDeletion = await contactAdapter.findContact(name);
 
-      if (!validationDeletion) {
+      if (!validationDeletion || validationDeletion.length === 0) {
         return { noFound: `Contact with name ${name} does not exist` };
       }
 

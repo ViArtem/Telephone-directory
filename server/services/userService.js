@@ -4,8 +4,6 @@ import bcrypt from "bcrypt";
 import uniqid from "uniqid";
 import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
-import * as fs from "node:fs/promises";
-import path from "node:path";
 
 class userService {
   async registrationUser(firstName, lastName, email, password, avatar) {

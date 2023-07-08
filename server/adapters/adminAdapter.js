@@ -3,13 +3,14 @@ import adminMongoRequest from "../database/mongo/adminMongoRequest.js";
 import adminMySQLRequest from "../database/mySQL/adminMySQLRequest.js";
 import dotenv from "dotenv";
 dotenv.config();
-const checkMongo = process.env.QUERY_PARAMETERS;
 
 class administratorAdapter {
+  #checkDatabase = process.env.QUERY_PARAMETERS;
+
   constructor(adminMongoRequest, adminMySQLRequest, administratorFileRequest) {
-    if (checkMongo === "mongo") {
+    if (this.#checkDatabase === "mongo") {
       this.service = adminMongoRequest;
-    } else if (checkMongo === "mySQL") {
+    } else if (this.#checkDatabase === "mySQL") {
       this.service = adminMySQLRequest;
     } else {
       this.service = administratorFileRequest;

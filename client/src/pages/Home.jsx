@@ -19,7 +19,11 @@ import HistoryBlock from "../components/HistoryBlock";
 import AdminChatWindow from "../components/AdminChatWindow";
 import About from "../components/About";
 import ChangeAvatar from "../components/ChangeAvatar";
-const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
+
+const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`, {
+  transports: ["websocket", "polling"],
+});
+
 //
 function Home() {
   //adds the found contact to the list of operations

@@ -4,17 +4,18 @@ import contactMySQLDatabaseRequest from "../database/mySQL/contactMySQLRequest.j
 import uniqid from "uniqid";
 import dotenv from "dotenv";
 dotenv.config();
-const checkDatabase = process.env.QUERY_PARAMETERS;
 
 class contactAdapter {
+  #checkDatabase = process.env.QUERY_PARAMETERS;
+
   constructor(
     contactMongoDatabaseRequest,
     contactMySQLDatabaseRequest,
     contactFileRequest
   ) {
-    if (checkDatabase === "mongo") {
+    if (this.#checkDatabase === "mongo") {
       this.service = contactMongoDatabaseRequest;
-    } else if (checkDatabase === "mySQL") {
+    } else if (this.#checkDatabase === "mySQL") {
       this.service = contactMySQLDatabaseRequest;
     } else {
       this.service = contactFileRequest;

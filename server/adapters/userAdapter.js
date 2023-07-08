@@ -3,13 +3,14 @@ import userFileRequest from "../filesService/userFileRequest.js";
 import userMySQLDatabaseRequest from "../database/mySQL/userMySQLRequest.js";
 import dotenv from "dotenv";
 dotenv.config();
-const checkDatabase = process.env.QUERY_PARAMETERS;
 
 class userAdapter {
+  #checkDatabase = process.env.QUERY_PARAMETERS;
+
   constructor(userMongoRequest, userMySQLDatabaseRequest, userFileRequest) {
-    if (checkDatabase === "mongo") {
+    if (this.#checkDatabase === "mongo") {
       this.service = userMongoRequest;
-    } else if (checkDatabase === "mySQL") {
+    } else if (this.#checkDatabase === "mySQL") {
       this.service = userMySQLDatabaseRequest;
     } else {
       this.service = userFileRequest;

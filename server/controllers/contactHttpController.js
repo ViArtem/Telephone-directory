@@ -84,11 +84,12 @@ class contactHttpController {
         imgPath
       );
 
-      if (
-        deleteSuccess.success === "You don't have enough rights" ||
-        deleteSuccess.noFound
-      ) {
+      if (deleteSuccess.success === "You don't have enough rights") {
         throw ApiError.RefreshError(deleteSuccess.success);
+      }
+
+      if (deleteSuccess.noFound) {
+        throw ApiError.BadRequest(deleteSuccess.noFound);
       }
 
       return res.status(200).json(deleteSuccess);

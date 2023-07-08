@@ -18,6 +18,7 @@ function startSocketServer() {
         origin: process.env.FRONTEND_URL,
       },
       maxHttpBufferSize: 1e8,
+      transports: ["websocket", "polling"],
     });
 
     server.listen(PORT, async () => {

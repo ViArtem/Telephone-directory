@@ -11,7 +11,7 @@ const Registration = () => {
   const [imageValue, setImageValueRegist] = useState(
     "click to upload an avatar"
   );
-  // const [imageTitle, setimageTitle] = useState(null);
+
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
@@ -19,7 +19,7 @@ const Registration = () => {
     password: "",
   });
 
-  const [errorValue, seterrorValue] = useState("");
+  const [errorValue, setErrorValue] = useState("");
 
   async function registrationUser(e) {
     try {
@@ -34,8 +34,8 @@ const Registration = () => {
       await axios
         .post(`${process.env.REACT_APP_SERVER_URL}user/registration`, data)
         .then((response) => {
-          if (response.response.status == 400) {
-            return seterrorValue(response.response.data.message);
+          if (response.response.status === 400) {
+            return setErrorValue(response.response.data.message);
           }
           setImageRegist(avatarImage);
         });
@@ -43,7 +43,7 @@ const Registration = () => {
       console.log("error");
       console.log(error);
       window.location.href = "/";
-      if (error.request.status == 501) {
+      if (error.request.status === 501) {
         console.log(error);
         return console.log(error.response.data.message);
       }
